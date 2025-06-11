@@ -1,10 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import Router from './router/Router'
 
-const App = () => {
+function App() {
   return (
-    <div>
-      
-    </div>
+    <>
+      <Router />
+      <h1 className='text-danger'>fasff</h1>
+    </>
   )
 }
 
