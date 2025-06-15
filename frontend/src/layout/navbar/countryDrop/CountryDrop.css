@@ -1,0 +1,79 @@
+
+.countryDrop {
+    width: 170px;
+    height: 50px;
+    min-width: 170px !important;
+    color: black !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 7px !important;
+    padding: 10px 15px !important;
+    text-align: left;
+    justify-content: flex-start !important;
+}
+
+.label {
+    font-size: 12px;
+    text-transform: capitalize;
+    color: rgba(0, 0, 0, 0.4);
+    line-height: 16px;
+}
+
+.name {
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #233a95;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+.locationModal .MuiPaper-elevation {
+    padding: 25px;
+    position: relative;
+}
+
+.countryList {
+    margin-bottom: 0;
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.countryList li {
+    width: 100%;
+    list-style: none;
+}
+
+.countryList li button {
+    width: 100%;
+    text-transform: capitalize;
+    color: black;
+    justify-content: flex-start;
+    padding: 10px 20px;
+}
+
+.countryList li button:hover {
+    background: #f1f1f1 !important;
+}
+
+.countryList li button.active {
+    background: #e2e2e2 !important;
+}
+
+.close_ {
+    position: absolute !important;
+    top: 10px;
+    right: 10px;
+    color: black !important;
+    min-width: 40px !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+}
+
+.close_ svg {
+    font-size: 22px;
+}
+
+.countryDrop span.ml-auto svg {
+    opacity: 0.7;
+}

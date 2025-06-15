@@ -1,10 +1,13 @@
 import React from 'react'
+import HomeBanner from './homeBanner/HomeBanner'
+import './Home.css'
 
 const Home = () => {
-    return (
-        <div>
 
-        </div>
+    return (
+        <>
+            <HomeBanner />
+        </>
     )
 }
 

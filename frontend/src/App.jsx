@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <Router />
-      <h1 className='text-danger'>fasff</h1>
     </>
   )
 }

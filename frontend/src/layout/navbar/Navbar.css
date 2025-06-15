@@ -1,84 +1,17 @@
+.haederWrapper {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .header {
     width: 100%;
     height: auto;
-    padding: 15px 0px;
+    padding: 25px 0px;
 }
 
 .logoWrapper img {
     width: 100%;
 }
 
-.countryDrop {
-    width: 170px;
-    height: 50px;
-    min-width: 170px !important;
-    color: black !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-radius: 7px !important;
-    padding: 10px 15px !important;
-    text-align: left;
-    justify-content: flex-start !important;
-}
-
-.label {
-    font-size: 12px;
-    text-transform: capitalize;
-    color: rgba(0, 0, 0, 0.4);
-    line-height: 16px;
-}
-
-.name {
-    font-size: 14px;
-    text-transform: capitalize;
-    color: #233a95;
-    font-weight: 700;
-    line-height: 16px;
-}
-
-.countryDrop span.ml-auto svg {
-    opacity: 0.7;
-}
-
-.headerSearch {
-    width: 60%;
-    height: 60px;
-    background-color: #f3f4f7;
-    padding: 5px;
-    position: relative;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.headerSearch input {
-    background: transparent;
-    outline: none;
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 45px;
-    border: 0px;
-    padding: 0 20px;
-}
-
-.headerSearch input::-webkit-input-placeholder {
-    color:rgba(0, 0, 0, 0.6) ;
-}
-
-.headerSearch button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    z-index: 100;
-    min-width: 40px;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    color: black;
-}
-
-.headerSearch button svg {
-    font-size: 25px;
-}
 
 .circle {
     align-items: center !important;

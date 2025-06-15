@@ -3,16 +3,17 @@ import Logo from '../../image/logo.webp'
 import { Link } from 'react-router'
 import CountryDrop from './countryDrop/CountryDrop';
 import Button from '@mui/material/Button';
-import { IoIosSearch } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
 import { IoBagOutline } from "react-icons/io5";
 import './Navbar.css'
+import SearchBox from './searchBox/SearchBox';
+import Navigation from './navigation/Navigation';
 
 const Navbar = () => {
   return (
-    <div>
+    <>
       <div className="haederWrapper">
-        <div className="header">
+        <header className="header">
           <div className="container">
             <div className="row">
               <div className="logoWrapper d-flex align-items-center col-sm-2">
@@ -21,10 +22,7 @@ const Navbar = () => {
               <div className="col-sm-10 d-flex align-items-center part2">
                 <CountryDrop />
 
-                <div className="headerSearch ml-3 mr-3">
-                  <input type="text" placeholder='Axtar...' />
-                  <Button><IoIosSearch /></Button>
-                </div>
+                <SearchBox />
 
                 <div className='part3 d-flex align-items-center ml-auto'>
                   <Button className='circle mr-3'><FiUser /></Button>
@@ -40,9 +38,12 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-        </div>
+        </header>
+
+        <Navigation />
+
       </div>
-    </div>
+    </ >
   )
 }
 
