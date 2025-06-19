@@ -1,0 +1,45 @@
+.productItem {
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.productItem .imgWrapper {
+    overflow: hidden;
+}
+
+.productItem .imgWrapper img {
+    transition: all 0.3s ease-in-out;
+}
+
+.productItem .imgWrapper:hover img {
+    transform: scale(1.1);
+}
+
+.productItem .imgWrapper:hover .actions {
+    opacity: 1;
+    right: 10px;
+}
+
+
+
+.badge {
+    display: inline-block;
+    padding: 7px 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.productItem .info {
+    padding: 15px;
+}
+
+.productItem .info h4 {
+    font-size: 15px;
+    font-weight: 600;
+}

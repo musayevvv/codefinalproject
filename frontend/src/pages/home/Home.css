@@ -1,28 +1,154 @@
-.homeBannerSection {
-    position: relative;
+.homeProducts {
+    padding: 25px 0;
+    width: 100%;
+}
+
+.banner {
+    width: 100%;
+    border-radius: 7px;
     overflow: hidden;
 }
 
-.homeBannerSection * {
-    outline: none !important;
+.hd {
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-.homeBannerSection .slick-arrows {
-    position: absolute;
-    top: 45%;
-    z-index: 100;
+
+
+.viewAllBtn {
+    padding: 5px 25px !important;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 30px !important;
+    color: #414141 !important;
+    font-weight: 600;
+    text-transform: capitalize !important;
+
+}
+
+.viewAllBtn svg {
+    font-size: 20px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    background-color: white;
+    opacity: 0.9;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px !important;
-    height: 40px !important;
-    background-color: black !important;
+    box-shadow: 0 1px 3px rgba(0 0 0 / 12%), 0 1px 2px rgba(0 0 0 / 24%) !important;
 }
 
-.homeBannerSection .slick-arrow .slick-next {
-    right: 0px !important;
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    color: black !important;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.homeBannerSection .slick-arrow .slick-prev {
-    left: 0px !important;
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background: #d7d7d7;
+}
+
+.info .oldPrice {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
+    text-decoration: line-through;
+}
+
+.info .netPrice {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info .oldPrice.lg,
+.info .netPrice.lg {
+    font-size: 20px;
+}
+
+
+.product_row .productItem {
+    border-right: 1px solid transparent !important;
+    width: 24%;
+}
+
+.product_row .swiper-slide:last-child .productItem {
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.product_row .actions {
+    position: absolute;
+    top: 20px;
+    right: -100%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+.product_row .actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    background-color: white !important;
+    transition: all 0.3s !important;
+    box-shadow: 0 1px 3px rgba(0 0 0 / 12%), 0 1px 2px rgba(0 0 0 / 24%) !important;
+}
+
+.product_row .actions button svg {
+    opacity: 0.8;
+    font-size: 15px;
+    color: black;
+    pointer-events: none;
+}
+
+.product_row .actions button:hover {
+    background: #233a95 !important;
+}
+
+.product_row .actions button:hover svg {
+    color: white !important;
+}
+
+.swiper {
+    padding-right: 1px !important;
+}
+
+.badge-primary {
+    background: #2bbef9 !important;
+}
+
+.bannerSec {
+    gap: 15px;
+}
+
+.sticky {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+
+.productRow2 {
+    gap: 10px;
+}
+
+.productRow2 .productItem {
+    width: 24%;
+    overflow: hidden;
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
 }

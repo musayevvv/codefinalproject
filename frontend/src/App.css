@@ -10,3 +10,26 @@
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
+
+.cursor {
+    cursor: pointer;
+}
+
+.text-light {
+    color: #8b8b8b !important;
+}
+
+.text-sml {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 10px;
+}
+
+.badge.bg-success {
+    background-color: #e5f8ed !important;
+    color: #16b858 !important;
+}
