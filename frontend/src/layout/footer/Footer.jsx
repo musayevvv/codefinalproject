@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
 
           <div className="col d-flex align-items-center">
-            <span><TbTruckDelivery t /></span>
+            <span><TbTruckDelivery /></span>
             <span className="ml-2">Free delivery for order over $70</span>
           </div>
 
@@ -98,7 +98,7 @@ const Footer = () => {
 
         <div className="copyright mt-3 pt-3 pb-3 d-flex">
           <p className="mb-0">Copyright 2024. All rights reserved</p>
-          <ul className="list list-inline ml-auto mb-0">
+          <ul className="list list-inline ml-auto mb-0 socials">
             <li className="list-inline-item">
               <Link to="#"><FaFacebookF /></Link>
             </li>

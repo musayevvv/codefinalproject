@@ -26,18 +26,27 @@
     color: rgba(0, 0, 0, 0.8) !important;
 }
 
+.productModal .actions {
+    position: relative;
+    flex-direction: row;
+    right: 0;
+}
+
 .productModal .actions button {
     color: black !important;
     border: 1px solid rgba(0, 0, 0, 0.1) !important;
     font-size: 10px !important;
+    width: auto;
 }
 
 .productModal .actions button svg {
-    font-size: 15px !important;
+    font-size: 18px !important;
+    margin-right: 4px;
 }
 
 .productModal .actions button:hover {
     background: #f1f1f1;
+    color: #f1f1f1 !important;
 }
 
 .productZoom {
@@ -106,10 +115,15 @@
     text-transform: capitalize;
 }
 
+.btn-blue svg {
+    font-size: 22px;
+}
+
 .btn-big {
-    font-size: 17px !important;
-    padding: 7px 30px !important;
+    font-size: 15px !important;
+    padding: 8px 30px !important;
     min-width: auto !important;
+    font-weight: bold;
 }
 
 .btn-round {

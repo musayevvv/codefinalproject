@@ -8,7 +8,7 @@ import { FaAngleDown } from 'react-icons/fa6';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
-import ProductItem from '../productItem/ProductItem';
+import ProductItem from '../home/productItem/ProductItem';
 import './Listing.css';
 
 const Listing = () => {

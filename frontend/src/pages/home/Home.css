@@ -3,7 +3,8 @@
     width: 100%;
 }
 
-.banner {
+.banner,
+.bannerSec .banner {
     width: 100%;
     border-radius: 7px;
     overflow: hidden;
@@ -15,8 +16,6 @@
     text-transform: uppercase;
 }
 
-
-
 .viewAllBtn {
     padding: 5px 25px !important;
     background: white;
@@ -25,7 +24,6 @@
     color: #414141 !important;
     font-weight: 600;
     text-transform: capitalize !important;
-
 }
 
 .viewAllBtn svg {
@@ -42,7 +40,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 3px rgba(0 0 0 / 12%), 0 1px 2px rgba(0 0 0 / 24%) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .swiper-button-prev::after,
@@ -57,16 +55,15 @@
     background: #d7d7d7;
 }
 
-.info .oldPrice {
-    font-size: 16px;
+.info .oldPrice,
+.info .netPrice {
+    font-size: 16px !important;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.4);
-    text-decoration: line-through;
 }
 
-.info .netPrice {
-    font-size: 16px;
-    font-weight: bold;
+.info .oldPrice {
+    color: rgba(0, 0, 0, 0.4);
+    text-decoration: line-through;
 }
 
 .info .oldPrice.lg,
@@ -74,29 +71,44 @@
     font-size: 20px;
 }
 
+.product_row,
+.productRow2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-.product_row .productItem {
-    border-right: 1px solid transparent !important;
+.product_row .productItem,
+.productRow2 .productItem {
     width: 24%;
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden;
 }
 
 .product_row .swiper-slide:last-child .productItem {
     border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
+.product_row .swiper {
+    padding-right: 80px;
+}
 
-.product_row .actions {
+.actions {
     position: absolute;
     top: 20px;
     right: -100%;
-    z-index: 1000;
     display: flex;
     flex-direction: column;
     gap: 10px;
     transition: all 0.5s ease-in-out;
+    z-index: 1000;
 }
 
-.product_row .actions button {
+.content_right .one .actions {
+    top: 75px;
+}
+
+.actions button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,18 +122,18 @@
     box-shadow: 0 1px 3px rgba(0 0 0 / 12%), 0 1px 2px rgba(0 0 0 / 24%) !important;
 }
 
-.product_row .actions button svg {
-    opacity: 0.8;
-    font-size: 15px;
+.actions button svg {
+    font-size: 20px;
     color: black;
+    opacity: 0.8;
     pointer-events: none;
 }
 
-.product_row .actions button:hover {
+.actions button:hover {
     background: #233a95 !important;
 }
 
-.product_row .actions button:hover svg {
+.actions button:hover svg {
     color: white !important;
 }
 
@@ -134,6 +146,7 @@
 }
 
 .bannerSec {
+    display: flex;
     gap: 15px;
 }
 
@@ -141,14 +154,4 @@
     position: sticky;
     top: 10px;
     z-index: 100;
-}
-
-.productRow2 {
-    gap: 10px;
-}
-
-.productRow2 .productItem {
-    width: 24%;
-    overflow: hidden;
-    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
 }

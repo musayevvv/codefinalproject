@@ -1,0 +1,154 @@
+.product_Listing_Page {
+  padding: 45px 0;
+}
+
+.productListing {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.sidebar {
+  width: 20%;
+  flex: 0 0 20%;
+}
+
+.sidebar .filterBox {
+  margin-bottom: 35px;
+}
+
+.sidebar .filterBox h6 {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.sidebar .scroll {
+  padding-left: 10px;
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar .scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.sidebar .scroll ul,
+.filterBox ul {
+  margin: 0;
+}
+
+.sidebar .scroll ul li,
+.filterBox ul li {
+  list-style: none;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* MUI checkbox tweaks */
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+  padding: 2px !important;
+}
+
+.css-ahj2mt-MuiTypography-root {
+  font-size: 13px;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #6d4aae !important;
+}
+
+/* Range slider */
+.range-slider {
+  height: 5px !important;
+}
+
+.range-slider .range-slider__thumb,
+.range-slider .range-slider__range {
+  background: #6d4aae !important;
+}
+
+.range-slider .range-slider__thumb {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+/* Right content */
+.content_right {
+  width: 80%;
+  flex: 1 0 78%;
+  padding-left: 50px;
+}
+
+.content_right .showBy {
+  width: 100%;
+  background: #f1f3ff;
+  padding: 15px 25px;
+}
+
+/* View mode buttons */
+.btnWrapper button {
+  min-width: 35px !important;
+  height: 35px !important;
+  width: 35px !important;
+  border-radius: 50% !important;
+  color: #000;
+}
+
+.btnWrapper button svg {
+  font-size: 18px !important;
+  opacity: 0.3;
+  color: #000;
+}
+
+.btnWrapper button.act svg,
+.btnWrapper button:hover svg {
+  opacity: 1;
+}
+
+/* Dropdown filter button */
+.showByFilter button {
+  min-width: auto !important;
+  color: #000;
+}
+
+.showByFilter button svg {
+  color: #000;
+  opacity: 0.6;
+  margin-left: 5px;
+}
+
+.showByFilter button.act svg {
+  opacity: 1;
+}
+
+.showPerPageDropdown .MuiPaper-root {
+  width: 80px !important;
+}
+
+/* Grid styles */
+.productItem.four {
+  width: 23%;
+}
+
+.productItem.three {
+  width: 31.5%;
+}
+
+.productItem.one {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.productItem.one .imgWrapper {
+  width: 30%;
+}
