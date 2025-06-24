@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Logo from '../../image/logo.webp'
 import { Link } from 'react-router'
 import CountryDrop from './countryDrop/CountryDrop';
@@ -10,6 +10,9 @@ import SearchBox from './searchBox/SearchBox';
 import Navigation from './navigation/Navigation';
 
 const Navbar = () => {
+
+  const [isLogin, setIsLogin] = useState(false)
+
   return (
     <>
       <div className="haederWrapper">
@@ -25,7 +28,16 @@ const Navbar = () => {
                 <SearchBox />
 
                 <div className='part3 d-flex align-items-center ml-auto'>
-                  <Button className='circle mr-3'><FiUser /></Button>
+                  {isLogin !== true ? (
+                    <Link to="/signIn">
+                      <Button className="btn-blue btn-round mr-3">Sign In</Button>
+                    </Link>
+                  ) : (
+                    <Button className="circle mr-3">
+                      <FiUser />
+                    </Button>
+                  )}
+
                   <div className="ml-auto d-flex align-items-center cartTab">
                     <span className='price'>3.28AZN</span>
                     <div className="position-relative ml-2">

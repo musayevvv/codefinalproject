@@ -55,24 +55,24 @@ const SignUp = () => {
 
                             <a className="border-effect cursor txt">Forgot Password?</a>
 
-                            <div className="d-flex align-items-center mt-3 mb-3">
+                            <div className="d-flex align-items-center justify-content-center mt-3 mb-3 btn-box">
                                 <div className='row w-100'>
-                                    <div className="col-md-6">
-                                        <Button className="btn-blue w-100 btn-lg btn-big">
-                                            Sign In
-                                        </Button>
-                                    </div>
 
-                                    <div className="col-md-6">
-                                        <Link className='d-block w-100' to="/signin">
-                                            <Button
-                                                className="btn-lg btn-big w-100"
-                                                variant="outlined"
-                                            >
-                                                Cancel
-                                            </Button>
-                                        </Link>
-                                    </div>
+                                    <Button className="btn-blue btn-lg btn-big">
+                                        Sign In
+                                    </Button>
+
+
+
+                                    <Link className='d-block pr-0 ' to="/signin">
+                                        <Button
+                                            className="btn-lg btn-big w-100"
+                                            variant="outlined"
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Link>
+
                                 </div>
                             </div>
 

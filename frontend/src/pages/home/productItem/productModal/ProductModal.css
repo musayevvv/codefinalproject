@@ -113,6 +113,8 @@
     background: #233a95 !important;
     color: white !important;
     text-transform: capitalize;
+    font-weight: 600 !important;
+    padding: 5px 20px !important;
 }
 
 .btn-blue svg {

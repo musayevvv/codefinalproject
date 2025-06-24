@@ -63,7 +63,7 @@
 
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
-  color: #6d4aae !important;
+  color: #233a95 !important;
 }
 
 /* Range slider */
@@ -73,7 +73,7 @@
 
 .range-slider .range-slider__thumb,
 .range-slider .range-slider__range {
-  background: #6d4aae !important;
+  background: #233a95 !important;
 }
 
 .range-slider .range-slider__thumb {
