@@ -1,16 +1,17 @@
-const express = require('express');
-const { Category } = require('../models/category');
+import express from "express";
+import { Category } from "../models/category.js";
+
 const router = express.Router();
 
 // GET: Bütün kateqoriyaları əldə et
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const categoryList = await Category.find();
 
         if (!categoryList || categoryList.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: 'No categories found',
+                message: "No categories found",
             });
         }
 
@@ -26,4 +27,4 @@ router.get('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
