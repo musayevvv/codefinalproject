@@ -1,9 +1,18 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema({
     name: { type: String, required: true },
-    images: [{ type: String, required: true }],
-    color: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
+    images: [{ type: String }],
+    color: { type: String },
+    parentId: { type: String }
+}, { timestamps: true });
+
+categorySchema.virtual('id').get(function () {
+    return this._id.toHexString();
 });
 
-export const Category = mongoose.model("Category", categorySchema);
+categorySchema.set('toJSON', { virtuals: true });
+
+export const Category = mongoose.model('Category', categorySchema);
+export { categorySchema };
