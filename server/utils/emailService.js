@@ -1,13 +1,14 @@
 import nodemailer from 'nodemailer';
 
 // Configure the SMTP transporter
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  port: 587, // və ya 465 (secure:true)
+  secure: false, // 587 üçün false, 465 üçün true
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASS,
+    user: 'aykhanfm-af107@code.edu.az', // Brevo tərəfindən verilmiş SMTP email
+    pass: 'nfuwyokjtixkhfju',              // Brevo SMTP üçün API açarı (şifrə deyil!)
   },
 });
 
@@ -15,7 +16,7 @@ const transporter = nodemailer.createTransport({
 export async function sendEmail(to, subject, text, html) {
   try {
     const info = await transporter.sendMail({
-      from: process.env.EMAIL,
+      from: '90c1b5002@smtp-brevo.com',
       to,
       subject,
       text,

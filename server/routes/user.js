@@ -50,8 +50,12 @@ const sendEmailFun = async (to, subject, text, html) => {
 };
 
 router.post("/signup", async (req, res) => {
+
+
   const { name, phone, email, password, isAdmin } = req.body;
   try {
+
+    
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
     const existingUser = await User.findOne({ email });
     const existingUserByPh = await User.findOne({ phone });

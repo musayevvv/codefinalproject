@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import path from 'path';
 
 // Routes
 import userRoutes from './routes/user.js';
@@ -51,12 +50,15 @@ app.use('/api/homeSideBanners', homeSideBannerRoutes);
 app.use('/api/homeBottomBanners', homeBottomBannerRoutes);
 
 // Database connection & server
-mongoose.connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Database Connection is ready...');
-    app.listen(process.env.PORT, () => {
-        console.log(`Server is running on http://localhost:${process.env.PORT}`);
+mongoose.connect(process.env.CONNECTION_STRING)
+    .then(() => {
+        console.log('✅ Database connection is ready...');
+
+        app.listen(process.env.PORT, () => {
+            console.log(`🚀 Server is running on http://localhost:${process.env.PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('❌ Database connection error:', err.message);
+        process.exit(1);
     });
-}).catch((err) => console.log(err));

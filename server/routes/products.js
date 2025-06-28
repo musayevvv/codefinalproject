@@ -31,18 +31,13 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
 router.post("/upload", upload.array("images"), async (req, res) => {
   imagesArr = [];
 
   try {
     for (const file of req.files) {
-      const result = await cloudinary.uploader.upload(file.path, {
-        use_filename: true,
-        unique_filename: false,
-        overwrite: false,
-      });
-
+      const result = await cloudinary.uploader.upload(file.path,
+        { use_filename: true, unique_filename: false, overwrite: false, });
       imagesArr.push(result.secure_url);
       fs.unlinkSync(file.path);
     }
@@ -226,7 +221,6 @@ router.get(`/catId`, async (req, res) => {
     productListArr = await Product.find({ catId: req.query.catId });
 
     for (let i = 0; i < productListArr.length; i++) {
-      //console.log(productList[i].location)
       for (let j = 0; j < productListArr[i].location.length; j++) {
         if (productListArr[i].location[j].value === req.query.location) {
           productList.push(productListArr[i]);
@@ -247,9 +241,6 @@ router.get(`/catId`, async (req, res) => {
         page: page,
       });
     }
-
-
-
 
   }
 });
@@ -282,7 +273,6 @@ router.get(`/subCatId`, async (req, res) => {
     const productListArr = await Product.find({ subCatId: req.query.subCatId });
 
     for (let i = 0; i < productListArr.length; i++) {
-      //console.log(productList[i].location)
       for (let j = 0; j < productListArr[i].location.length; j++) {
         if (productListArr[i].location[j].value === req.query.location) {
           productList.push(productListArr[i]);
@@ -316,7 +306,6 @@ router.get(`/fiterByPrice`, async (req, res) => {
 
     if (req.query.location !== "All") {
       for (let i = 0; i < productListArr.length; i++) {
-        //console.log(productList[i].location)
         for (let j = 0; j < productListArr[i].location.length; j++) {
           if (productListArr[i].location[j].value === req.query.location) {
             productList.push(productListArr[i]);
@@ -333,7 +322,6 @@ router.get(`/fiterByPrice`, async (req, res) => {
 
     if (req.query.location !== "All") {
       for (let i = 0; i < productListArr.length; i++) {
-        //console.log(productList[i].location)
         for (let j = 0; j < productListArr[i].location.length; j++) {
           if (productListArr[i].location[j].value === req.query.location) {
             productList.push(productListArr[i]);
@@ -373,7 +361,6 @@ router.get(`/rating`, async (req, res) => {
 
     if (req.query.location !== "All") {
       for (let i = 0; i < productListArr.length; i++) {
-        //console.log(productList[i].location)
         for (let j = 0; j < productListArr[i].location.length; j++) {
           if (productListArr[i].location[j].value === req.query.location) {
             productList.push(productListArr[i]);
@@ -391,7 +378,6 @@ router.get(`/rating`, async (req, res) => {
 
     if (req.query.location !== "All") {
       for (let i = 0; i < productListArr.length; i++) {
-        //console.log(productList[i].location)
         for (let j = 0; j < productListArr[i].location.length; j++) {
           if (productListArr[i].location[j].value === req.query.location) {
             productList.push(productListArr[i]);
@@ -498,77 +484,60 @@ router.post(`/recentlyViewd`, async (req, res) => {
   }
 });
 
-router.post(`/create`, async (req, res) => {
-  const category = await Category.findById(req.body.category);
-  if (!category) {
-    return res.status(404).send("invalid Category!");
-  }
+// CREATE PRODUCT
+router.post("/create", async (req, res) => {
+  try {
+    const category = await Category.findById(req.body.category);
+    if (!category) {
+      return res.status(404).send("Invalid Category!");
+    }
 
-  const images_Array = [];
-  const uploadedImages = await ImageUpload.find();
+    // Image yığılması
+    const images_Array = [];
+    const uploadedImages = await ImageUpload.find();
 
-  const images_Arr = uploadedImages?.map((item) => {
-    item.images?.map((image) => {
-      images_Array.push(image);
-      console.log(image);
+    uploadedImages?.forEach((item) => {
+      item.images?.forEach((image) => {
+        images_Array.push(image);
+      });
     });
-  });
 
-  product = new Product({
-    name: req.body.name,
-    description: req.body.description,
-    images: images_Array,
-    brand: req.body.brand,
-    price: req.body.price,
-    oldPrice: req.body.oldPrice,
-    catId: req.body.catId,
-    catName: req.body.catName,
-    subCat: req.body.subCat,
-    subCatId: req.body.subCatId,
-    subCatName: req.body.subCatName,
-    category: req.body.category,
-    countInStock: req.body.countInStock,
-    rating: req.body.rating,
-    isFeatured: req.body.isFeatured,
-    discount: req.body.discount,
-    productRam: req.body.productRam,
-    size: req.body.size,
-    productWeight: req.body.productWeight,
-    location: req.body.location !== "" ? req.body.location : "All",
-  });
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      images: images_Array,
+      brand: req.body.brand,
+      price: req.body.price,
+      oldPrice: req.body.oldPrice,
+      catId: req.body.catId,
+      catName: req.body.catName,
+      subCat: req.body.subCat,
+      subCatId: req.body.subCatId,
+      subCatName: req.body.subCatName,
+      category: req.body.category,
+      countInStock: req.body.countInStock,
+      rating: req.body.rating,
+      isFeatured: req.body.isFeatured,
+      discount: req.body.discount,
+      productRam: req.body.productRam,
+      size: req.body.size,
+      productWeight: req.body.productWeight,
+      location: req.body.location && req.body.location.length > 0 ? req.body.location : [{ value: "all", label: "All" }]
+    });
 
-  product = await product.save();
+    const savedProduct = await product.save();
 
-  if (!product) {
+    res.status(201).json(savedProduct);
+  } catch (err) {
     res.status(500).json({
-      error: err,
       success: false,
+      error: err.message || "Product creation failed",
     });
   }
-
-  imagesArr = [];
-
-  res.status(201).json(product);
-});
-
-router.get("/:id", async (req, res) => {
-  productEditId = req.params.id;
-
-  const product = await Product.findById(req.params.id).populate("category");
-
-  if (!product) {
-    res
-      .status(500)
-      .json({ message: "The product with the given ID was not found." });
-  }
-  return res.status(200).send(product);
 });
 
 router.delete("/deleteImage", async (req, res) => {
   const imgUrl = req.query.img;
-
-  // console.log(imgUrl)
-
   const urlArr = imgUrl.split("/");
   const image = urlArr[urlArr.length - 1];
 
@@ -597,11 +566,8 @@ router.delete("/:id", async (req, res) => {
 
     if (imageName) {
       cloudinary.uploader.destroy(imageName, (error, result) => {
-        // console.log(error, result);
       });
     }
-
-    //  console.log(imageName)
   }
 
   const deletedProduct = await Product.findByIdAndDelete(req.params.id);
