@@ -3,7 +3,7 @@ import { fetchDataFromApi } from '../../utils/api';
 import Dialog from '@mui/material/Dialog';
 import { MdClose } from "react-icons/md";
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { MyContext } from "../../App";
 
 const Orders = () => {

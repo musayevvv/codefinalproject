@@ -6,10 +6,6 @@ import { MdMenuOpen } from "react-icons/md";
 import { MdOutlineMenu } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdNightlightRound } from "react-icons/md";
-
-import { MdDarkMode } from "react-icons/md";
-import { IoCartOutline } from "react-icons/io5";
-import { MdOutlineMailOutline } from "react-icons/md";
 import { FaRegBell } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 
@@ -21,7 +17,7 @@ import Logout from "@mui/icons-material/Logout";
 import { IoShieldHalfSharp } from "react-icons/io5";
 import Divider from "@mui/material/Divider";
 import { MyContext } from "../../App";
-import UserAvatarImgComponent from "../userAvatarImg";
+import UserAvatarImgComponent from "../userAvatarImg/userAvatarImg";
 
 import { useNavigate } from "react-router-dom";
 

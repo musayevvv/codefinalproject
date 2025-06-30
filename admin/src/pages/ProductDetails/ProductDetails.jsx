@@ -6,7 +6,7 @@ import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
 import { MdBrandingWatermark } from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-import UserAvatarImgComponent from "../../components/userAvatarImg";
+import UserAvatarImgComponent from "../../components/userAvatarImg/userAvatarImg";
 import Rating from '@mui/material/Rating';
 import { MdFilterVintage } from "react-icons/md";
 import { MdRateReview } from "react-icons/md";
@@ -14,7 +14,7 @@ import { BsPatchCheckFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { fetchDataFromApi } from "../../utils/api";
-import ProductZoom from '../../components/ProductZoom';
+import ProductZoom from '../../components/ProductZoom/ProductZoom';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =

@@ -29,8 +29,8 @@ const Login = () => {
   const context = useContext(MyContext);
 
   const [formfields, setFormfields] = useState({
-    email: "",
-    password: "",
+    email: "ayxanmusayev175@gmail.com",
+    password: "yasamal333",
     isAdmin: true,
   });
 

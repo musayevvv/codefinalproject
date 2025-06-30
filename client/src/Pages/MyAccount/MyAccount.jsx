@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { IoMdCloudUpload } from "react-icons/io";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import {
   deleteData,
   editData,
@@ -33,7 +33,7 @@ function CustomTabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
@@ -113,7 +113,7 @@ const MyAccount = () => {
       });
     });
 
-    
+
     context.setEnableFilterTab(false);
   }, []);
 
@@ -295,7 +295,7 @@ const MyAccount = () => {
 
         editData(`/api/user/changePassword/${user.userId}`, data).then(
           (res) => {
-          
+
           }
         );
       }

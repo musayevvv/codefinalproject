@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import emprtCart from '../../assets/images/myList.png';
 import { MyContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
-import { deleteData, editData, fetchDataFromApi } from "../../utils/api";
+import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { FaHome } from "react-icons/fa";
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const MyList = () => {
 

@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { MdShoppingBag } from "react-icons/md";
 import { GiStarsStack } from "react-icons/gi";
-import SearchBox from "../../components/SearchBox";
+import SearchBox from "../../components/SearchBox/Search";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import Pagination from "@mui/material/Pagination";
 import { MyContext } from "../../App";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -27,8 +26,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-
-import { PieChart, Pie, Sector, Cell } from "recharts";
 
 import {
   BarChart,

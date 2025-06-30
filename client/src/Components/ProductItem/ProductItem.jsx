@@ -18,17 +18,7 @@ const ProductItem = (props) => {
   const context = useContext(MyContext);
 
   const sliderRef = useRef();
-
-  var settings = {
-    dots: true,
-    infinite: true,
-    loop: true,
-    speed: 200,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: 100,
-  };
-
+  
   const viewProductDetails = (id) => {
     context.openProductDetailsModal(id, true);
   };

@@ -25,24 +25,27 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/upload", upload.array("images"), async (req, res) => {
-  imagesArr = [];
   try {
+    const uploadedUrls = [];
+
     for (let file of req.files) {
-      await cloudinary.uploader.upload(file.path, {
+      const result = await cloudinary.uploader.upload(file.path, {
         use_filename: true,
         unique_filename: false,
         overwrite: false,
-      }, (err, result) => {
-        imagesArr.push(result.secure_url);
-        fs.unlinkSync(`uploads/${file.filename}`);
       });
+
+      uploadedUrls.push(result.secure_url);
+      fs.unlinkSync(file.path);
     }
-    const imagesUploaded = new ImageUpload({ images: imagesArr });
+
+    const imagesUploaded = new ImageUpload({ images: uploadedUrls });
     await imagesUploaded.save();
-    res.status(200).json(imagesArr);
+
+    res.status(200).json({ images: uploadedUrls }); 
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false });
+    res.status(500).json({ success: false, message: 'Upload failed' });
   }
 });
 
@@ -114,17 +117,30 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  let catObj = {
-    name: req.body.name,
-    slug: req.body.name,
-    ...(imagesArr.length > 0 && { images: imagesArr, color: req.body.color }),
-    ...(req.body.parentId && { parentId: req.body.parentId })
-  };
-  const category = new Category(catObj);
-  if (!category) return res.status(500).json({ success: false });
-  await category.save();
-  imagesArr = [];
-  res.status(201).json(category);
+  try {
+    const { name, color, parentId, images = [] } = req.body;
+    const slug = slugify(name, { lower: true });
+
+    const existing = await Category.findOne({ slug });
+    if (existing) {
+      return res.status(400).json({ success: false, message: "Bu adla kateqoriya artıq mövcuddur." });
+    }
+
+    const catObj = {
+      name,
+      slug,
+      images,
+      ...(color && { color }),
+      ...(parentId && { parentId }),
+    };
+
+    const category = new Category(catObj);
+    await category.save();
+
+    res.status(201).json({ success: true, data: category });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 });
 
 router.delete("/deleteImage", async (req, res) => {

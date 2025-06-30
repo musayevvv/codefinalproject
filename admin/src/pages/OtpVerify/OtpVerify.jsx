@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
-import OtpBox from "../../components/OtpBox";
+import OtpBox from "../../components/OtpBox/OtpBox";
 
 const VerifyAccount = () => {
   const [isLoading, setIsLoading] = useState(false);

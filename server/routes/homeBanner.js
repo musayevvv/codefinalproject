@@ -3,7 +3,6 @@ import multer from 'multer';
 import fs from 'fs';
 import { v2 as cloudinary } from 'cloudinary';
 import { HomeBanner } from '../models/homeBanner.js';
-import { ImageUpload } from '../models/imageUpload.js';
 
 const router = express.Router();
 
@@ -22,26 +21,28 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
-router.post(`/upload`, upload.array("images"), async (req, res) => {
-    imagesArr = [];
+router.post('/upload', upload.array('images'), async (req, res) => {
     try {
-        for (let i = 0; i < req?.files?.length; i++) {
-            await cloudinary.uploader.upload(req.files[i].path, {
-                use_filename: true, unique_filename: false, overwrite: false
-            }, (error, result) => {
-                imagesArr.push(result.secure_url);
-                fs.unlinkSync(`uploads/${req.files[i].filename}`);
+        const imagesArr = [];
+
+        for (let i = 0; i < req.files.length; i++) {
+            const result = await cloudinary.uploader.upload(req.files[i].path, {
+                use_filename: true,
+                unique_filename: false,
+                overwrite: false
             });
+
+            imagesArr.push(result.secure_url);
+            fs.unlinkSync(req.files[i].path);
         }
-        const imagesUploaded = new ImageUpload({ images: imagesArr });
-        await imagesUploaded.save();
+
         res.status(200).json(imagesArr);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Şəkil yüklənmədi' });
     }
 });
+
 
 router.get(`/`, async (req, res) => {
     try {
@@ -60,12 +61,22 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-    const newEntry = new HomeBanner({ images: imagesArr });
-    if (!newEntry) return res.status(500).json({ success: false });
-    await newEntry.save();
-    imagesArr = [];
-    res.status(201).json(newEntry);
+    try {
+        const { images } = req.body;
+        if (!images || !Array.isArray(images)) {
+            return res.status(400).json({ success: false, message: 'Images array tələb olunur' });
+        }
+
+        const newEntry = new HomeBanner({ images });
+        await newEntry.save();
+
+        res.status(201).json(newEntry);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Banner yaradılmadı' });
+    }
 });
+
 
 router.delete('/deleteImage', async (req, res) => {
     const imgUrl = req.query.img;

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { MyContext } from "../../App";
 import { fetchDataFromApi, postData, deleteData } from "../../utils/api";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 const Checkout = () => {
   const [formFields, setFormFields] = useState({
     fullName: "",

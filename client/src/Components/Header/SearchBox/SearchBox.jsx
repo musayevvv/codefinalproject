@@ -72,7 +72,7 @@ const SearchBox = (props) => {
                         {item?.name.substr(0, 50) + "..."}
                       </h4>
                     </Link>
-                    <span>Rs. {item?.price}</span>
+                    <span>{item?.price}$</span>
                   </div>
                 </div>
               );

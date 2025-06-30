@@ -489,23 +489,13 @@ router.post("/create", async (req, res) => {
   try {
     const category = await Category.findById(req.body.category);
     if (!category) {
-      return res.status(404).send("Invalid Category!");
+      return res.status(404).json({ success: false, message: "Invalid Category!" });
     }
-
-    // Image yığılması
-    const images_Array = [];
-    const uploadedImages = await ImageUpload.find();
-
-    uploadedImages?.forEach((item) => {
-      item.images?.forEach((image) => {
-        images_Array.push(image);
-      });
-    });
 
     const product = new Product({
       name: req.body.name,
       description: req.body.description,
-      images: images_Array,
+      images: req.body.images, 
       brand: req.body.brand,
       price: req.body.price,
       oldPrice: req.body.oldPrice,
@@ -522,19 +512,17 @@ router.post("/create", async (req, res) => {
       productRam: req.body.productRam,
       size: req.body.size,
       productWeight: req.body.productWeight,
-      location: req.body.location && req.body.location.length > 0 ? req.body.location : [{ value: "all", label: "All" }]
+      location: req.body.location?.length ? req.body.location : [{ value: "all", label: "All" }]
     });
 
     const savedProduct = await product.save();
 
-    res.status(201).json(savedProduct);
+    res.status(201).json({ success: true, data: savedProduct });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      error: err.message || "Product creation failed",
-    });
+    res.status(500).json({ success: false, error: err.message || "Product creation failed" });
   }
 });
+
 
 router.delete("/deleteImage", async (req, res) => {
   const imgUrl = req.query.img;
