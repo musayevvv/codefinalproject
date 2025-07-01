@@ -291,6 +291,15 @@ const SignUp = () => {
               </div>
             </div>
 
+
+            <p className="txt">
+              Have you an account?{" "}
+              <Link to="/signIn" className="border-effect">
+                Sign In
+              </Link>
+            </p>
+
+
             <h6 className="mt-4 text-center font-weight-bold">
               Or continue with social account
             </h6>

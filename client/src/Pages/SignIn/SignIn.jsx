@@ -301,12 +301,7 @@ const SignIn = () => {
                   </Link>
                 </div>
 
-                <p className="txt">
-                  Not Registered?{" "}
-                  <Link to="/signUp" className="border-effect">
-                    Sign Up
-                  </Link>
-                </p>
+             
 
                 <h6 className="mt-4 text-center font-weight-bold">
                   Or continue with social account

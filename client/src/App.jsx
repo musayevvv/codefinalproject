@@ -57,6 +57,7 @@ function Layout() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/verifyOTP" element={<VerifyOTP />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+
       </Routes>
 
       {isHeaderFooterShow && <Footer />}

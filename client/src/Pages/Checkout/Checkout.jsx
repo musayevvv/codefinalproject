@@ -372,7 +372,7 @@ const Checkout = () => {
                               <td>
                                 {item?.subTotal?.toLocaleString("en-US", {
                                   style: "currency",
-                                  currency: "INR",
+                                  currency: "USD",
                                 })}
                               </td>
                             </tr>
@@ -392,7 +392,7 @@ const Checkout = () => {
                             : 0
                           )?.toLocaleString("en-US", {
                             style: "currency",
-                            currency: "INR",
+                            currency: "USD",
                           })}
                         </td>
                       </tr>
