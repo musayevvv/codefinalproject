@@ -6,7 +6,8 @@ import { IoIosSearch } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import Slide from '@mui/material/Slide';
-import { MyContext } from '../../App';
+import MyContext from "../../Context/MyContext";
+import './CountryDropdown.css'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -83,13 +84,8 @@ const CountryDropdown = () => {
                             )
                         })
                     }
-
-
                 </ul>
-
             </Dialog>
-
-
         </>
     )
 }

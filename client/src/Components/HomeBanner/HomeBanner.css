@@ -1,0 +1,16 @@
+.homeBannerSection {
+    position: relative;
+}
+
+.homeBannerSection .swiper {
+    overflow: inherit !important;
+}
+
+.homeBannerSection .swiper .item {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.homeBannerSection * {
+    outline: none !important;
+}

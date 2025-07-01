@@ -1,0 +1,364 @@
+nav .navPart1 {
+    max-width: 17%;
+    flex: 0 0 17%;
+}
+
+nav .navPart2 {
+    max-width: 83%;
+    flex: 0 0 83%;
+}
+
+nav .navPart1 .catWrapper {
+    position: relative;
+}
+
+nav .navPart1 .catWrapper .sidebarNav {
+    width: 100%;
+    height: 0px;
+    opacity: 0;
+    background: #fff;
+    position: absolute;
+    top: 130%;
+    left: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 0px;
+    transition: all 0.2s;
+    visibility: hidden;
+    z-index: 100;
+}
+
+nav .navPart1 .catWrapper .sidebarNav.open {
+    height: auto;
+    opacity: 1;
+    visibility: inherit;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li {
+    width: 100%;
+    list-style: none;
+    padding: 0px 10px;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li button {
+    text-align: left !important;
+    color: #000;
+    width: 100%;
+    justify-content: flex-start;
+    text-transform: capitalize !important;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li button svg {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li button:hover {
+    background: transparent !important;
+    color: #7a55c1 !important;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li:hover button:first-child {
+    color: #7a55c1 !important;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li {
+    position: static;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li .submenu {
+    position: absolute;
+    top: 0px;
+    left: 105%;
+    width: 250px;
+    height: 100%;
+    background: #fff;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li:hover .submenu {
+    opacity: 1;
+    visibility: inherit;
+    left: 100%;
+}
+
+nav .navPart1 .catWrapper .sidebarNav ul li:hover .submenu button {
+    border-radius: 0px !important;
+    color: #000 !important;
+}
+
+
+nav .navPart1 .catWrapper .sidebarNav ul li .submenu button:hover {
+    color: #7a55c1 !important;
+}
+
+nav .allCatTab {
+    background: #6d4aae;
+    padding: 7px 12px !important;
+    border-radius: 30px !important;
+}
+
+nav .allCatTab * {
+    color: #fff;
+}
+
+nav .allCatTab:hover {
+    background: #7a55c1;
+}
+
+nav .allCatTab .text {
+    font-weight: 600;
+    font-size: 12px;
+}
+
+nav .allCatTab .icon1 svg {
+    font-size: 20px !important;
+}
+
+nav .allCatTab .icon2 svg {
+    font-size: 15px !important;
+}
+
+nav .navPart2 ul {
+    margin-bottom: 0px;
+}
+
+nav .navPart2 ul li {
+    padding-bottom: 20px;
+    margin-right: 0px !important;
+}
+
+nav .navPart2 ul li a {
+    text-decoration: none;
+}
+
+nav .navPart2 ul li a button {
+    font-size: 14px !important;
+    font-weight: 600;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+    text-transform: uppercase !important;
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    transition: all 0.2s ease-in-out;
+    border-radius: 25px;
+}
+
+nav .navPart2 ul li a button:hover {
+    background: #f1f1f1;
+    color: #000;
+}
+
+nav .navPart2 ul li:hover a button {
+    background: #f1f1f1;
+    color: #000;
+}
+
+nav .navPart2 ul li a svg {
+    font-size: 20px;
+}
+
+nav .navPart2 ul li a:hover {
+    background: #f0faff;
+    color: #7a55c1;
+}
+
+nav .navPart2 ul li {
+    position: relative;
+}
+
+nav .navPart2 ul li .submenu {
+    position: absolute;
+    top: 150%;
+    left: 0px;
+    min-width: 200px;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    z-index: 100;
+    overflow: hidden;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+nav .navPart2 ul li .submenu a {
+    display: block;
+    width: 100%;
+}
+
+nav .navPart2 ul li .submenu a button {
+    text-align: left !important;
+    width: 100%;
+    justify-content: flex-start !important;
+    border-radius: 0px !important;
+    text-transform: capitalize !important;
+    font-weight: 500 !important;
+    color: #282828 !important;
+    background: #fff;
+}
+
+nav .navPart2 ul li .submenu a button:hover {
+    background: #f1f1f1 !important;
+}
+
+nav .navPart2 ul li:hover .submenu {
+    opacity: 1;
+    visibility: inherit;
+    top: 100%;
+}
+
+@media only screen and (min-width:320px) and (max-width:992px) {
+
+    .res-nav {
+        position: fixed;
+        top: 0%;
+        left: -100%;
+        width: 85%;
+        height: 100vh;
+        background: #fff;
+        z-index: 101;
+        padding: 20px 0px;
+        transition: all 0.2s ease-in-out;
+        opacity: 0;
+        max-height: 100vh;
+        overflow-y: hidden;
+    }
+
+    .res-nav ul {
+        max-height: 75vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .res-nav .btn-blue {
+        border-radius: 5px !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+
+    .res-nav-overlay {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .res-nav-wrapper.open .res-nav {
+        left: 0px;
+        opacity: 1;
+    }
+
+    .res-nav-wrapper.open .res-nav-overlay {
+        opacity: 1;
+        visibility: inherit;
+    }
+
+    .res-nav .logo {
+        display: block;
+        padding-bottom: 15px;
+        background: #fff;
+    }
+
+    .res-nav li {
+        width: 100%;
+        padding-bottom: 0px !important;
+    }
+
+    .res-nav li a,
+    .res-nav li a button {
+        display: flex !important;
+        width: 100% !important;
+        border-radius: 0px !important;
+        justify-content: flex-start !important;
+    }
+
+    .res-nav li a button {
+        padding: 10px 20px !important;
+    }
+
+
+    nav .navPart2 ul li .submenu {
+        width: 100% !important;
+        position: static !important;
+        height: 0px;
+        box-shadow: none !important;
+        transition: all 0.3s;
+    }
+
+    nav .navPart2 ul li .submenu.open {
+        height: auto !important;
+        opacity: 1 !important;
+        visibility: inherit !important;
+    }
+
+    nav .navPart2 ul li .arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 7px;
+        right: 20px;
+        z-index: 100;
+        transition: all 0.3s ease-in-out;
+        width: 35px;
+        height: 35px;
+        background: #f1f1f1;
+        border-radius: 100%;
+    }
+
+    nav .navPart2 ul li .arrow.rotate {
+        transform: rotate(180deg);
+    }
+
+    nav .navPart1 .catWrapper .sidebarNav {
+        opacity: 1 !important;
+        visibility: inherit !important;
+        position: relative !important;
+        top: 0px !important;
+        left: 0px !important;
+        height: auto !important;
+        display: block !important;
+        border: 0px !important;
+        padding: 0px !important;
+    }
+
+    nav .navPart1 {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    nav .navPart1 .catWrapper .sidebarNav ul {
+        display: block !important;
+        width: 100% !important;
+        white-space: nowrap !important;
+        overflow: scroll !important;
+        overflow-y: hidden !important;
+        margin-bottom: 0px !important;
+    }
+
+    nav .navPart1 .catWrapper .sidebarNav ul::-webkit-scrollbar {
+        display: none !important;
+    }
+
+
+    nav .navPart1 .catWrapper .sidebarNav ul li {
+        display: inline-block !important;
+        vertical-align: top !important;
+        width: max-content !important;
+        padding: 0px !important;
+    }
+
+}

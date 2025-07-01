@@ -1,0 +1,30 @@
+.orderTable th,
+.orderTable td {
+    white-space: nowrap;
+}
+
+.orderTable .img {
+    width: 70px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.orderTable .img img {
+    width: 100%;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 10px;
+    border-radius: 20px;
+}
+
+.badge.bg-success {
+    background: #e5f8ed !important;
+    color: #16b858 !important;
+}
+
+.badge-success {
+    color: #00b853;
+    background: #e5f8ed;
+}

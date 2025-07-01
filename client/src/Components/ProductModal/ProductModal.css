@@ -1,0 +1,105 @@
+.productModal .actions button {
+    opacity: 1 !important;
+}
+
+.productModal .actions button svg.text-danger {
+    color: #ed174a !important;
+    opacity: 1 !important;
+}
+
+.productModal .MuiPaper-elevation {
+    padding: 25px;
+    position: relative;
+    max-width: 900px !important;
+    width: 900px !important;
+}
+
+.productModal h4 {
+    font-size: 20px !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.productModal .actions button {
+    color: #000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    font-size: 10px !important;
+}
+
+.productModal .actions button svg {
+    font-size: 15px !important;
+    color: #000 !important;
+}
+
+.productModal .actions button:hover {
+    background: #f1f1f1;
+    opacity: 1 !important;
+}
+
+.productDetaileModal p {
+    font-size: 14px;
+    line-height: 25px;
+    opacity: 0.8;
+}
+
+.productSize {
+    width: 100%;
+    height: auto;
+    padding: 25px 0px;
+}
+
+.productSize ul li {
+    margin-right: 10px !important;
+}
+
+.productSize ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-decoration: none !important;
+    color: #000;
+    font-size: 14px !important;
+    transition: all 0.1s ease-in-out;
+    border-radius: 4px !important;
+}
+
+.productSize ul li a:hover {
+    background: #ececec;
+}
+
+.productSize ul li a.active {
+    background: #6d4aae !important;
+    color: #fff !important;
+}
+
+.productSize ul.error li a {
+    border: 1px solid red !important;
+}
+
+
+@media only screen and (min-width:320px) and (max-width:575px) {
+    .productDetaileModal .actions_ {
+        flex-direction: column !important;
+        padding: 10px 0px;
+        justify-content: flex-start !important;
+    }
+
+    .productDetaileModal .actions_ .quantityDrop {
+        margin-bottom: 15px !important;
+    }
+
+    .productDetaileModal .actions_ .btn-big {
+        margin-right: auto !important;
+        margin-left: 0px !important;
+    }
+
+    .productModal .actions {
+        margin-top: 15px !important;
+    }
+
+    .productModal .actions button {
+        zoom: 80%;
+    }
+}

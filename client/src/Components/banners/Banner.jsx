@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import "./style.css";
-import { MyContext } from "../../App";
+import "./Banner.css";
+import MyContext from "../../Context/MyContext";
 import { Link } from "react-router-dom";
 
 const Banners = (props) => {
@@ -82,31 +82,31 @@ const Banners = (props) => {
             {props?.data?.length !== 0 &&
               props?.data?.map((item, index) => {
                 return (
-                   <div className={`col_`}>
-                      {item?.subCatId !== null ? (
-                        <Link
-                          to={`/products/subCat/${item?.subCatId}`}
-                          className="box"
-                        >
-                          <img
-                            src={item?.images[0]}
-                            className="w-100 transition"
-                            alt="banner img"
-                          />
-                        </Link>
-                      ) : (
-                        <Link
-                          to={`/products/category/${item?.catId}`}
-                          className="box"
-                        >
-                          <img
-                            src={item?.images[0]}
-                            className="w-100 transition"
-                            alt="banner img"
-                          />
-                        </Link>
-                      )}
-                    </div>
+                  <div className={`col_`}>
+                    {item?.subCatId !== null ? (
+                      <Link
+                        to={`/products/subCat/${item?.subCatId}`}
+                        className="box"
+                      >
+                        <img
+                          src={item?.images[0]}
+                          className="w-100 transition"
+                          alt="banner img"
+                        />
+                      </Link>
+                    ) : (
+                      <Link
+                        to={`/products/category/${item?.catId}`}
+                        className="box"
+                      >
+                        <img
+                          src={item?.images[0]}
+                          className="w-100 transition"
+                          alt="banner img"
+                        />
+                      </Link>
+                    )}
+                  </div>
                 );
               })}
           </div>

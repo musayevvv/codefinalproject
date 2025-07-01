@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { IoBagCheckOutline } from "react-icons/io5";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import { fetchDataFromApi, postData, deleteData } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import './Checkout.css'
 const Checkout = () => {
   const [formFields, setFormFields] = useState({
     fullName: "",

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/images/logo.jpg";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { editData, postData } from "../../utils/api";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
-
+import './SignIn.css'
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 

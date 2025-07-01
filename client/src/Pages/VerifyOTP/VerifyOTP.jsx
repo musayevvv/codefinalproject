@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postData } from "../../utils/api";
 import OtpBox from "../../Components/OtpBox/OtpBox";
+import './VerifyOTP.css'
 
 const VerifyOTP = () => {
   const [isLoading, setIsLoading] = useState(false);

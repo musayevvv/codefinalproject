@@ -29,8 +29,8 @@ const Login = () => {
   const context = useContext(MyContext);
 
   const [formfields, setFormfields] = useState({
-    email: "ayxanmusayev175@gmail.com",
-    password: "yasamal333",
+    email: "",
+    password: "",
     isAdmin: true,
   });
 
@@ -240,7 +240,6 @@ const Login = () => {
         <div className="loginBox">
           <Link to={"/"} className="d-flex align-items-center flex-column logo">
             <img src={Logo} />
-            <span className="ml-2">ECOMMERCE</span>
           </Link>
           <div className="wrapper mt-3 card border">
             {isOpenVerifyEmailBox === true && (
@@ -249,9 +248,8 @@ const Login = () => {
 
             <form onSubmit={signIn}>
               <div
-                className={`form-group position-relative ${
-                  inputIndex === 0 && "focus"
-                }`}
+                className={`form-group position-relative ${inputIndex === 0 && "focus"
+                  }`}
               >
                 <span className="icon">
                   <MdEmail />
@@ -271,9 +269,8 @@ const Login = () => {
               {isOpenVerifyEmailBox === false ? (
                 <>
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 1 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 1 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <RiLockPasswordFill />

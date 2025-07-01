@@ -4,7 +4,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import ProductItem from "../../../Components/ProductItem/ProductItem";
-import { MyContext } from "../../../App";
+import MyContext from "../../../Context/MyContext";
+import './RelatedProducts.css'
 
 const RelatedProducts = (props) => {
     const context = useContext(MyContext);

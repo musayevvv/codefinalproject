@@ -1,0 +1,17 @@
+.checkoutForm .form-group {
+    margin-bottom: 20px;
+}
+
+.checkoutForm .form-group .MuiOutlinedInput-input {
+    background: #f1f1f1 !important;
+}
+
+.orderInfo {
+    background: #fafafa !important;
+    padding: 25px !important;
+}
+
+.orderInfo thead {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}

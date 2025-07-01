@@ -8,15 +8,8 @@ import { IoMdCloudUpload } from "react-icons/io";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteData,
-  editData,
-  fetchDataFromApi,
-  uploadImage,
-} from "../../utils/api";
-
-import { MyContext } from "../../App";
-
+import { deleteData, editData, fetchDataFromApi, uploadImage, } from "../../utils/api";
+import MyContext from "../../Context/MyContext";
 import NoUserImg from "../../assets/images/no-user.jpg";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -24,17 +17,11 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography component="div">{children}</Typography>
-        </Box>
+        <Box sx={{ p: 3 }}><Typography component="div">{children}</Typography></Box>
       )}
     </div>
   );
@@ -47,31 +34,19 @@ CustomTabPanel.propTypes = {
 };
 
 function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+  return { id: `simple-tab-${index}`, "aria-controls": `simple-tabpanel-${index}`, };
 }
 
 const MyAccount = () => {
   const [isLogin, setIsLogin] = useState(false);
-
   const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+  const handleChange = (event, newValue) => { setValue(newValue); };
   const history = useNavigate();
-
   const context = useContext(MyContext);
-
   const [isLoading, setIsLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-
   const [previews, setPreviews] = useState([]);
   const [userData, setUserData] = useState([]);
-
   const formdata = new FormData();
 
   const [formFields, setFormFields] = useState({
@@ -105,14 +80,12 @@ const MyAccount = () => {
     fetchDataFromApi(`/api/user/${user?.userId}`).then((res) => {
       setUserData(res);
       setPreviews(res.images);
-
       setFormFields({
         name: res.name,
         email: res.email,
         phone: res.phone,
       });
     });
-
 
     context.setEnableFilterTab(false);
   }, []);

@@ -1,13 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/images/logo.jpg";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {  useNavigate } from "react-router-dom";
-
 import CircularProgress from "@mui/material/CircularProgress";
 import {  postData } from "../../utils/api";
-
 
 const ChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +14,6 @@ const ChangePassword = () => {
 
   useEffect(() => {
     context.setisHeaderFooterShow(false);
-
     context.setEnableFilterTab(false);
   }, []);
 
@@ -32,7 +29,6 @@ const ChangePassword = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
 
   const changePass = (e) => {
     e.preventDefault();
@@ -55,7 +51,6 @@ const ChangePassword = () => {
       return false;
     }
 
-
     if (formfields.newPass !== formfields.confirmPass) {
       context.setAlertBox({
         open: true,
@@ -64,7 +59,6 @@ const ChangePassword = () => {
       });
       return false;
     }
-
 
     postData(`/api/user/forgotPassword/changePassword`, formfields).then((res) => {
       if (res.status === "SUCCESS") {
@@ -78,7 +72,6 @@ const ChangePassword = () => {
     });
 
   }
-
 
   return (
     <section className="section signInPage">
@@ -94,7 +87,7 @@ const ChangePassword = () => {
         >
           {" "}
           <path
-            class="st0"
+            className="st0"
             d="M1921,413.1v406.7H0V0.5h0.4l228.1,598.3c30,74.4,80.8,130.6,152.5,168.6c107.6,57,212.1,40.7,245.7,34.4 c22.4-4.2,54.9-13.1,97.5-26.6L1921,400.5V413.1z"
           ></path>
         </svg>
@@ -110,8 +103,7 @@ const ChangePassword = () => {
             <h2 className="mb-4">
               Change Password
             </h2>
-
-
+            
             <div className="form-group position-relative">
               <TextField
                 id="standard-basic"

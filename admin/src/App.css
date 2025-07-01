@@ -97,7 +97,7 @@ body.dark header{background: #112143 !important;}
 
 .logo{text-decoration: none;}
 .logo:hover{text-decoration: none;}
-.logo img{width: 45px;}
+.logo img{width: 200px; object-fit: contain;}
  .logo span{color: #292929; font-weight: 800; font-size: 24px;}
 body.dark header .logo span{color: #fff !important; opacity: 0.9;}
 

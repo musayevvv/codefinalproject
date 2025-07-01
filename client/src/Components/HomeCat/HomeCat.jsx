@@ -4,7 +4,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { Link } from "react-router-dom";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
+import './HomeCat.css'
 
 const HomeCat = (props) => {
 

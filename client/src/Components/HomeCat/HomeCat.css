@@ -1,0 +1,69 @@
+.homeCat {
+    padding: 35px 0px;
+}
+
+.homeCat .swiper {
+    overflow: inherit !important;
+}
+
+.homeCat .swiper .item {
+    padding: 0px;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeCat .swiper .item:hover img {
+    -webkit-animation: mover .7s infinite alternate;
+    animation: mover .7s infinite alternate;
+}
+
+.homeCat .swiper .item img {
+    width: 60%;
+    background-size: cover
+}
+
+.homeCat .swiper .swiper-slide h6 {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    opacity: 0.8;
+    text-transform: capitalize;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.homeCat .swiper .item:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    transform: translateY(-5px);
+    background: #ccc;
+}
+
+.homeCat .swiper-button-prev,
+.homeCat .swiper-button-next {
+    top: -30px !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.homeCat .swiper-button-prev {
+    right: 30px !important;
+    left: inherit !important;
+}
+
+.homeCat .swiper-button-next {
+    right: -10px !important;
+}
+
+.homeCat .swiper-button-prev::after,
+.homeCat .swiper-button-next::after {
+    font-size: 12px !important;
+}

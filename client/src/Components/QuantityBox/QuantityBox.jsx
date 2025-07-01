@@ -2,8 +2,8 @@ import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import Button from '@mui/material/Button';
 import { useContext, useEffect, useState } from "react";
-import { MyContext } from "../../App";
-
+import MyContext from "../../Context/MyContext";
+import './QuantityBox.css'
 const QuantityBox = (props) => {
 
     const [inputVal, setInputVal] = useState(1);

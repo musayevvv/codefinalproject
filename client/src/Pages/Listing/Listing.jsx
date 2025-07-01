@@ -11,23 +11,18 @@ import ProductItem from "../../Components/ProductItem/ProductItem";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
-import { MyContext } from "../../App";
-
+import MyContext from "../../Context/MyContext";
+import './Listing.css'
 const Listing = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [productView, setProductView] = useState("four");
   const [productData, setProductData] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [filterId, setFilterId] = useState("");
-
   const [page, setPage] = useState(10);
-
   const history = useNavigate();
-
   const openDropdown = Boolean(anchorEl);
-
   const context = useContext(MyContext);
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -145,21 +140,6 @@ const Listing = () => {
     });
   };
 
-  const handleChange = (event, value) => {
-    setisLoading(true);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    fetchDataFromApi(
-      `/api/products?subCatId=${id}&page=${value}&perPage=6&location=${localStorage.getItem(
-        "location"
-      )}`
-    ).then((res) => {
-      setProductData(res);
-      setisLoading(false);
-    });
-  };
 
   return (
     <>

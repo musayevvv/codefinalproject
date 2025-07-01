@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/images/logo.jpg";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
+import './SignUp.css'
 
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
@@ -264,8 +265,6 @@ const SignUp = () => {
               />
             </div>
 
-            <a className="border-effect cursor txt">Forgot Password?</a>
-
             <div className="d-flex align-items-center mt-3 mb-3 ">
               <div className="row w-100">
                 <div className="col-md-6">
@@ -291,13 +290,6 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-
-            <p className="txt">
-              Not Registered?{" "}
-              <Link to="/signIn" className="border-effect">
-                Sign In
-              </Link>
-            </p>
 
             <h6 className="mt-4 text-center font-weight-bold">
               Or continue with social account

@@ -1,0 +1,125 @@
+.showByFilter button {
+    min-width: auto !important;
+    color: #000;
+}
+
+.showByFilter button svg {
+    color: #000;
+    opacity: 0.6;
+    margin-left: 5px;
+}
+
+.showByFilter button.act svg {
+    opacity: 1 !important;
+}
+
+.showPerPageDropdown .MuiPaper-root {
+    width: 80px !important;
+}
+
+@media only screen and (min-width:320px) and (max-width:992px) {
+
+    .product_Listing_Page {
+        padding-top: 15px !important;
+    }
+
+    .product_Listing_Page .productListing .sidebar {
+        position: fixed;
+        top: 0px !important;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        overflow-y: scroll;
+        z-index: 10000;
+        background: #fff;
+        flex: 0 0 100% !important;
+        padding: 25px;
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+    }
+
+    .product_Listing_Page .productListing .sidebar.open {
+        right: 0px !important;
+        opacity: 1 !important;
+    }
+
+    .product_Listing_Page .productListing .sidebar img {
+        display: none !important;
+    }
+
+    .product_Listing_Page .productListing .content_right {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        padding-left: 0px;
+    }
+
+}
+
+
+@media only screen and (min-width:320px) and (max-width:350px) {
+    .product_Listing_Page .productItem {
+        width: 100% !important;
+    }
+
+    .productListing .productItem.one {
+        width: 100% !important;
+    }
+
+    .productListing,
+    .infinite-scroll-component {
+        gap: 7px !important;
+    }
+}
+
+@media only screen and (min-width:350px) and (max-width:600px) {
+
+    .productListing,
+    .infinite-scroll-component {
+        gap: 7px !important;
+    }
+
+    .product_Listing_Page .productListing {
+        gap: 7px !important;
+    }
+
+    .product_Listing_Page .productItem {
+        width: 48% !important;
+    }
+
+    .productListing .productItem.one {
+        width: 100% !important;
+    }
+}
+
+
+@media only screen and (min-width:600px) and (max-width:767px) {
+
+    .productListing,
+    .infinite-scroll-component {
+        gap: 7px !important;
+    }
+
+    .product_Listing_Page .productItem {
+        width: 32.5% !important;
+    }
+
+    .productListing .productItem.one {
+        width: 100% !important;
+    }
+}
+
+@media only screen and (min-width:767px) and (max-width:992px) {
+    .productListing,
+    .infinite-scroll-component {
+        gap: 7px !important;
+    }
+
+    .product_Listing_Page .productItem {
+        width: 23% !important;
+    }
+
+    .productListing .productItem.one {
+        width: 100% !important;
+    }
+}

@@ -3,25 +3,20 @@ import { TfiFullscreen } from "react-icons/tfi";
 import Button from "@mui/material/Button";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { useContext, useEffect, useRef, useState } from "react";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import { Link } from 'react-router-dom';
 import Skeleton from "@mui/material/Skeleton";
 import { IoIosImages } from "react-icons/io";
 import { fetchDataFromApi, postData } from "../../utils/api";
 import { FaHeart } from "react-icons/fa";
-
+import './ProductItem.css'
 const ProductItem = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAddedToMyList, setSsAddedToMyList] = useState(false);
-
   const context = useContext(MyContext);
-
   const sliderRef = useRef();
-  
-  const viewProductDetails = (id) => {
-    context.openProductDetailsModal(id, true);
-  };
+  const viewProductDetails = (id) => { context.openProductDetailsModal(id, true); };
 
   const handleMouseEnter = (id) => {
     if (isLoading === false) {
@@ -32,15 +27,12 @@ const ProductItem = (props) => {
         }
       }, 20);
     }
-
     const user = JSON.parse(localStorage.getItem("user"));
 
     fetchDataFromApi(
       `/api/my-list?productId=${id}&userId=${user?.userId}`
     ).then((res) => {
-      if (res.length !== 0) {
-        setSsAddedToMyList(true);
-      }
+      if (res.length !== 0) { setSsAddedToMyList(true); }
     });
   };
 
@@ -48,18 +40,12 @@ const ProductItem = (props) => {
     if (isLoading === false) {
       setIsHovered(false);
       setTimeout(() => {
-        if (sliderRef.current) {
-          sliderRef.current.slickPause();
-        }
+        if (sliderRef.current) { sliderRef.current.slickPause(); }
       }, 20);
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
+  useEffect(() => { setTimeout(() => { setIsLoading(false); }, 500); }, []);
 
   const addToMyList = (id) => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -88,22 +74,13 @@ const ProductItem = (props) => {
             }
           });
         } else {
-          context.setAlertBox({
-            open: true,
-            error: true,
-            msg: res.msg,
-          });
+          context.setAlertBox({ open: true, error: true, msg: res.msg, });
         }
       });
     } else {
-      context.setAlertBox({
-        open: true,
-        error: true,
-        msg: "Please Login to continue",
-      });
+      context.setAlertBox({ open: true, error: true, msg: "Please Login to continue", });
     }
   };
-
   return (
     <>
       <div
@@ -202,7 +179,7 @@ const ProductItem = (props) => {
           <div className="d-flex">
             <span className="oldPrice">{props?.item?.oldPrice}$</span>
             <span className="netPrice text-danger ml-2">
-               {props?.item?.price}$
+              {props?.item?.price}$
             </span>
           </div>
         </div>

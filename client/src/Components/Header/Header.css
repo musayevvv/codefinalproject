@@ -1,0 +1,302 @@
+.gotoTop {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 100% !important;
+    background: #6d4aae !important;
+    position: fixed !important;
+    bottom: 0%;
+    right: 1%;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out !important;
+    opacity: 0 !important;
+    transform: scale(0.5) !important;
+}
+
+.gotoTop svg {
+    color: #fff !important;
+    font-size: 25px !important;
+}
+
+.gotoTop.show {
+    opacity: 1 !important;
+    bottom: 12% !important;
+    transform: scale(1) !important;
+}
+
+
+.headerWrapper {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+.headerWrapperFixed {
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    top: 34px;
+    left: 0px;
+    width: 100%;
+    z-index: 10000;
+}
+
+.headerWrapperFixed {
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 10000;
+}
+
+.headerWrapperFixed.fixed {
+    top: -90px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 6%), 0 1px 2px rgb(0 0 0 / 12%);
+}
+
+.MuiDialog-root {
+    z-index: 100000 !important;
+}
+
+.headerWrapperFixed+div {
+    margin-top: 210px !important;
+}
+
+.headerWrapperFixed+section {
+    margin-top: 195px !important;
+}
+
+.headerWrapper .header {
+    width: 100%;
+    height: auto;
+    padding: 25px 0px;
+}
+
+
+header .part3 .circle {
+    align-items: center;
+    justify-content: center;
+    min-width: 45px !important;
+    height: 45px !important;
+    width: 45px !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #000;
+    background: #ededed;
+}
+
+header .part3 .circle svg {
+    font-size: 22px;
+}
+
+.cartTab .price {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+}
+
+.cartTab button {
+    background: #fff1ee !important;
+}
+
+.cartTab button svg {
+    color: #ea2b0f !important;
+}
+
+.cartTab .count {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    background: #ea2b0f;
+    border-radius: 50%;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+}
+
+.headerSearchWrapper {
+    width: 58%;
+    position: relative;
+}
+
+
+.headerSearchWrapper .searchResults {
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    width: 100%;
+    background: #fff;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.headerSearchWrapper .searchResults .result {
+    width: 100%;
+    padding: 5px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.headerSearchWrapper .searchResults .result:hover {
+    background: #f1f1f1;
+}
+
+.headerSearchWrapper .searchResults .result .img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.headerSearchWrapper .searchResults .result .info {
+    width: 80%;
+}
+
+.headerSearchWrapper .searchResults .result .info h4 {
+    font-size: 13px;
+    color: #222;
+    font-weight: 600;
+}
+
+.headerSearchWrapper .searchResults .result .info h4:hover {
+    color: #0961b3 !important;
+}
+
+.headerSearchWrapper .searchResults .result .info span {
+    font-size: 14px;
+    color: #222;
+}
+
+
+.logoWrapper img {
+    width: 100%;
+}
+
+#accDrop {
+    z-index: 10000 !important;
+}
+
+#accDrop .info {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+#accDrop .info h5 {
+    text-transform: capitalize;
+}
+
+#accDrop ul a {
+    color: #000;
+}
+
+#accDrop ul li {
+    font-size: 16px !important;
+    padding: 7px 15px !important;
+}
+
+#accDrop ul li svg {
+    font-size: 15px !important;
+}
+
+@media only screen and (min-width:320px) and (max-width:992px) {
+    .fixed-bottom-menu {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: auto;
+        padding: 10px 15px;
+        background: #fff;
+        z-index: 1000;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .fixed-bottom-menu button {
+        min-width: 40px !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 100% !important;
+        flex-direction: column !important;
+    }
+
+    .fixed-bottom-menu button svg {
+        font-size: 20px;
+        color: rgba(0, 0, 0, 0.6) !important;
+        width: 30px !important;
+    }
+
+    .fixed-bottom-menu button .title {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 12px !important;
+    }
+
+    .toggleNav {
+        min-width: 40px !important;
+        height: 40px !important;
+        border-radius: 100% !important;
+    }
+
+    .toggleNav svg {
+        color: #000 !important;
+        font-size: 30px !important;
+    }
+
+    .headerWrapper .header {
+        padding: 10px 0px;
+    }
+
+    .headerWrapper .header .logoWrapper {
+        width: 100% !important;
+        padding-right: 15px !important;
+    }
+
+    .headerWrapper .header .part2 {
+        width: 70% !important;
+    }
+
+    .headerWrapper .header .part2 .btn-blue {
+        padding: 5px 10px !important;
+        margin-right: 10px !important;
+    }
+
+    .headerWrapperFixed.fixed {
+        top: 0px !important;
+    }
+
+    .headerSearchWrapper .headerSearch {
+        width: 100% !important;
+        pad: 0px !important;
+        margin: 0px !important;
+    }
+
+    .headerSearchWrapper {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100% !important;
+        height: 100vh;
+        background: #fff;
+        z-index: 1000;
+        padding: 15px !important;
+        margin: 0px !important;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+    }
+
+    .headerSearchWrapper.open {
+        opacity: 1;
+        visibility: inherit;
+    }
+
+    .headerWrapperFixed+div {
+        margin-top: 160px !important;
+    }
+
+    .headerWrapperFixed+section {
+        margin-top: 140px !important;
+    }
+
+}

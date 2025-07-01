@@ -2,19 +2,17 @@ import Button from "@mui/material/Button";
 import { IoIosSearch } from "react-icons/io";
 import { fetchDataFromApi } from "../../../utils/api";
 import { useContext, useState } from "react";
-import { MyContext } from "../../../App";
-
+import MyContext from "../../../Context/MyContext";
 import { Link, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ClickAwayListener } from "@mui/base";
+import './SearchBox.css'
 
 const SearchBox = (props) => {
   const [searchFields, setSearchFields] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState([]);
-
   const context = useContext(MyContext);
-
   const history = useNavigate();
 
   const onChangeValue = (e) => {

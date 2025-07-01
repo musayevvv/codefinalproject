@@ -9,11 +9,11 @@ import { FaInstagram } from "react-icons/fa";
 import newsLetterImg from "../../assets/images/newsletter.png";
 import Button from "@mui/material/Button";
 import { IoMailOutline } from "react-icons/io5";
+import './Footer.css'
 const Footer = () => {
 
   return (
     <>
-      
       <section className="newsLetterSection mt-3 mb-3 d-flex align-items-center">
         <div className="container">
           <div className="row">

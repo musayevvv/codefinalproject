@@ -121,7 +121,7 @@ const SignUp = () => {
           console.log(res);
 
           if (res.status !== "FAILED") {
-          
+
             localStorage.setItem("userEmail", formfields.email);
 
             setTimeout(() => {
@@ -260,9 +260,8 @@ const SignUp = () => {
               <div className="wrapper mt-3 card border">
                 <form onSubmit={signUp}>
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 0 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 0 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <FaUserCircle />
@@ -280,9 +279,8 @@ const SignUp = () => {
                   </div>
 
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 1 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 1 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <MdEmail />
@@ -299,9 +297,8 @@ const SignUp = () => {
                   </div>
 
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 2 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 2 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <FaPhoneAlt />
@@ -318,9 +315,8 @@ const SignUp = () => {
                   </div>
 
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 3 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 3 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <RiLockPasswordFill />
@@ -344,17 +340,15 @@ const SignUp = () => {
                   </div>
 
                   <div
-                    className={`form-group position-relative ${
-                      inputIndex === 4 && "focus"
-                    }`}
+                    className={`form-group position-relative ${inputIndex === 4 && "focus"
+                      }`}
                   >
                     <span className="icon">
                       <IoShieldCheckmarkSharp />
                     </span>
                     <input
-                      type={`${
-                        isShowConfirmPassword === true ? "text" : "password"
-                      }`}
+                      type={`${isShowConfirmPassword === true ? "text" : "password"
+                        }`}
                       className="form-control"
                       placeholder="confirm your password"
                       onFocus={() => focusInput(4)}

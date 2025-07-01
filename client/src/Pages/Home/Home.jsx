@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import ProductItem from "../../Components/ProductItem/ProductItem";
 import HomeCat from "../../Components/HomeCat/HomeCat";
-import { MyContext } from "../../App";
+import MyContext from "../../Context/MyContext";
 import { fetchDataFromApi } from "../../utils/api";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -16,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import homeBannerPlaceholder from "../../assets/images/homeBannerPlaceholder.jpg";
 import Banners from "../../Components/banners/Banner";
 import { Link } from "react-router-dom";
+import './Home.css'
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);

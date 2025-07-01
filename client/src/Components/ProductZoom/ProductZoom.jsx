@@ -5,6 +5,7 @@ import { Navigation } from 'swiper/modules';
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import { useRef, useState } from 'react';
+import './ProductZoom.css'
 
 const ProductZoom = (props) => {
     const [slideIndex, setSlideIndex] = useState(0);
@@ -44,12 +45,8 @@ const ProductZoom = (props) => {
                             )
                         })
                     }
-
-
                 </Swiper>
-
             </div>
-
 
             <Swiper
                 slidesPerView={5}
@@ -60,20 +57,17 @@ const ProductZoom = (props) => {
                 className="zoomSlider"
                 ref={zoomSlider}
             >
-            {
-                props?.images?.map((img, index) => {
-                    return (
-                        <SwiperSlide>
-                        <div className={`item ${slideIndex === index && 'item_active'}`} key={index}>
-                            <img src={img} className='w-100' onClick={() => goto(index)} />
-                        </div>
-                    </SwiperSlide>
-                    )
-                })
-            }
-
-               
-
+                {
+                    props?.images?.map((img, index) => {
+                        return (
+                            <SwiperSlide>
+                                <div className={`item ${slideIndex === index && 'item_active'}`} key={index}>
+                                    <img src={img} className='w-100' onClick={() => goto(index)} />
+                                </div>
+                            </SwiperSlide>
+                        )
+                    })
+                }
             </Swiper>
         </div>
     )

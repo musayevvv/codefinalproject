@@ -6,22 +6,20 @@ import { useContext, useEffect, useState } from 'react';
 import QuantityBox from '../QuantityBox/QuantityBox';
 import { IoIosHeartEmpty } from "react-icons/io";
 import { MdOutlineCompareArrows } from "react-icons/md";
-import { MyContext } from '../../App';
+import MyContext from "../../Context/MyContext";
 import ProductZoom from '../ProductZoom/ProductZoom';
 import { IoCartSharp } from "react-icons/io5";
 import { fetchDataFromApi, postData } from '../../utils/api';
 import { FaHeart } from "react-icons/fa";
-
+import './ProductModal.css'
 
 const ProductModal = (props) => {
-
     const [productQuantity, setProductQuantity] = useState();
     const [chengeQuantity, setchengeQuantity] = useState(0);
     let [cartFields, setCartFields] = useState({});
     const [activeSize, setActiveSize] = useState(null);
     const [tabError, setTabError] = useState(false);
     const [isAddedToMyList, setSsAddedToMyList] = useState(false);
-
     const context = useContext(MyContext);
 
     useEffect(() => {
@@ -32,27 +30,16 @@ const ProductModal = (props) => {
         const user = JSON.parse(localStorage.getItem("user"));
 
         fetchDataFromApi(`/api/my-list?productId=${props?.data?.id}&userId=${user?.userId}`).then((res) => {
-            if (res.length !== 0) {
-                setSsAddedToMyList(true);
-            }
+            if (res.length !== 0) { setSsAddedToMyList(true); }
         })
-
     }, [])
 
-    const quantity = (val) => {
-        setProductQuantity(val);
-        setchengeQuantity(val)
-    }
+    const quantity = (val) => { setProductQuantity(val); setchengeQuantity(val) }
 
-    const isActive = (index) => {
-        setActiveSize(index);
-        setTabError(false);
-    }
+    const isActive = (index) => { setActiveSize(index); setTabError(false); }
     const addtoCart = () => {
-
         if (activeSize !== null) {
             const user = JSON.parse(localStorage.getItem("user"));
-
             cartFields.productTitle = props?.data?.name
             cartFields.image = props?.data?.images[0]
             cartFields.rating = props?.data?.rating
@@ -62,13 +49,10 @@ const ProductModal = (props) => {
             cartFields.productId = props?.data?.id
             cartFields.countInStock = props?.data?.countInStock
             cartFields.userId = user?.userId
-
-
             context.addToCart(cartFields);
         } else {
             setTabError(true);
         }
-
     }
 
 
@@ -85,26 +69,13 @@ const ProductModal = (props) => {
             }
             postData(`/api/my-list/add/`, data).then((res) => {
                 if (res.status !== false) {
-                    context.setAlertBox({
-                        open: true,
-                        error: false,
-                        msg: "the product added in my list"
-                    })
+                    context.setAlertBox({ open: true, error: false, msg: "the product added in my list" })
                 } else {
-                    context.setAlertBox({
-                        open: true,
-                        error: true,
-                        msg: res.msg
-                    })
+                    context.setAlertBox({ open: true, error: true, msg: res.msg })
                 }
-
             })
         } else {
-            context.setAlertBox({
-                open: true,
-                error: true,
-                msg: "Please Login to continue"
-            })
+            context.setAlertBox({ open: true, error: true, msg: "Please Login to continue" })
         }
     }
     return (
@@ -133,13 +104,9 @@ const ProductModal = (props) => {
                         </div>
 
                         <span className="badge bg-success">IN STOCK</span>
-
                         <p className='mt-3'>{props?.data?.description}$</p>
 
-
-
-                        {
-                            props?.data?.productRam?.length !== 0 &&
+                        {props?.data?.productRam?.length !== 0 &&
                             <div className='productSize d-flex align-items-center'>
                                 <span>RAM:</span>
                                 <ul className={`list list-inline mb-0 pl-4 ${tabError === true && 'error'}`}>
@@ -150,14 +117,11 @@ const ProductModal = (props) => {
                                             )
                                         })
                                     }
-
                                 </ul>
                             </div>
                         }
 
-
-                        {
-                            props?.data?.size?.length !== 0 &&
+                        {props?.data?.size?.length !== 0 &&
                             <div className='productSize d-flex align-items-center'>
                                 <span>Size:</span>
                                 <ul className={`list list-inline mb-0 pl-4 ${tabError === true && 'error'}`}>
@@ -168,13 +132,11 @@ const ProductModal = (props) => {
                                             )
                                         })
                                     }
-
                                 </ul>
                             </div>
                         }
 
-                        {
-                            props?.data?.productWeight?.length !== 0 &&
+                        {props?.data?.productWeight?.length !== 0 &&
                             <div className='productSize d-flex align-items-center'>
                                 <span>Weight:</span>
                                 <ul className={`list list-inline mb-0 pl-4 ${tabError === true && 'error'}`}>
@@ -185,7 +147,6 @@ const ProductModal = (props) => {
                                             )
                                         })
                                     }
-
                                 </ul>
                             </div>
                         }
@@ -193,25 +154,16 @@ const ProductModal = (props) => {
                             <QuantityBox quantity={quantity} item={props?.data} />
 
                             <Button className='btn-blue bg-red btn-lg btn-big btn-round ml-3' onClick={() => addtoCart()}><IoCartSharp />
-                                {
-                                    context.addingInCart === true ? "adding..." : " Add to cart"
-                                }
+                                {context.addingInCart === true ? "adding..." : " Add to cart"}
                             </Button>
                         </div>
                         <div className='d-flex align-items-center mt-5 actions'>
                             <Button className='btn-round btn-sml' variant="outlined" onClick={() => addToMyList(props?.data?.id)} >
 
-                                {
-                                    isAddedToMyList === true ?
-                                        <>
-                                            <FaHeart className="text-danger" />
-                                            &nbsp; ADDED TO WISHLIST
-                                        </>
-                                        :
-                                        <>
-                                            <IoIosHeartEmpty />
-                                            &nbsp; ADD TO WISHLIST
-                                        </>
+                                {isAddedToMyList === true ?
+                                    <><FaHeart className="text-danger" /> &nbsp; ADDED TO WISHLIST</>
+                                    :
+                                    <><IoIosHeartEmpty />&nbsp; ADD TO WISHLIST</>
                                 }
                             </Button>
                             <Button className='btn-round btn-sml ml-3' variant="outlined"><MdOutlineCompareArrows /> &nbsp; COMPARE</Button>
@@ -222,5 +174,4 @@ const ProductModal = (props) => {
         </>
     )
 }
-
 export default ProductModal;
