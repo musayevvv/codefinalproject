@@ -78,98 +78,57 @@ const AddHomeSlide = () => {
   const onChangeFile = async (e, apiEndPoint) => {
     try {
       const files = e.target.files;
-
       setUploading(true);
+      const formdata = new FormData();
 
-      for (var i = 0; i < files.length; i++) {
-        if (
-          files[i] &&
-          (files[i].type === "image/jpeg" ||
-            files[i].type === "image/jpg" ||
-            files[i].type === "image/png" ||
-            files[i].type === "image/webp")
-        ) {
-          const file = files[i];
-          selectedImages.push(file);
-          formdata.append(`images`, file);
-        } else {
+      for (let file of files) {
+        if (!["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type)) {
           context.setAlertBox({
             open: true,
             error: true,
             msg: "Please select a valid JPG or PNG image file.",
           });
           setUploading(false);
-          return false;
+          return;
         }
+        formdata.append("images", file);
       }
 
-      formFields.images = selectedImages;
-    } catch (error) {
-      console.log(error);
-    }
+      const res = await uploadImage(apiEndPoint, formdata);
+      const appendedArray = [...previews, ...res];
+      setPreviews(appendedArray);
+      setFormFields(prev => ({ ...prev, images: appendedArray }));
+      setUploading(false);
 
-    uploadImage(apiEndPoint, formdata).then((res) => {
-      fetchDataFromApi("/api/imageUpload").then((response) => {
-        if (
-          response !== undefined &&
-          response !== null &&
-          response !== "" &&
-          response.length !== 0
-        ) {
-          response.length !== 0 &&
-            response.map((item) => {
-              item?.images.length !== 0 &&
-                item?.images?.map((img) => {
-                  img_arr.push(img);
-
-                });
-            });
-
-          uniqueArray = img_arr.filter(
-            (item, index) => img_arr.indexOf(item) === index
-          );
-          const appendedArray = [...previews, ...uniqueArray];
-
-          setPreviews(appendedArray);
-
-          setTimeout(() => {
-            setUploading(false);
-            img_arr = [];
-            uniqueArray=[];
-            fetchDataFromApi("/api/imageUpload").then((res) => {
-              res?.map((item) => {
-                item?.images?.map((img) => {
-                  deleteImages(`/api/homeBanner/deleteImage?img=${img}`).then((res) => {
-                  });
-                });
-              });
-            });
-            context.setAlertBox({
-              open: true,
-              error: false,
-              msg: "Images Uploaded!",
-            });
-          }, 500);
-        }
+      context.setAlertBox({
+        open: true,
+        error: false,
+        msg: "Images Uploaded!",
       });
-    });
+    } catch (error) {
+      setUploading(false);
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Image upload failed!",
+      });
+    }
   };
+
 
   const removeImg = async (index, imgUrl) => {
-    const imgIndex = previews.indexOf(imgUrl);
+    await deleteImages(`/api/homeBanner/deleteImage?img=${imgUrl}`);
 
-      deleteImages(`/api/homeBanner/deleteImage?img=${imgUrl}`).then((res) => {
-        context.setAlertBox({
-          open: true,
-          error: false,
-          msg: "Image Deleted!",
-        });
-      });
+    context.setAlertBox({
+      open: true,
+      error: false,
+      msg: "Image Deleted!",
+    });
 
-      if (imgIndex > -1) {
-        previews.splice(index, 1);
-      }
+    const updatedPreviews = previews.filter((_, i) => i !== index);
+    setPreviews(updatedPreviews);
   };
+
 
   const addHomeSlide = (e) => {
     e.preventDefault();
@@ -180,8 +139,7 @@ const AddHomeSlide = () => {
 
     formdata.append("images", appendedArray);
 
-    formFields.images = appendedArray;
-
+    setFormFields((prev) => ({ ...prev, images: appendedArray }));
     if (previews.length !== 0) {
       setIsLoading(true);
 
@@ -202,6 +160,8 @@ const AddHomeSlide = () => {
       return false;
     }
   };
+
+
 
   return (
     <>
@@ -269,11 +229,8 @@ const AddHomeSlide = () => {
                         <>
                           <input
                             type="file"
-                            
-                            onChange={(e) =>
-                              onChangeFile(e, "/api/homeBanner/upload")
-                            }
                             name="images"
+                            onChange={(e) => onChangeFile(e, "/api/homeBanner/upload")}
                           />
                           <div className="info">
                             <FaRegImages />

@@ -196,7 +196,7 @@ const AddProductSize = () => {
                   <tbody>
                     {productSizeData?.map((item, index) => {
                       return (
-                        <tr>
+                        <tr key={index}>
                           <td>{item.size}</td>
                           <td>
                             <div className="actions d-flex align-items-center">

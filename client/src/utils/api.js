@@ -1,76 +1,68 @@
 import axios from "axios";
 
-const token = localStorage.getItem("token");
+const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
 
-const params = {
-    headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
     },
-};
-
+    (error) => Promise.reject(error)
+);
 
 export const fetchDataFromApi = async (url) => {
     try {
-        const { data } = await axios.get(import.meta.env.VITE_API_URL + url, params);
+        const { data } = await api.get(url);
         return data;
     } catch (error) {
-        console.log(error);
-        return error;
+        console.error("fetchDataFromApi error:", error);
+        return [];
     }
 };
-
 
 export const postData = async (url, formData) => {
     try {
-        const response = await fetch(import.meta.env.VITE_API_URL + url, {
-            method: 'POST',
+        const { data } = await api.post(url, formData, {
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
-            credentials: 'include', 
-            body: JSON.stringify(formData),
         });
-
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        } else {
-            const errorData = await response.json();
-            return errorData;
-        }
+        return data;
     } catch (error) {
-        console.error('Error:', error);
+        console.error("postData error:", error);
+        throw error;
     }
 };
 
 
+
 export const editData = async (url, updatedData) => {
-    const { data } = await axios.put(`${import.meta.env.VITE_API_URL}${url}`, updatedData, params);
+    const { data } = await api.put(url, updatedData, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
     return data;
 };
 
 export const deleteData = async (url) => {
-    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}${url}`, params);
+    const { data } = await api.delete(url);
     return data;
 };
 
 export const uploadImage = async (url, formData) => {
-    const { data } = await axios.post(import.meta.env.VITE_API_URL + url, formData, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    });
+    const { data } = await api.post(url, formData);
     return data;
 };
 
 export const deleteImages = async (url, image) => {
-    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}${url}`, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        data: image,
-    });
+    const { data } = await api.delete(url, { data: image });
     return data;
 };
+
+export default api;

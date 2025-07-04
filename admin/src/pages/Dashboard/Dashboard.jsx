@@ -106,27 +106,38 @@ const Dashboard = () => {
     window.scrollTo(0, 0);
     context.setProgress(40);
 
-    fetchDataFromApi("/api/user/get/count").then(res => setTotalUsers(res.userCount));
-    fetchDataFromApi("/api/orders/get/count").then(res => setTotalOrders(res.orderCount));
-    fetchDataFromApi("/api/products/get/count").then(res => setTotalProducts(res.productsCount));
-    fetchDataFromApi("/api/productReviews/get/count").then(res => setTotalProductsReviews(res.productsReviews));
-
-    fetchDataFromApi("/api/orders/").then((res) => {
-      const total = res.reduce((sum, item) => sum + parseInt(item.amount), 0);
-      setTotalSales(total);
+    fetchDataFromApi("/api/user/get/count").then(res => {
+      setTotalUsers(res.userCount);
+    });
+    fetchDataFromApi("/api/orders/get/count").then(res => {
+      setTotalOrders(res.count);
+    });
+    fetchDataFromApi("/api/products/get/count").then(res => {
+      setTotalProducts(res.count);
     });
 
+    fetchDataFromApi("/api/productReviews/get/count").then(res => {
+      setTotalProductsReviews(res.count);
+    });
+    fetchDataFromApi("/api/orders").then((res) => {
+      const total = res.orders?.reduce((sum, item) => sum + parseFloat(item.amount || 0), 0);
+      setTotalSales(Math.round(total * 100) / 100);
+    });
     fetchDataFromApi(`/api/orders/sales?year=${year}`).then((res) => {
       const sales = res?.monthlySales?.map(item => ({
         name: item?.month,
-        sales: parseInt(item?.sale),
+        sales: parseInt(item?.sale || 0),
       })) || [];
+
       const uniqueArr = sales.filter((obj, index, self) =>
         index === self.findIndex((t) => t.name === obj.name)
       );
       setSalesData(uniqueArr);
     });
+
+    context.setProgress(100);
   }, []);
+
 
   const deleteProduct = (id) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));

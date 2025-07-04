@@ -1,8 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 
 // Routes
 import userRoutes from './routes/user.js';
@@ -21,6 +21,7 @@ import searchRoutes from './routes/search.js';
 import bannersRoutes from './routes/banners.js';
 import homeSideBannerRoutes from './routes/homeSideBanner.js';
 import homeBottomBannerRoutes from './routes/homeBottomBanner.js';
+import stripeRoutes from "./routes/stripe.js";
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -38,8 +39,8 @@ app.use(cors({
     credentials: true,
 }));
 app.use(cookieParser());
-app.use(bodyParser.json());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/user', userRoutes);
@@ -59,6 +60,7 @@ app.use('/api/banners', bannersRoutes);
 app.use('/api/homeSideBanners', homeSideBannerRoutes);
 app.use('/api/homeBottomBanners', homeBottomBannerRoutes);
 app.use("/api", productRoutes);
+app.use("/api/stripe", stripeRoutes);
 
 
 mongoose.connect(process.env.CONNECTION_STRING)

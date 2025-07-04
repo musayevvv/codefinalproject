@@ -196,7 +196,7 @@ const AddProductRAMS = () => {
                   <tbody>
                     {productRamData?.map((item, index) => {
                       return (
-                        <tr>
+                        <tr key={index}>
                           <td>{item.productRam}</td>
                           <td>
                             <div className="actions d-flex align-items-center">

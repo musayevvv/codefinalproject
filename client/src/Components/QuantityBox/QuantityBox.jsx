@@ -8,7 +8,6 @@ const QuantityBox = (props) => {
     const [inputVal, setInputVal] = useState(1);
     const context = useContext(MyContext);
 
-    // Başlanğıc dəyəri təyin et
     useEffect(() => {
         if (props?.value !== undefined && props?.value !== null && props?.value !== "") {
             setInputVal(parseInt(props.value));
@@ -34,8 +33,6 @@ const QuantityBox = (props) => {
             });
         }
     };
-
-    // input dəyişəndə parent funksiyalara ötür
     useEffect(() => {
         if (props.quantity) props.quantity(inputVal);
         if (props.selectedItem) props.selectedItem(props.item, inputVal);

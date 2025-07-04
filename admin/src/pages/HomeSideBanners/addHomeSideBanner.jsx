@@ -27,7 +27,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-//breadcrumb code
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
     theme.palette.mode === "light"
@@ -53,16 +52,16 @@ const AddBanner = () => {
   const [uploading, setUploading] = useState(false);
   const [formFields, setFormFields] = useState({
     images: [],
-    catName: null,
-    catId: null,
-    subCat: null,
-    subCatId: null,
-    subCatName: null,
+    catName: "",
+    catId: "",
+    subCat: "",
+    subCatId: "",
+    subCatName: "",
   });
 
   const [previews, setPreviews] = useState([]);
-  const [categoryVal, setcategoryVal] = useState(null);
-  const [subCatVal, setSubCatVal] = useState(null);
+  const [categoryVal, setcategoryVal] = useState("");
+  const [subCatVal, setSubCatVal] = useState("");
   const [subCatData, setSubCatData] = useState([]);
 
   const formdata = new FormData();
@@ -108,12 +107,8 @@ const AddBanner = () => {
     try {
       const files = e.target.files;
 
-      console.log(files);
       setUploading(true);
-
-      //const fd = new FormData();
       for (var i = 0; i < files.length; i++) {
-        // Validate file type
         if (
           files[i] &&
           (files[i].type === "image/jpeg" ||
@@ -134,8 +129,11 @@ const AddBanner = () => {
           return false;
         }
       }
+      setFormFields(prev => ({
+        ...prev,
+        images: selectedImages
+      }));
 
-      formFields.images = selectedImages;
     } catch (error) {
       console.log(error);
     }
@@ -153,8 +151,6 @@ const AddBanner = () => {
               item?.images.length !== 0 &&
                 item?.images?.map((img) => {
                   img_arr.push(img);
-
-                  //console.log(img)
                 });
             });
 
@@ -168,12 +164,11 @@ const AddBanner = () => {
           setTimeout(() => {
             setUploading(false);
             img_arr = [];
-            uniqueArray=[];
+            uniqueArray = [];
             fetchDataFromApi("/api/imageUpload").then((res) => {
               res?.map((item) => {
                 item?.images?.map((img) => {
                   deleteImages(`/api/homeSideBanners/deleteImage?img=${img}`).then((res) => {
-                 //   deleteData("/api/imageUpload/deleteAllImages");
                   });
                 });
               });
@@ -203,8 +198,7 @@ const AddBanner = () => {
     );
 
     if (imgIndex > -1) {
-      // only splice array when item is found
-      previews.splice(index, 1); // 2nd parameter means remove one item only
+      previews.splice(index, 1);
     }
   };
 
@@ -217,8 +211,11 @@ const AddBanner = () => {
   };
 
   const selectCat = (cat, id) => {
-    formFields.catName = cat;
-    formFields.catId = id;
+    setFormFields(prev => ({
+      ...prev,
+      catName: cat,
+      catId: id,
+    }));
   };
 
   const selectSubCat = (subCat, id) => {
@@ -237,37 +234,27 @@ const AddBanner = () => {
   const addHomeBanner = (e) => {
     e.preventDefault();
 
-    const appendedArray = [...previews, ...uniqueArray];
-
-    img_arr = [];
-
-    formdata.append("images", appendedArray);
-
-    formFields.images = appendedArray;
-
-    if (previews.length !== 0) {
-      setIsLoading(true);
-
-      console.log(formFields);
-
-      postData(`/api/homeSideBanners/create`, formFields).then((res) => {
-        // console.log(res);
-        setIsLoading(false);
-        context.fetchCategory();
-
-        deleteData("/api/imageUpload/deleteAllImages");
-
-        history("/homeSideBanners");
-      });
-    } else {
+    if (previews.length === 0) {
       context.setAlertBox({
         open: true,
         error: true,
         msg: "Please fill all the details",
       });
-      return false;
+      return;
     }
+    const updatedFormFields = {
+      ...formFields,
+      images: previews,
+    };
+    setIsLoading(true);
+    postData(`/api/homeSideBanners/create`, updatedFormFields).then((res) => {
+      setIsLoading(false);
+      context.fetchCategory();
+      deleteData("/api/imageUpload/deleteAllImages");
+      history("/homeSideBanners");
+    });
   };
+
 
   return (
     <>
@@ -311,22 +298,20 @@ const AddBanner = () => {
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>Select Category</em>
                         </MenuItem>
-                        {context.catData?.categoryList?.length !== 0 &&
-                          context.catData?.categoryList?.map((cat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={cat._id}
-                                key={index}
-                                onClick={() => selectCat(cat.name, cat._id)}
-                              >
-                                {cat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {context.catData?.categoryList?.map((cat, index) => (
+                          <MenuItem
+                            className="text-capitalize"
+                            value={cat._id}
+                            key={index}
+                            onClick={() => selectCat(cat.name, cat._id)}
+                          >
+                            {cat.name}
+                          </MenuItem>
+                        ))}
                       </Select>
+
                     </div>
                   </div>
 
@@ -341,24 +326,20 @@ const AddBanner = () => {
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>Select Subcategory</em>
                         </MenuItem>
-                        {subCatData?.length !== 0 &&
-                          subCatData?.map((subCat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={subCat._id}
-                                key={index}
-                                onClick={() =>
-                                  selectSubCat(subCat.name, subCat._id)
-                                }
-                              >
-                                {subCat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {subCatData?.map((subCat, index) => (
+                          <MenuItem
+                            className="text-capitalize"
+                            value={subCat._id}
+                            key={index}
+                            onClick={() => selectSubCat(subCat.name, subCat._id)}
+                          >
+                            {subCat.name}
+                          </MenuItem>
+                        ))}
                       </Select>
+
                     </div>
                   </div>
                 </div>
@@ -399,7 +380,7 @@ const AddBanner = () => {
                         <>
                           <input
                             type="file"
-                            
+                            multiple
                             onChange={(e) =>
                               onChangeFile(e, "/api/homeSideBanners/upload")
                             }

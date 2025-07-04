@@ -13,7 +13,6 @@ import { MdClose } from "react-icons/md";
 import Button from "@mui/material/Button";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { MdOutlineDateRange } from "react-icons/md";
 
 import MenuItem from "@mui/material/MenuItem";
@@ -133,9 +132,10 @@ const Orders = () => {
     window.scrollTo(0, 0);
 
     fetchDataFromApi(`/api/orders`).then((res) => {
-      setOrders(res);
+      setOrders(Array.isArray(res.orders) ? res.orders : []);
     });
   }, []);
+
 
   const showProducts = (id) => {
     fetchDataFromApi(`/api/orders/${id}`).then((res) => {
@@ -144,27 +144,19 @@ const Orders = () => {
     });
   };
 
+
+
   const handleChangeStatus = (e, orderId) => {
     setstatusVal(e.target.value);
     setIsLoading(true);
     context.setProgress(40);
-    fetchDataFromApi(`/api/orders/${orderId}`).then((res) => {
-      const order = {
-        name: res.name,
-        phoneNumber: res.phoneNumber,
-        address: res.address,
-        pincode: res.pincode,
-        amount: parseInt(res.amount),
-        paymentId: res.paymentId,
-        email: res.email,
-        userid: res.userId,
-        products: res.products,
-        status: e.target.value,
-      };
 
-      editData(`/api/orders/${orderId}`, order).then((res) => {
+    fetchDataFromApi(`/api/orders/${orderId}`).then((res) => {
+      editData(`/api/orders/${orderId}`, {
+        status: e.target.value,
+      }).then(() => {
         fetchDataFromApi(`/api/orders`).then((res) => {
-          setOrders(res);
+          setOrders(Array.isArray(res.orders) ? res.orders : []);
         });
         context.setProgress(100);
         setIsLoading(false);
@@ -173,6 +165,7 @@ const Orders = () => {
       setSingleOrder(res.products);
     });
   };
+
 
 
   return (
@@ -220,7 +213,7 @@ const Orders = () => {
                 </TableHead>
 
                 <TableBody>
-               
+
                   {orders?.length !== 0 &&
                     orders
                       ?.slice(
@@ -231,7 +224,7 @@ const Orders = () => {
                       ?.map((order, index) => {
                         return (
                           <TableRow key={index}>
-                          <TableCell style={{ minWidth: columns.minWidth }}>
+                            <TableCell style={{ minWidth: columns.minWidth }}>
                               <span className="text-blue fonmt-weight-bold">
                                 {order?._id}
                               </span>
@@ -260,7 +253,7 @@ const Orders = () => {
                             </TableCell>
                             <TableCell>{order?.pincode}</TableCell>
                             <TableCell style={{ minWidth: columns.minWidth }}>
-                              <MdOutlineCurrencyRupee /> {order?.amount}
+                              {order?.amount} $
                             </TableCell>
                             <TableCell style={{ minWidth: columns.minWidth }}>
                               <MdOutlineEmail /> {order?.email}
@@ -268,29 +261,31 @@ const Orders = () => {
                             <td>{order?.userid}</td>
                             <TableCell style={{ minWidth: columns.minWidth }}>
                               <Select
-                                disabled={isLoading === true ? true : false}
+                                MenuProps={{
+                                  disableAutoFocusItem: true,
+                                  disablePortal: true, 
+                                }}
+                                disabled={isLoading}
                                 value={
                                   order?.status !== null
                                     ? order?.status
-                                    : statusVal
+                                    : statusVal || ""
                                 }
-                                onChange={(e) =>
-                                  handleChangeStatus(e, order?._id)
-                                }
+                                onChange={(e) => handleChangeStatus(e, order?._id)}
                                 displayEmpty
-                                inputProps={{ "aria-label": "Without label" }}
+                                inputProps={{ "aria-label": "Select Order Status" }}
                                 size="small"
                                 className="w-100"
                               >
                                 <MenuItem value={null}>
                                   <em value={null}>None</em>
                                 </MenuItem>
-
                                 <MenuItem value="pending">Pending</MenuItem>
-
-                                <MenuItem value="confirm">Confirm</MenuItem>
-
+                                <MenuItem value="processing">Processing</MenuItem>
+                                <MenuItem value="shipped">Shipped</MenuItem>
                                 <MenuItem value="delivered">Delivered</MenuItem>
+                                <MenuItem value="cancelled">Cancelled</MenuItem>
+
                               </Select>
                             </TableCell>
                             <TableCell style={{ minWidth: columns.minWidth }}>
@@ -314,11 +309,17 @@ const Orders = () => {
             />
           </Paper>
 
-         
+
         </div>
       </div>
-
-      <Dialog open={isOpenModal} className="productModal">
+      <Dialog
+        open={isOpenModal}
+        className="productModal"
+        disableEnforceFocus
+        disableAutoFocus
+        aria-modal="true"
+        keepMounted
+      >
         <Button className="close_" onClick={() => setIsOpenModal(false)}>
           <MdClose />
         </Button>
@@ -341,10 +342,10 @@ const Orders = () => {
               {products?.length !== 0 &&
                 products?.map((item, index) => {
                   return (
-                    <tr>
+                    <tr key={index}>
                       <td>{item?.productId}</td>
                       <td style={{ whiteSpace: "inherit" }}>
-                        <span>{item?.productTitle?.substr(0, 30) + "..."}</span>
+                        <span>{item?.name ? item.name.slice(0, 30) + "..." : "-"}</span>
                       </td>
                       <td>
                         <div className="img">

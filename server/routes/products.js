@@ -88,7 +88,14 @@ router.get("/all", async (req, res) => {
 });
 
 
-
+router.get("/", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch products", error });
+  }
+});
 
 router.get("/products/:id", async (req, res) => {
   try {
@@ -101,60 +108,30 @@ router.get("/products/:id", async (req, res) => {
   }
 });
 
+
 router.get(`/catName`, async (req, res) => {
-  let productList = [];
+  try {
+    const catName = req.query.catName;
+    const location = req.query.location;
 
-  const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage);
-  const totalPosts = await Product.countDocuments();
-  const totalPages = Math.ceil(totalPosts / perPage);
-
-  if (page > totalPages) {
-    return res.status(404).json({ message: "Page not found" });
-  }
-
-  if (req.query.page !== undefined && req.query.perPage !== undefined) {
-    const productListArr = await Product.find({ catName: req.query.catName })
-      .populate("category")
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .exec();
-
-    return res.status(200).json({
-      products: productListArr,
-      totalPages: totalPages,
-      page: page,
+    let products = await Product.find({
+      catName: { $regex: new RegExp(`^${catName}$`, "i") },
     });
-  } else {
-    const productListArr = await Product.find({ catName: req.query.catName })
-      .populate("category")
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .exec();
 
-    for (let i = 0; i < productListArr.length; i++) {
-      for (let j = 0; j < productListArr[i].location.length; j++) {
-        if (productListArr[i].location[j].value === req.query.location) {
-          productList.push(productListArr[i]);
-        }
-      }
+    if (location && location.toLowerCase() !== "all") {
+      products = products.filter((product) =>
+        product.location?.some(
+          (loc) => loc.value?.toLowerCase() === location.toLowerCase()
+        )
+      );
     }
 
-    if (req.query.location !== "All") {
-      return res.status(200).json({
-        products: productList,
-        totalPages: totalPages,
-        page: page,
-      });
-    } else {
-      return res.status(200).json({
-        products: productListArr,
-        totalPages: totalPages,
-        page: page,
-      });
-    }
+    res.status(200).json({ products });
+  } catch (err) {
+    res.status(500).json({ message: "Internal error", error: err.message });
   }
 });
+
 
 router.get(`/catId`, async (req, res) => {
   let productList = [];
@@ -460,41 +437,83 @@ router.post(`/recentlyViewd`, async (req, res) => {
 
 router.post("/create", async (req, res) => {
   try {
-    const category = await Category.findById(req.body.category);
-    if (!category) {
+    const {
+      name,
+      description,
+      images,
+      brand,
+      price,
+      oldPrice,
+      catId,
+      catName,
+      subCat,
+      subCatId,
+      subCatName,
+      category,
+      countInStock,
+      rating,
+      isFeatured,
+      discount,
+      productRam,
+      size,
+      productWeight,
+      location
+    } = req.body;
+
+    if (!name || !description || !images?.length || !category || discount === undefined || countInStock === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "Zəhmət olmasa bütün tələb olunan sahələri doldurun: name, description, images, category, countInStock, discount"
+      });
+    }
+    const categoryDoc = await Category.findById(category);
+    if (!categoryDoc) {
       return res.status(404).json({ success: false, message: "Invalid Category!" });
     }
 
     const product = new Product({
-      name: req.body.name,
-      description: req.body.description,
-      images: req.body.images,
-      brand: req.body.brand,
-      price: req.body.price,
-      oldPrice: req.body.oldPrice,
-      catId: req.body.catId,
-      catName: req.body.catName,
-      subCat: req.body.subCat,
-      subCatId: req.body.subCatId,
-      subCatName: req.body.subCatName,
-      category: req.body.category,
-      countInStock: req.body.countInStock,
-      rating: req.body.rating,
-      isFeatured: req.body.isFeatured,
-      discount: req.body.discount,
-      productRam: req.body.productRam,
-      size: req.body.size,
-      productWeight: req.body.productWeight,
-      location: req.body.location?.length ? req.body.location : [{ value: "all", label: "All" }]
+      name,
+      description,
+      images,
+      brand,
+      price,
+      oldPrice,
+      catId,
+      catName,
+      subCat,
+      subCatId,
+      subCatName,
+      category,
+      countInStock,
+      rating,
+      isFeatured,
+      discount,
+      productRam,
+      size,
+      productWeight,
+      location: location?.length ? location : [{ value: "all", label: "All" }],
     });
 
     const savedProduct = await product.save();
+    console.log("▶️ Gələn məlumat:", req.body);
 
-    res.status(201).json({ success: true, data: savedProduct });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message || "Product creation failed" });
+    return res.status(201).json({
+      success: true,
+      message: "Məhsul uğurla yaradıldı",
+      data: savedProduct,
+    });
+
+  }
+  catch (err) {
+    console.error("❌ PRODUCT CREATE ERROR:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: err.message || "Product creation failed"
+    });
   }
 });
+
 
 
 router.delete("/deleteImage", async (req, res) => {
@@ -517,35 +536,31 @@ router.delete("/:id", async (req, res) => {
   const product = await Product.findById(req.params.id);
   const images = product.images;
 
-  for (img of images) {
+  for (const img of images) {
     const imgUrl = img;
     const urlArr = imgUrl.split("/");
     const image = urlArr[urlArr.length - 1];
-
     const imageName = image.split(".")[0];
 
     if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {
-      });
+      await cloudinary.uploader.destroy(imageName);
     }
   }
 
   const deletedProduct = await Product.findByIdAndDelete(req.params.id);
 
   const myListItems = await MyList.find({ productId: req.params.id });
-
   for (var i = 0; i < myListItems.length; i++) {
     await MyList.findByIdAndDelete(myListItems[i].id);
   }
 
   const cartItems = await Cart.find({ productId: req.params.id });
-
   for (var i = 0; i < cartItems.length; i++) {
     await Cart.findByIdAndDelete(cartItems[i].id);
   }
 
   if (!deletedProduct) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Product not found!",
       success: false,
     });
@@ -556,6 +571,7 @@ router.delete("/:id", async (req, res) => {
     message: "Product Deleted!",
   });
 });
+
 
 router.put("/:id", async (req, res) => {
   const product = await Product.findByIdAndUpdate(

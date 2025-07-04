@@ -60,8 +60,8 @@ const EditBanner = () => {
   });
 
   const [previews, setPreviews] = useState([]);
-  const [categoryVal, setcategoryVal] = useState(null);
-  const [subCatVal, setSubCatVal] = useState(null);
+  const [categoryVal, setcategoryVal] = useState("");
+  const [subCatVal, setSubCatVal] = useState("");
   const [subCatData, setSubCatData] = useState([]);
 
   let { id } = useParams();
@@ -85,10 +85,9 @@ const EditBanner = () => {
     });
 
     fetchDataFromApi(`/api/homeSideBanners/${id}`).then((res) => {
-      console.log(res)
       setPreviews(res.images);
-      setcategoryVal(res?.catId);
-      setSubCatVal(res?.subCatId);
+      setcategoryVal(res?.catId || "");
+      setSubCatVal(res?.subCatId || "");
       formFields.catId = res?.catId;
       formFields.subCatId = res?.subCatId;
       context.setProgress(100);
@@ -234,17 +233,11 @@ const EditBanner = () => {
 
   const editSlide = (e) => {
     e.preventDefault();
-
     const appendedArray = [...previews, ...uniqueArray];
-    console.log(appendedArray);
-
     img_arr = [];
-
     formdata.append("images", appendedArray);
 
     formFields.images = appendedArray;
-
-    console.log(formdata);
     if (
       formFields.name !== "" &&
       formFields.color !== "" &&
@@ -308,25 +301,22 @@ const EditBanner = () => {
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>Select Category</em>
                         </MenuItem>
-                        {context.catData?.categoryList?.length !== 0 &&
-                          context.catData?.categoryList?.map((cat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={cat._id}
-                                key={index}
-                                onClick={() => selectCat(cat.name, cat._id)}
-                              >
-                                {cat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {context.catData?.categoryList?.map((cat, index) => (
+                          <MenuItem
+                            className="text-capitalize"
+                            value={cat._id}
+                            key={index}
+                            onClick={() => selectCat(cat.name, cat._id)}
+                          >
+                            {cat.name}
+                          </MenuItem>
+                        ))}
                       </Select>
+
                     </div>
                   </div>
-
                   <div className="col-md-6">
                     <div className="form-group">
                       <h6>SUB CATEGORY</h6>
@@ -338,23 +328,18 @@ const EditBanner = () => {
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>Select Subcategory</em>
                         </MenuItem>
-                        {subCatData?.length !== 0 &&
-                          subCatData?.map((subCat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={subCat._id}
-                                key={index}
-                                onClick={() =>
-                                  selectSubCat(subCat.name, subCat._id)
-                                }
-                              >
-                                {subCat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {subCatData?.map((subCat, index) => (
+                          <MenuItem
+                            className="text-capitalize"
+                            value={subCat._id}
+                            key={index}
+                            onClick={() => selectSubCat(subCat.name, subCat._id)}
+                          >
+                            {subCat.name}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </div>
                   </div>
@@ -385,11 +370,7 @@ const EditBanner = () => {
                           </div>
                         );
                       })}
-
-
-                    {
-                      previews?.length < 0 &&
-
+                    {previews?.length === 0 && (
                       <div className="uploadBox">
                         {uploading === true ? (
                           <div className="progressBar text-center d-flex align-items-center justify-content-center flex-column">
@@ -400,7 +381,7 @@ const EditBanner = () => {
                           <>
                             <input
                               type="file"
-
+                              multiple
                               onChange={(e) =>
                                 onChangeFile(e, "/api/homeBanner/upload")
                               }
@@ -413,7 +394,7 @@ const EditBanner = () => {
                           </>
                         )}
                       </div>
-                    }
+                    )}
                   </div>
 
                   <br />

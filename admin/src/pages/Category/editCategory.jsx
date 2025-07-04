@@ -79,14 +79,25 @@ const EditCategory = () => {
     });
 
     fetchDataFromApi(`/api/category/${id}`).then((res) => {
-      setcategory(res?.categoryData[0]);
-      setPreviews(res?.categoryData[0]?.images);
-      setFormFields({
-        name: res?.categoryData[0]?.name,
-        color: res?.categoryData[0]?.color,
-      });
+      if (res?.categoryData && res.categoryData.length > 0) {
+        const cat = res.categoryData[0];
+        setcategory(cat);
+        setPreviews(cat.images || []);
+        setFormFields({
+          name: cat?.name || "",
+          color: cat?.color || "",
+        });
+      } else {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Category not found or has been deleted.",
+        });
+        history("/category");
+      }
       context.setProgress(100);
     });
+
   }, []);
 
   const changeInput = (e) => {

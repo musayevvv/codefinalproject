@@ -27,13 +27,24 @@ router.post('/upload', upload.array('images'), async (req, res) => {
   imagesArr = [];
   try {
     for (let i = 0; i < req?.files?.length; i++) {
-      const options = { use_filename: true, unique_filename: false, overwrite: false };
+      const result = await cloudinary.uploader.upload(req.files[i].path, {
+        folder: "homeSideBanners",
+        use_filename: true,
+        unique_filename: false,
+        overwrite: false,
+      });
+
+      imagesArr.push(result.secure_url);
+      fs.unlinkSync(req.files[i].path);
     }
-    let imagesUploaded = new ImageUpload({ images: imagesArr });
-    imagesUploaded = await imagesUploaded.save();
+
+    const imagesUploaded = new ImageUpload({ images: imagesArr });
+    await imagesUploaded.save();
+
     return res.status(200).json(imagesArr);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ success: false, error: "Image upload failed" });
   }
 });
 
@@ -55,7 +66,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   let newEntry = new HomeSideBanners({
-    images: imagesArr,
+    images: req.body.images,
     catId: req.body.catId,
     catName: req.body.catName,
     subCatId: req.body.subCatId,

@@ -175,13 +175,12 @@ const Header = () => {
                     <div className="ml-auto cartTab d-flex align-items-center">
                       {context.windowWidth > 1000 && (
                         <span className="price">
-                          {(context.cartData?.length !== 0
-                            ? context.cartData?.map(
-                              (item) => parseInt(item.price) * item.quantity
-                            )
-                              .reduce((total, value) => total + value, 0)
-                            : 0
-                          )?.toLocaleString("en-US", { style: "currency", currency: "USD", })}
+                          {Array.isArray(context.cartData) && context.cartData.length > 0
+                            ? context.cartData
+                              .map((item) => parseInt(item.price) * item.quantity)
+                              .reduce((a, b) => a + b, 0)
+                              .toLocaleString("en-US", { style: "currency", currency: "USD" })
+                            : "$0.00"}
                         </span>
                       )}
 

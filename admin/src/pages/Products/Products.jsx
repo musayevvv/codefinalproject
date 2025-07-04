@@ -136,7 +136,7 @@ const Products = () => {
 
   const deleteProduct = (id) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    if (userInfo?.email === "rinkuv37@gmail.com") {
+    if (userInfo?.email === "ayxanmusayev175@gmail.com") {
       context.setProgress(40);
       setIsLoadingBar(true);
       deleteData(`/api/products/${id}`).then((res) => {
@@ -176,7 +176,7 @@ const Products = () => {
     if (event.target.value === "all") {
       setcategoryVal("all");
       setcategoryVal(event.target.value);
-      fetchDataFromApi(`/api/products`).then((res) => {
+      fetchDataFromApi(`/api/products/All?page=${page + 1}&perPage=${rowsPerPage}`).then((res) => {
         setProductList(res);
         context.setProgress(100);
       });

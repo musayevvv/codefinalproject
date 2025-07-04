@@ -114,7 +114,7 @@ const BannersList = () => {
                 {slideList?.length !== 0 &&
                   slideList?.map((item, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <div
                             className="d-flex align-items-center "

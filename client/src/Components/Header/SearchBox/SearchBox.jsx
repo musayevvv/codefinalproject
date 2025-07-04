@@ -57,7 +57,7 @@ const SearchBox = (props) => {
           <div className="searchResults res-hide">
             {searchData?.map((item, index) => {
               return (
-                <div className="d-flex align-items-center result">
+                <div key={index} className="d-flex align-items-center result">
                   <div className="img">
                     <Link to={`/product/${item?.id}`}>
                       <img src={item?.images[0]} className="w-100" />

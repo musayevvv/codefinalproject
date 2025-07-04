@@ -187,7 +187,6 @@ function App() {
           onLoaderFinished={() => setProgress(0)}
           className="topLoadingBar"
         />
-
         <Snackbar
           open={alertBox.open}
           autoHideDuration={6000}
@@ -195,7 +194,6 @@ function App() {
         >
           <Alert
             onClose={handleClose}
-            autoHideDuration={6000}
             severity={alertBox.error === false ? "success" : "error"}
             variant="filled"
             sx={{ width: "100%" }}

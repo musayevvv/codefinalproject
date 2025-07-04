@@ -63,9 +63,14 @@ router.post("/signup", async (req, res) => {
 
     await sendEmailFun(email, "Verify Email", "", "Your OTP is " + verifyCode);
     const token = jwt.sign(
-      { email: user.email, id: user._id, isAdmin: user.isAdmin },
+      {
+        userId: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin
+      },
       process.env.JSON_WEB_TOKEN_SECRET_KEY
     );
+
 
     return res.status(200).json({
       success: true,
@@ -77,27 +82,44 @@ router.post("/signup", async (req, res) => {
     res.json({ status: "FAILED", msg: "something went wrong" });
   }
 });
-
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ error: true, msg: "User not found!" });
+    if (!user) {
+      console.log("🔴 User tapılmadı");
+      return res.status(404).json({ error: true, msg: "User not found!" });
+    }
+
     if (!user.isVerified) {
+      console.log("🟡 Email təsdiqlənməyib");
       return res.json({
         error: true, isVerify: false,
         msg: "Your account is not active yet. Please verify your account."
       });
     }
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ error: true, msg: "Invalid credentials" });
 
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JSON_WEB_TOKEN_SECRET_KEY);
+    const match = await bcrypt.compare(password, user.password);
+    console.log("🔐 Şifrə uyğunluğu:", match);
+
+    if (!match) {
+      console.log("🔴 Yanlış şifrə");
+      return res.status(400).json({ error: true, msg: "Invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email, isAdmin: user.isAdmin },
+      process.env.JSON_WEB_TOKEN_SECRET_KEY
+    );
+
     return res.status(200).send({ user, token, msg: "User Authenticated" });
   } catch (error) {
+    console.log("❌ Login error:", error);
     res.status(500).json({ error: true, msg: "Something went wrong" });
   }
 });
+
 
 router.post("/verifyemail", async (req, res) => {
   const { email, otp } = req.body;
@@ -158,21 +180,35 @@ router.put("/verifyAccount/emailVerify/:id", async (req, res) => {
 });
 
 router.put("/changePassword/:id", async (req, res) => {
-  const { name, phone, email, password, newPass, images } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) return res.status(404).json({ error: true, msg: "User not found!" });
+  const { password, newPass } = req.body;
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(404).json({ error: true, msg: "Current password wrong" });
+  if (!password || !newPass) {
+    return res.status(400).json({ error: true, msg: "Missing password or newPass" });
+  }
 
-  const hashed = newPass ? bcrypt.hashSync(newPass, 10) : user.password;
-  const updated = await User.findByIdAndUpdate(req.params.id, {
-    name, phone, email, password: hashed, images
-  }, { new: true });
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: true, msg: "User not found!" });
+    }
 
-  if (!updated) return res.status(400).json({ error: true, msg: "The user cannot be Updated!" });
-  res.send(updated);
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: true, msg: "Current password is incorrect" });
+    }
+
+
+    const hashedNewPass = await bcrypt.hash(newPass, 10);
+    user.password = hashedNewPass;
+    await user.save();
+
+    res.status(200).json({ success: true, msg: "Password updated successfully!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: true, msg: "Something went wrong" });
+  }
 });
+
 
 router.get("/", async (req, res) => {
   const users = await User.find();
@@ -209,7 +245,13 @@ router.post("/authWithGoogle", async (req, res) => {
     if (!user) {
       user = await User.create({ name, phone, email, password, images, isAdmin, isVerified: true });
     }
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JSON_WEB_TOKEN_SECRET_KEY);
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email
+      },
+      process.env.JSON_WEB_TOKEN_SECRET_KEY
+    );
     res.status(200).send({ user, token, msg: "User Login Successfully!" });
   } catch (error) {
     console.log(error);

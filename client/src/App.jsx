@@ -6,8 +6,8 @@ import MyContextProvider from "./Context/MyContextProvider.jsx";
 import Layout from "./Layout/Layout.jsx";
 
 
-
 function App() {
+
   return (
     <BrowserRouter>
       <MyContextProvider>

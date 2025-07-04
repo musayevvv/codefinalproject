@@ -17,30 +17,33 @@ cloudinary.config({
 let imagesArr = [];
 
 const storage = multer.diskStorage({
-  destination: (cb) => cb(null, "uploads"),
-  filename: (file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  }
 });
 
 const upload = multer({ storage });
-
 router.post("/upload", upload.array("images"), async (req, res) => {
   imagesArr = [];
   try {
     for (let i = 0; i < req?.files?.length; i++) {
-      await cloudinary.uploader.upload(req.files[i].path, {
+      const uploaded = await cloudinary.uploader.upload(req.files[i].path, {
         use_filename: true,
         unique_filename: false,
         overwrite: false,
-      }, (result) => {
-        imagesArr.push(result.secure_url);
-        fs.unlinkSync(`uploads/${req.files[i].filename}`);
       });
+      imagesArr.push(uploaded.secure_url);
+      fs.unlinkSync(`uploads/${req.files[i].filename}`);
     }
     const imagesUploaded = new ImageUpload({ images: imagesArr });
     await imagesUploaded.save();
     return res.status(200).json(imagesArr);
   } catch (error) {
-    console.log(error);
+    console.log("Upload Error:", error);
+    return res.status(500).json({ success: false, message: "Şəkil yükləmə uğursuz oldu." });
   }
 });
 

@@ -37,94 +37,114 @@ const SignIn = () => {
     }));
   };
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-
-    if (formfields.email === "") {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formfields.email === "" || !emailRegex.test(formfields.email.trim())) {
       context.setAlertBox({
         open: true,
         error: true,
-        msg: "email can not be blank!",
+        msg: "Düzgün email ünvanı daxil edin!",
       });
       return false;
     }
 
     if (isOpenVerifyEmailBox === false) {
-      if (formfields.password === "") {
+      if (formfields.password === "" || formfields.password.length < 6) {
         context.setAlertBox({
           open: true,
           error: true,
-          msg: "password can not be blank!",
+          msg: "Şifrə ən azı 6 simvoldan ibarət olmalıdır!",
         });
         return false;
       }
 
       setIsLoading(true);
-      postData("/api/user/signin", formfields).then((res) => {
-        try {
-          if (res.error !== true) {
-            localStorage.setItem("token", res.token);
+      const loginData = {
+        email: formfields.email.trim().toLowerCase(),
+        password: formfields.password.trim()
+      };
 
-            const user = {
-              name: res.user?.name,
-              email: res.user?.email,
-              userId: res.user?.id,
-              image: res?.user?.images[0],
-            };
+      try {
+        const res = await postData("/api/user/signin", loginData);
 
-            localStorage.setItem("user", JSON.stringify(user));
-            context.setUser(JSON.stringify(user));
+        if (res.error !== true) {
+          localStorage.setItem("token", res.token);
 
-            context.setAlertBox({
-              open: true,
-              error: false,
-              msg: res.msg,
-            });
+          const user = {
+            name: res.user?.name,
+            email: res.user?.email,
+            userId: res.user?.id,
+            image: res?.user?.images?.[0] || null,
+          };
 
-            setTimeout(() => {
-              history("/");
-              context.setIsLogin(true);
-              setIsLoading(false);
-              context.setisHeaderFooterShow(true);
-            }, 2000);
-          }
-          else {
-            if (res?.isVerify === false) {
-              setIsLoading(true);
-              setIsOpenVerifyEmailBox(true);
-            }
+          localStorage.setItem("user", JSON.stringify(user));
+          context.setUser(user);
 
-            context.setAlertBox({
-              open: true,
-              error: true,
-              msg: res.msg,
-            });
+          context.setAlertBox({
+            open: true,
+            error: false,
+            msg: res.msg,
+          });
+
+          setTimeout(() => {
+            history("/");
+            context.setIsLogin(true);
             setIsLoading(false);
+            context.setisHeaderFooterShow(true);
+          }, 2000);
+        } else {
+          if (res?.isVerify === false) {
+            setIsOpenVerifyEmailBox(true);
           }
-        } catch (error) {
-          console.log(error);
+
+          context.setAlertBox({
+            open: true,
+            error: true,
+            msg: res.msg,
+          });
           setIsLoading(false);
         }
-      });
+      } catch (error) {
+        console.error("Login error:", error);
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: error?.response?.data?.msg || "Giriş uğursuz oldu",
+        });
+        setIsLoading(false);
+      }
     }
 
+    // Email verify hissəsi
     if (isOpenVerifyEmailBox === true) {
-      localStorage.setItem("userEmail", formfields.email);
-      postData("/api/user/verifyAccount/resendOtp", {
-        email: formfields.email,
-      }).then((res) => {
+      localStorage.setItem("userEmail", formfields.email.trim());
+
+      try {
+        const res = await postData("/api/user/verifyAccount/resendOtp", {
+          email: formfields.email.trim(),
+        });
+
         if (res?.otp !== null && res?.otp !== "") {
-          editData(`/api/user/verifyAccount/emailVerify/${res.existingUserId}`, {
-            email: formfields.email,
+          await editData(`/api/user/verifyAccount/emailVerify/${res.existingUserId}`, {
+            email: formfields.email.trim(),
             otp: res?.otp,
-          }).then((res) => {
-            setTimeout(() => {
-              setIsLoading(true);
-              history("/verifyOTP");
-            }, 2000);
           });
+
+          setTimeout(() => {
+            setIsLoading(true);
+            history("/verifyOTP");
+          }, 2000);
         }
-      });
+      } catch (error) {
+        console.error("Verify error:", error);
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: "Email təsdiqləmə uğursuz oldu",
+        });
+        setIsLoading(false);
+      }
     }
   };
 
@@ -282,7 +302,15 @@ const SignIn = () => {
                   />
                 </div>
 
+                <p className="txt">
+                  Not Register?{" "}
+                  <Link to="/signUp" className="border-effect">
+                    Sign Up
+                  </Link>
+                </p>
+
                 <a className="border-effect cursor txt" onClick={forgotPassword}>Forgot Password?</a>
+
 
                 <div className="d-flex align-items-center mt-3 mb-3 ">
                   <Button type="submit" className="btn-blue col btn-lg btn-big">
@@ -300,7 +328,7 @@ const SignIn = () => {
                   </Link>
                 </div>
 
-             
+
 
                 <h6 className="mt-4 text-center font-weight-bold">
                   Or continue with social account

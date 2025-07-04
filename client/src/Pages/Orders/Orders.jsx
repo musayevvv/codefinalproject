@@ -28,16 +28,16 @@ const Orders = () => {
 
         const user = JSON.parse(localStorage.getItem("user"));
         fetchDataFromApi(`/api/orders?userid=${user?.userId}`).then((res) => {
-            setOrders(res);
-        })
+            setOrders(res.orders || []);
+        });
         context.setEnableFilterTab(false);
     }, []);
 
     const showProducts = (id) => {
         fetchDataFromApi(`/api/orders/${id}`).then((res) => {
             setIsOpenModal(true);
-            setproducts(res.products);
-        })
+            setproducts(res.products || []);
+        });
     }
     return (
         <>

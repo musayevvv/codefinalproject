@@ -268,48 +268,61 @@ const MyAccount = () => {
 
 
 
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
-    formdata.append("password", fields.password);
 
     if (
-      fields.oldPassword !== "" &&
-      fields.password !== "" &&
-      fields.confirmPassword !== ""
+      fields.oldPassword === "" ||
+      fields.password === "" ||
+      fields.confirmPassword === ""
     ) {
-      if (fields.password !== fields.confirmPassword) {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "Password and confirm password not match",
-        });
-      } else {
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        const data = {
-          name: user?.name,
-          email: user?.email,
-          password: fields.oldPassword,
-          newPass: fields.password,
-          phone: formFields.phone,
-          images: formFields.images,
-        };
-
-        editData(`/api/user/changePassword/${user.userId}`, data).then(
-          (res) => {
-
-          }
-        );
-      }
-    } else {
       context.setAlertBox({
         open: true,
         error: true,
         msg: "Please fill all the details",
       });
-      return false;
+      return;
+    }
+
+    if (fields.password !== fields.confirmPassword) {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Password and confirm password do not match",
+      });
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const data = {
+      password: fields.oldPassword,
+      newPass: fields.password,
+    };
+    try {
+      const res = await editData(`/api/user/changePassword/${user.userId}`, data);
+      if (res?.success) {
+        context.setAlertBox({
+          open: true,
+          error: false,
+          msg: res.msg,
+        });
+        setFields({ oldPassword: "", password: "", confirmPassword: "" });
+      } else {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: res.msg || "Something went wrong",
+        });
+      }
+    } catch (err) {
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: err.response?.data?.msg || "Something went wrong",
+      });
     }
   };
+
 
   return (
     <section className="section myAccountPage">

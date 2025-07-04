@@ -53,14 +53,14 @@ const BannersList = () => {
 
   const deleteSlide = (id) => {
     context.setProgress(30);
-    deleteData(`/api/banners/${id}`).then((res) => {
+    deleteData(`/api/homeBanner/${id}`).then((res) => {
       context.setProgress(100);
       context.setProgress({
         open: true,
         error: false,
         msg: "Banner Deleted!",
       });
-      fetchDataFromApi("/api/banners").then((res) => {
+      fetchDataFromApi("/api/homeBanner").then((res) => {
         setSlideList(res);
         context.setProgress(100);
 

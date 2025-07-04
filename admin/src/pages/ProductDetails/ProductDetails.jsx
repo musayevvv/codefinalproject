@@ -150,7 +150,7 @@ const ProductDetails = () => {
                                                             {
                                                                 productData?.productRam?.map((item, index) => {
                                                                     return (
-                                                                        <li className="list-inline-item">
+                                                                        <li key={index} className="list-inline-item">
                                                                             <span>{item}</span>
                                                                         </li>
                                                                     )
@@ -183,7 +183,7 @@ const ProductDetails = () => {
                                                             {
                                                                 productData?.size?.map((item, index) => {
                                                                     return (
-                                                                        <li className="list-inline-item">
+                                                                        <li key={index} className="list-inline-item">
                                                                             <span>{item}</span>
                                                                         </li>
                                                                     )
@@ -214,7 +214,7 @@ const ProductDetails = () => {
                                                             {
                                                                 productData?.productWeight?.map((item, index) => {
                                                                     return (
-                                                                        <li className="list-inline-item">
+                                                                        <li key={index} className="list-inline-item">
                                                                             <span>{item}</span>
                                                                         </li>
                                                                     )
@@ -285,7 +285,7 @@ const ProductDetails = () => {
                                     {
                                         reviewsData?.length !== 0 && reviewsData?.map((review, index) => {
                                             return (
-                                                <div className="reviewsRow">
+                                                <div key={index} className="reviewsRow">
                                                     <div className="row">
                                                         <div className="col-sm-7 d-flex">
                                                             <div className="d-flex flex-column">

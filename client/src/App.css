@@ -362,3 +362,21 @@ input[type=number]::-webkit-outer-spin-button {
 .MuiPagination-root button svg {
   color: #000 !important;
 }
+
+.scrol span {
+  text-transform: capitalize !important;
+}
+
+.productScroller {
+  display: flex;
+  gap: 10px;
+}
+
+.popularProductScroller .productItem {
+  width: 23.5% !important;
+}
+
+.swiper-wrapper .swiper-slide .proproductItem,
+.swiper-wrapper .swiper-slide-active .proproductItem {
+  width: 100%;
+}

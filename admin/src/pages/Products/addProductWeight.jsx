@@ -193,7 +193,7 @@ const AddProductWeight = () => {
                                         {
                                             productWeightData?.map((item, index) => {
                                                 return (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td>
                                                             {item.productWeight}
                                                         </td>

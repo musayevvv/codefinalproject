@@ -95,7 +95,7 @@ const HomeProductRow = ({
                     className="product_row w-100 mt-2"
                     style={{ opacity: isLoading ? "0.5" : "1" }}
                 >
-                    {context.windowWidth > 992 ? (
+                    {context.windowWidth > 992 && filterData?.length >= 4 ? (
                         <Swiper
                             ref={filterSlider}
                             slidesPerView={4}
@@ -105,26 +105,28 @@ const HomeProductRow = ({
                             modules={[Navigation]}
                             className="mySwiper"
                         >
-                            {filterData?.length > 0 &&
-                                [...filterData].reverse().map((item, index) => (
-                                    <SwiperSlide key={index}>
-                                        <ProductItem item={item} />
-                                    </SwiperSlide>
-                                ))}
-
+                            {[...filterData].reverse().map((item, index) => (
+                                <SwiperSlide key={index}>
+                                    <ProductItem item={item} />
+                                </SwiperSlide>
+                            ))}
                             <SwiperSlide style={{ opacity: 0 }}>
-                                <div className="productItem"></div>
+                                <div className="productItem" />
                             </SwiperSlide>
                         </Swiper>
                     ) : (
-                        <div className="productScroller">
-                            {filterData?.length > 0 &&
+                        <div className="productScroller popularProductScroller">
+                            {filterData?.length > 0 ? (
                                 [...filterData].reverse().map((item, index) => (
                                     <ProductItem key={index} item={item} />
-                                ))}
+                                ))
+                            ) : (
+                                <p>No products found.</p>
+                            )}
                         </div>
                     )}
                 </div>
+
 
                 <div className="d-flex align-items-center mt-2">
                     <div className="info w-75">

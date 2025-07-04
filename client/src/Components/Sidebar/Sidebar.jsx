@@ -82,7 +82,7 @@ const Sidebar = (props) => {
               {context?.subCategoryData?.length !== 0 &&
                 context?.subCategoryData?.map((item, index) => {
                   return (
-                    <FormControlLabel value={item?.id} control={<Radio />} label={item?.name} />
+                    <FormControlLabel key={index} value={item?.id} control={<Radio />} label={item?.name} />
                   );
                 })}
             </RadioGroup>

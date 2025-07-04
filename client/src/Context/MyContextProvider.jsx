@@ -13,13 +13,15 @@ const MyContextProvider = ({ children }) => {
   const [categoryData, setCategoryData] = useState([]);
   const [subCategoryData, setsubCategoryData] = useState([]);
   const [addingInCart, setAddingInCart] = useState(false);
-  const [cartData, setCartData] = useState();
+  const [cartData, setCartData] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [isOpenNav, setIsOpenNav] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [enableFilterTab, setEnableFilterTab] = useState(false);
   const [isOpenFilters, setIsOpenFilters] = useState(false);
   const [isBottomShow, setIsBottomShow] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
+  const [customerInfo, setCustomerInfo] = useState(null);
   const [alertBox, setAlertBox] = useState({
     msg: "",
     error: false,
@@ -34,7 +36,7 @@ const MyContextProvider = ({ children }) => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.userId) {
-      fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then(setCartData);
+      fetchDataFromApi(`/api/cart`).then(setCartData);
     }
   }, [isLogin]);
 
@@ -65,19 +67,21 @@ const MyContextProvider = ({ children }) => {
   };
 
   const getCartData = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then(setCartData);
+    fetchDataFromApi(`/api/cart`).then(setCartData);
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const user = localStorage.getItem("user");
+
+    if (token && user) {
       setIsLogin(true);
-      setUser(JSON.parse(localStorage.getItem("user")));
+      setUser(JSON.parse(user));
     } else {
       setIsLogin(false);
+      setUser({ name: "", email: "", userId: "" });
     }
-  }, [isLogin]);
+  }, []);
 
   const openProductDetailsModal = (id, status) => {
     fetchDataFromApi(`/api/products/${id}`).then((res) => {
@@ -109,41 +113,28 @@ const MyContextProvider = ({ children }) => {
 
   const values = {
     countryList,
-    setselectedCountry,
-    selectedCountry,
-    isOpenProductModal,
-    setisOpenProductModal,
-    isHeaderFooterShow,
-    setisHeaderFooterShow,
-    isLogin,
-    setIsLogin,
-    user,
-    setUser,
-    categoryData,
-    setCategoryData,
-    subCategoryData,
-    setsubCategoryData,
+    selectedCountry, setselectedCountry,
+    isOpenProductModal, setisOpenProductModal,
+    isHeaderFooterShow, setisHeaderFooterShow,
+    isLogin, setIsLogin,
+    user, setUser,
+    categoryData, setCategoryData,
+    subCategoryData, setsubCategoryData,
     openProductDetailsModal,
-    alertBox,
-    setAlertBox,
+    alertBox, setAlertBox,
     addToCart,
-    addingInCart,
-    setAddingInCart,
-    cartData,
-    setCartData,
+    addingInCart, setAddingInCart,
+    cartData, setCartData,
     getCartData,
-    searchData,
-    setSearchData,
+    searchData, setSearchData,
     windowWidth,
-    isOpenNav,
-    setIsOpenNav,
-    setEnableFilterTab,
-    enableFilterTab,
-    setIsOpenFilters,
-    isOpenFilters,
-    setIsBottomShow,
-    isBottomShow,
+    isOpenNav, setIsOpenNav,
+    enableFilterTab, setEnableFilterTab,
+    isOpenFilters, setIsOpenFilters,
+    isBottomShow, setIsBottomShow,
     productData,
+    customerInfo, setCustomerInfo,
+    cartItems, setCartItems
   };
 
   return <MyContext.Provider value={values}>{children}</MyContext.Provider>;

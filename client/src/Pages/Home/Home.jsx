@@ -51,34 +51,24 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (context.categoryData?.length > 0) {
-      const firstCat = context.categoryData[0];
-      setSelectedCat(firstCat.name);
-
-      const randomIndex = Math.floor(Math.random() * context.categoryData.length);
-      const randomCat = context.categoryData[randomIndex];
-
-      fetchDataFromApi(
-        `/api/products/catId?catId=${randomCat?.id}&location=${localStorage.getItem("location")}`
-      ).then((res) => {
-        setRandomCatProducts({
-          catName: randomCat?.name,
-          catId: randomCat?.id,
-          products: res?.products,
-        });
-      });
+    if (context.categoryData && context.categoryData.length > 0) {
+      const firstCategory = context.categoryData[0];
+      if (firstCategory?.name) {
+        setSelectedCat(firstCategory.name);
+      }
     }
   }, [context.categoryData]);
 
   useEffect(() => {
     if (selectedCat) {
       setIsLoading(true);
-      const location = localStorage.getItem("location");
-      fetchDataFromApi(`/api/products/catName?catName=${selectedCat}&location=${location}`).then((res) => {
-        setFilterData(res.products);
-        setIsLoading(false);
-        filterSlider?.current?.swiper?.slideTo(0);
-      });
+      const location = localStorage.getItem("location") || "all";
+      fetchDataFromApi(`/api/products/catName?catName=${selectedCat}&location=${location}`)
+        .then((res) => {
+          setFilterData(res.products || []);
+          setIsLoading(false);
+          filterSlider?.current?.swiper?.slideTo(0);
+        });
     }
   }, [selectedCat]);
 
@@ -139,7 +129,7 @@ const Home = () => {
                     <SwiperSlide style={{ opacity: 0 }}><div className="productItem"></div></SwiperSlide>
                   </Swiper>
                 ) : (
-                  <div className="productScroller">
+                  <div className="productScroller ">
                     {featuredProducts.slice().reverse().map((item, index) => (
                       <ProductItem item={item} key={index} />
                     ))}

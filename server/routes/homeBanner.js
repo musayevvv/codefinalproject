@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
+import path from 'path';
 import { v2 as cloudinary } from 'cloudinary';
 import { HomeBanner } from '../models/homeBanner.js';
 
@@ -16,15 +17,24 @@ cloudinary.config({
 let imagesArr = [];
 
 const storage = multer.diskStorage({
-    destination: (cb) => cb(null, "uploads"),
-    filename: (file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
+    destination: (req, file, cb) => {
+        cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}_${file.originalname}`);
+    }
 });
 
+const uploadDir = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
 const upload = multer({ storage });
+
 router.post('/upload', upload.array('images'), async (req, res) => {
     try {
         const imagesArr = [];
-
         for (let i = 0; i < req.files.length; i++) {
             const result = await cloudinary.uploader.upload(req.files[i].path, {
                 use_filename: true,
@@ -38,11 +48,10 @@ router.post('/upload', upload.array('images'), async (req, res) => {
 
         res.status(200).json(imagesArr);
     } catch (error) {
-        console.error(error);
+        console.error("Upload error:", error);
         res.status(500).json({ success: false, message: 'Şəkil yüklənmədi' });
     }
 });
-
 
 router.get(`/`, async (req, res) => {
     try {
@@ -63,27 +72,36 @@ router.get('/:id', async (req, res) => {
 router.post('/create', async (req, res) => {
     try {
         const { images } = req.body;
-        if (!images || !Array.isArray(images)) {
+        if (!images || !Array.isArray(images) || images.length === 0) {
             return res.status(400).json({ success: false, message: 'Images array tələb olunur' });
         }
-
         const newEntry = new HomeBanner({ images });
         await newEntry.save();
-
-        res.status(201).json(newEntry);
+        res.status(201).json({ success: true, data: newEntry });
     } catch (error) {
-        console.error(error);
+        console.error("Banner yaradılma xətası:", error);
         res.status(500).json({ success: false, message: 'Banner yaradılmadı' });
     }
 });
 
 
-router.delete('/deleteImage', async (req, res) => {
-    const imgUrl = req.query.img;
-    const imageName = imgUrl.split('/').pop().split('.')[0];
-    const response = await cloudinary.uploader.destroy(imageName);
-    if (response) res.status(200).send(response);
+router.delete("/deleteImage", async (req, res) => {
+    try {
+        const imgUrl = req.query.img;
+        const publicId = imgUrl.split("/").pop().split(".")[0];
+        const response = await cloudinary.uploader.destroy(publicId);
+
+        if (response.result === "ok" || response.result === "not found") {
+            return res.status(200).json({ message: "Image deleted from Cloudinary" });
+        } else {
+            return res.status(400).json({ message: "Cloudinary image not deleted" });
+        }
+    } catch (error) {
+        console.error("Cloudinary delete error:", error);
+        return res.status(500).json({ message: "Server error" });
+    }
 });
+
 
 router.delete('/:id', async (req, res) => {
     const item = await HomeBanner.findById(req.params.id);

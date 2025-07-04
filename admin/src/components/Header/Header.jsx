@@ -24,9 +24,9 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpennotificationDrop, setisOpennotificationDrop] = useState(false);
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+  const openNotifications = Boolean(notificationAnchorEl);
   const openMyAcc = Boolean(anchorEl);
-  const openNotifications = Boolean(isOpennotificationDrop);
-
   const context = useContext(MyContext);
 
   const history = useNavigate();
@@ -38,12 +38,12 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const handleOpenotificationsDrop = () => {
-    setisOpennotificationDrop(true);
+  const handleOpenNotificationsDrop = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
   };
 
-  const handleClosenotificationsDrop = () => {
-    setisOpennotificationDrop(false);
+  const handleCloseNotificationsDrop = () => {
+    setNotificationAnchorEl(null);
   };
 
   const changeTheme = () => {
@@ -96,7 +96,7 @@ const Header = () => {
                     <MdOutlineMenu />
                   )}
                 </Button>
-                
+
               </div>
             )}
 
@@ -112,7 +112,7 @@ const Header = () => {
               <div className="dropdownWrapper position-relative">
                 <Button
                   className="rounded-circle mr-3"
-                  onClick={handleOpenotificationsDrop}
+                  onClick={handleOpenNotificationsDrop}
                 >
                   <FaRegBell />
                 </Button>
@@ -127,14 +127,14 @@ const Header = () => {
                 )}
 
                 <Menu
-                  anchorEl={isOpennotificationDrop}
-                  className="notifications dropdown_list"
-                  id="notifications"
+                  anchorEl={notificationAnchorEl}
                   open={openNotifications}
-                  onClose={handleClosenotificationsDrop}
-                  onClick={handleClosenotificationsDrop}
+                  onClose={handleCloseNotificationsDrop}
+                  onClick={handleCloseNotificationsDrop}
                   transformOrigin={{ horizontal: "right", vertical: "top" }}
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  className="notifications dropdown_list"
+                  id="notifications"
                 >
                   <div className="head pl-3 pb-0">
                     <h4>Orders (12) </h4>
@@ -314,19 +314,20 @@ const Header = () => {
 
                   <Menu
                     anchorEl={anchorEl}
-                    id="account-menu"
                     open={openMyAcc}
                     onClose={handleCloseMyAccDrop}
                     onClick={handleCloseMyAccDrop}
                     transformOrigin={{ horizontal: "right", vertical: "top" }}
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    className="notifications dropdown_list"
+                    id="my-account-menu"
                   >
                     <MenuItem onClick={handleCloseMyAccDrop}>
-                    <Link to="/my-account">
-                      <ListItemIcon>
-                        <PersonAdd fontSize="small" />
-                      </ListItemIcon>
-                      My Account
+                      <Link to="/my-account">
+                        <ListItemIcon>
+                          <PersonAdd fontSize="small" />
+                        </ListItemIcon>
+                        My Account
                       </Link>
                     </MenuItem>
                     <MenuItem onClick={handleCloseMyAccDrop}>

@@ -36,29 +36,24 @@ const VerifyOTP = () => {
       const actionType = localStorage.getItem("actionType");
 
       postData(`/api/user/verifyemail`, obj).then((res) => {
+        setIsLoading(false);
         if (res?.success === true) {
           context.setAlertBox({
             open: true,
             error: false,
             msg: res?.message,
           });
-          setIsLoading(false);
-
-          if (actionType !== "changePassword") {
-            localStorage.removeItem("userEmail");
-            history("/signIn");
-          } else {
-            history("/changePassword");
-          }
+          localStorage.removeItem("userEmail");
+          history("/signIn"); 
         } else {
           context.setAlertBox({
             open: true,
             error: true,
             msg: res?.message,
           });
-          setIsLoading(false);
         }
       });
+
     } else {
       context.setAlertBox({
         open: true,

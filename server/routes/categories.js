@@ -97,29 +97,29 @@ router.get("/subCat/get/count", async (req, res) => {
   res.send({ categoryCount: subCats.length });
 });
 
-const createCat = (categories, parentId = null, cat) => {
-  const filtered = categories.filter(c => c.parentId == parentId);
-  return [{
-    _id: cat._id,
-    id: cat._id,
-    name: cat.name,
-    images: cat.images,
-    color: cat.color,
-    slug: cat.slug,
-    children: filtered
-  }];
-};
 
 router.get("/:id", async (req, res) => {
   try {
-    const categoryList = await Category.find();
     const category = await Category.findById(req.params.id);
-    if (!category) return res.status(500).json({ message: "Category not found." });
-    res.status(200).json({ categoryData: createCat(categoryList, category._id, category) });
-  } catch {
-    res.status(500).json({ success: false });
+    if (!category) {
+      return res.status(404).json({
+        success: false,
+        message: "Category not found",
+        categoryData: [],
+      });
+    }
+    res.status(200).json({
+      success: true,
+      categoryData: [category],
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 });
+
 
 router.post("/create", async (req, res) => {
   try {
@@ -166,14 +166,19 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const updated = await Category.findByIdAndUpdate(req.params.id, {
-    name: req.body.name,
-    images: req.body.images,
-    color: req.body.color,
-  }, { new: true });
-  if (!updated) return res.status(500).json({ message: "Update failed", success: false });
-  imagesArr = [];
+  const updated = await Category.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+      images: req.body.images,
+      color: req.body.color,
+    },
+    { new: true }
+  );
+  if (!updated)
+    return res.status(500).json({ message: "Update failed", success: false });
   res.send(updated);
 });
+
 
 export default router;

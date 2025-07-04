@@ -1,4 +1,3 @@
-// ActiveTabs.jsx
 import React from "react";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";

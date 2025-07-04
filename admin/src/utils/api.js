@@ -37,13 +37,12 @@ export const uploadImage = async (url, formData) => {
   try {
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}${url}`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return data;
   } catch (error) {
-    console.error("Image Upload Error:", error);
+    console.error("Image Upload Error:", error.response?.data || error);
     throw error;
   }
 };
@@ -68,13 +67,12 @@ export const deleteData = async (url) => {
   }
 };
 
-export const deleteImages = async (url, image) => {
+export const deleteImages = async (url) => {
   try {
     const { data } = await axios.delete(`${import.meta.env.VITE_BASE_URL}${url}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      data: image,
     });
     return data;
   } catch (error) {

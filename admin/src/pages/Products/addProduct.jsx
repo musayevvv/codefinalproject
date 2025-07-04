@@ -85,26 +85,26 @@ const ProductUpload = () => {
   const history = useNavigate();
 
   const [formFields, setFormFields] = useState({
-  name: "",
-  subCat: "",
-  subCatName: "",
-  description: "",
-  brand: "",
-  price: "",
-  oldPrice: "",
-  subCatId: "",
-  catName: "",
-  catId: "",
-  category: "",
-  countInStock: "",
-  rating: 1,
-  isFeatured: "",
-  discount: "",
-  productRam: [],
-  size: [],
-  productWeight: [],
-  location: [],
-});
+    name: "",
+    subCat: "",
+    subCatName: "",
+    description: "",
+    brand: "",
+    price: "",
+    oldPrice: "",
+    subCatId: "",
+    catName: "",
+    catId: "",
+    category: "",
+    countInStock: "",
+    rating: 1,
+    isFeatured: "",
+    discount: "",
+    productRam: [],
+    size: [],
+    productWeight: [],
+    location: [],
+  });
 
 
   const productImages = useRef();
@@ -115,11 +115,11 @@ const ProductUpload = () => {
 
   useEffect(() => {
     const newData = {
-      value:'All',
-      label:'All'
+      value: 'All',
+      label: 'All'
     };
-    const updatedArray = [...context?.countryList]; 
-    updatedArray.unshift(newData); 
+    const updatedArray = [...context?.countryList];
+    updatedArray.unshift(newData);
     setCountryList(updatedArray);
   }, [context?.countryList]);
 
@@ -305,7 +305,7 @@ const ProductUpload = () => {
           setTimeout(() => {
             setUploading(false);
             img_arr = [];
-            uniqueArray=[];
+            uniqueArray = [];
             fetchDataFromApi("/api/imageUpload").then((res) => {
               res?.map((item) => {
                 item?.images?.map((img) => {
@@ -340,152 +340,85 @@ const ProductUpload = () => {
       previews.splice(index, 1);
     }
   };
-
-  const addProduct = (e) => {
+  const addProduct = async (e) => {
     e.preventDefault();
 
     const appendedArray = [...previews, ...uniqueArray];
 
-    img_arr = [];
-
-    formdata.append("name", formFields.name);
-    formdata.append("description", formFields.description);
-    formdata.append("brand", formFields.brand);
-    formdata.append("price", formFields.price);
-    formdata.append("oldPrice", formFields.oldPrice);
-    formdata.append("subCatId", formFields.subCatId);
-    formdata.append("catId", formFields.catId);
-    formdata.append("catName", formFields.catName);
-    formdata.append("category", formFields.category);
-    formdata.append("subCat", formFields.subCat);
-    formdata.append("countInStock", formFields.countInStock);
-    formdata.append("rating", formFields.rating);
-    formdata.append("isFeatured", formFields.isFeatured);
-    formdata.append("discount", formFields.discount);
-    formdata.append("productRam", formFields.productRam);
-    formdata.append("size", formFields.size);
-    formdata.append("productWeight", formFields.productWeight);
-    formdata.append("location", formFields.location);
-
-    formFields.location = selectedLocation;
-
-    formFields.images = appendedArray;
-
-    if (formFields.name === "") {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product name",
-        error: true,
-      });
-      return false;
+    if (formFields.name.trim() === "") {
+      return context.setAlertBox({ open: true, msg: "Please add product name", error: true });
     }
 
-    if (formFields.description === "") {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product description",
-        error: true,
-      });
-      return false;
+    if (formFields.description.trim() === "") {
+      return context.setAlertBox({ open: true, msg: "Please add product description", error: true });
     }
 
-    if (formFields.brand === "") {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product brand",
-        error: true,
-      });
-      return false;
+    if (formFields.brand.trim() === "") {
+      return context.setAlertBox({ open: true, msg: "Please add product brand", error: true });
     }
 
-    if (formFields.price === null) {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product price",
-        error: true,
-      });
-      return false;
+    if (!formFields.price) {
+      return context.setAlertBox({ open: true, msg: "Please add product price", error: true });
     }
 
-    if (formFields.oldPrice === null) {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product oldPrice",
-        error: true,
-      });
-      return false;
+    if (!formFields.oldPrice) {
+      return context.setAlertBox({ open: true, msg: "Please add product old price", error: true });
     }
 
-    if (formFields.category === "") {
-      context.setAlertBox({
-        open: true,
-        msg: "please select a category",
-        error: true,
-      });
-      return false;
+    if (!formFields.category) {
+      return context.setAlertBox({ open: true, msg: "Please select a category", error: true });
     }
 
-    if (formFields.countInStock === null) {
-      context.setAlertBox({
-        open: true,
-        msg: "please add product count in stock",
-        error: true,
-      });
-      return false;
+    if (!formFields.countInStock) {
+      return context.setAlertBox({ open: true, msg: "Please add product stock count", error: true });
     }
 
-    if (formFields.rating === 0) {
-      context.setAlertBox({
-        open: true,
-        msg: "please select product rating",
-        error: true,
-      });
-      return false;
+    if (!formFields.rating || formFields.rating === 0) {
+      return context.setAlertBox({ open: true, msg: "Please select a rating", error: true });
     }
 
-    if (formFields.isFeatured === null) {
-      context.setAlertBox({
-        open: true,
-        msg: "please select the product is a featured or not",
-        error: true,
-      });
-      return false;
+    if (formFields.isFeatured === "" || formFields.isFeatured === null) {
+      return context.setAlertBox({ open: true, msg: "Please select if product is featured", error: true });
     }
 
-    if (formFields.discount === null) {
-      context.setAlertBox({
-        open: true,
-        msg: "please select the product discount",
-        error: true,
-      });
-      return false;
+    if (!formFields.discount && formFields.discount !== 0) {
+      return context.setAlertBox({ open: true, msg: "Please add a discount value", error: true });
     }
 
     if (previews.length === 0) {
-      context.setAlertBox({
-        open: true,
-        msg: "please select images",
-        error: true,
-      });
-      return false;
+      return context.setAlertBox({ open: true, msg: "Please upload at least one image", error: true });
     }
 
-    setIsLoading(true);
+    const finalForm = {
+      ...formFields,
+      images: appendedArray,
+      location: selectedLocation?.length ? selectedLocation : [{ value: "all", label: "All" }],
+    };
 
-    postData("/api/products/create", formFields).then((res) => {
+    try {
+      setIsLoading(true);
+
+      const res = await postData("/api/products/create", finalForm);
+
       context.setAlertBox({
         open: true,
         msg: "The product is created!",
         error: false,
       });
 
-      setIsLoading(false);
-      deleteData("/api/imageUpload/deleteAllImages");
-
+      await deleteData("/api/imageUpload/deleteAllImages");
       history("/products");
-    });
+    } catch (error) {
+      console.error("🚨 Product creation failed:", error.message);
+      context.setAlertBox({
+        open: true,
+        msg: "Failed to create product",
+        error: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
-
 
   const handleChangeLocation = (selectedOptions) => {
     setSelectedLocation(selectedOptions);
@@ -703,7 +636,7 @@ const ProductUpload = () => {
                       >
                         {productRAMSData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.productRam}>
+                            <MenuItem key={index} value={item.productRam}>
                               {item.productRam}
                             </MenuItem>
                           );
@@ -727,7 +660,7 @@ const ProductUpload = () => {
                       >
                         {productWEIGHTData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.productWeight}>
+                            <MenuItem key={index} value={item.productWeight}>
                               {item.productWeight}
                             </MenuItem>
                           );
@@ -749,7 +682,7 @@ const ProductUpload = () => {
                       >
                         {productSIZEData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.size}>{item.size}</MenuItem>
+                            <MenuItem key={index} value={item.size}>{item.size}</MenuItem>
                           );
                         })}
                       </Select>

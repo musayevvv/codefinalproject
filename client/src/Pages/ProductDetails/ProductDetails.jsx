@@ -1,4 +1,3 @@
-// ProductDetails.jsx
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -111,8 +110,23 @@ const ProductDetails = () => {
   const quantity = (val) => setProductQuantity(val);
 
   const addtoCart = () => {
-    if (activeSize === null) return setTabError(true);
     const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      return context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Please login to add to cart",
+      });
+    }
+
+    if (!productQuantity || productQuantity <= 0) {
+      return context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Please select quantity",
+      });
+    }
+
     const fields = {
       productTitle: productData?.name,
       image: productData?.images[0],
@@ -120,13 +134,13 @@ const ProductDetails = () => {
       price: productData?.price,
       quantity: productQuantity,
       subTotal: parseInt(productData?.price * productQuantity),
-      productId: productData?.id,
+      productId: productData?.id || productData?._id,
       countInStock: productData?.countInStock,
       userId: user?.userId,
     };
-    setCartFields(fields);
     context.addToCart(fields);
   };
+
 
   const gotoReviews = () => {
     window.scrollTo({ top: 550, behavior: "smooth" });

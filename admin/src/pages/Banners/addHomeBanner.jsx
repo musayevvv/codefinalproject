@@ -65,14 +65,17 @@ const AddBanner = () => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    fetchDataFromApi("/api/imageUpload").then((res) => {
-      res?.map((item) => {
-        item?.images?.map((img) => {
-          deleteImages(`/api/homeBanner/deleteImage?img=${img}`).then(() => {
-            deleteData("/api/imageUpload/deleteAllImages");
+    fetchDataFromApi("/api/homeBanner").then((res) => {
+      if (Array.isArray(res)) {
+        res.forEach((item) => {
+          item?.images?.forEach((img) => {
+            const publicId = extractPublicId(img);
+            deleteImages(`/api/homeBanner/deleteImage?img=${publicId}`).then(() => {
+              deleteData(`/api/homeBanner/${item._id}`);
+            });
           });
         });
-      });
+      }
     });
   }, []);
 
@@ -164,68 +167,67 @@ const AddBanner = () => {
     });
   };
 
-  const removeImg = async (index, imgUrl) => {
-    const imgIndex = previews.indexOf(imgUrl);
+  const extractPublicId = (url) => {
+    const parts = url.split('/');
+    const fileWithExtension = parts[parts.length - 1];
+    const publicId = fileWithExtension.split('.')[0];
+    return publicId;
+  };
 
-    deleteImages(`/api/banners/deleteImage?img=${imgUrl}`).then(() => {
+
+  const removeImg = async (index, imgUrl) => {
+    const publicId = extractPublicId(imgUrl);
+
+    try {
+      await deleteImages(`/api/homeBanner/deleteImage?img=${publicId}`);
       context.setAlertBox({
         open: true,
         error: false,
         msg: "Image Deleted!",
       });
-    });
 
-    if (imgIndex > -1) {
-      previews.splice(index, 1);
+      const newPreviews = [...previews];
+      newPreviews.splice(index, 1);
+      setPreviews(newPreviews);
+    } catch (err) {
+      console.error("Image Delete Error:", err);
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Image silinərkən xəta baş verdi!",
+      });
     }
   };
 
-  const handleChangeCategory = async (event) => {
-    const selectedId = event.target.value;
-    setcategoryVal(selectedId);
 
-    const selectedCat = context.catData?.categoryList.find(
-      (cat) => cat._id === selectedId
-    );
 
-    setFormFields((prev) => ({
-      ...prev,
-      catName: selectedCat?.name || "",
-      catId: selectedId,
+  const handleChangeCategory = (event) => {
+    setcategoryVal(event.target.value);
+    setFormFields(() => ({
+      ...formFields,
+      category: event.target.value,
     }));
-    try {
-      const result = await fetchDataFromApi(`/api/subcategories/${selectedId}`);
-      if (Array.isArray(result)) {
-        setSubCatData(result);
-      } else {
-        setSubCatData([]);
-      }
-    } catch (err) {
-      console.error("Subcategory fetch error:", err);
-      setSubCatData([]);
-    }
+  };
+  const selectCat = (cat, id) => {
+    setFormFields(prev => ({
+      ...prev,
+      catName: cat,
+      catId: id,
+    }));
+  };
 
-    setSubCatVal("");
+  const selectSubCat = (subCat, id) => {
+    setFormFields(() => ({
+      ...formFields,
+      subCat: subCat,
+      subCatName: subCat,
+      subCatId: id,
+    }));
   };
 
   const handleChangeSubCategory = (event) => {
-    const selectedId = event.target.value;
-    setSubCatVal(selectedId);
-
-    const selectedSubCat = subCatData.find((sub) => sub._id === selectedId);
-    setFormFields((prev) => ({
-      ...prev,
-      subCat: selectedSubCat?.name || "",
-      subCatName: selectedSubCat?.name || "",
-      subCatId: selectedId,
-    }));
+    setSubCatVal(event.target.value);
   };
-
-  useEffect(() => {
-    if (categoryVal) {
-      handleChangeCategory({ target: { value: categoryVal } });
-    }
-  }, []);
 
 
   const addHomeBanner = (e) => {

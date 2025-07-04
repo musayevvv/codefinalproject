@@ -92,25 +92,25 @@ const EditUpload = () => {
 
   const [formFields, setFormFields] = useState({
     name: "",
-    subCat: "",
-    subCatName: "",
     description: "",
     brand: "",
-    price: null,
-    oldPrice: null,
+    price: "",
+    oldPrice: "",
     catName: "",
     catId: "",
     subCatId: "",
     category: "",
-    countInStock: null,
+    subCat: "",
+    countInStock: "",
     rating: 0,
-    isFeatured: null,
-    discount: 0,
+    isFeatured: "",
+    discount: "",
     productRam: [],
     size: [],
     productWeight: [],
     location: [],
   });
+
 
   const productImages = useRef();
 
@@ -119,12 +119,13 @@ const EditUpload = () => {
   const formdata = new FormData();
 
   useEffect(() => {
-    const newData = {
-      value: "All",
-      label: "All",
-    };
-    const updatedArray = [...context?.countryList];
-    updatedArray.unshift(newData);
+    const newData = { value: "All", label: "All" };
+    const uniqueCountries = context.countryList.filter(
+      (item, index, self) =>
+        item.value !== "All" &&
+        index === self.findIndex(t => t.value === item.value && t.label === item.label)
+    );
+    const updatedArray = [newData, ...uniqueCountries];
     setCountryList(updatedArray);
   }, [context?.countryList]);
 
@@ -525,6 +526,12 @@ const EditUpload = () => {
     });
   };
 
+  const validCategories = context.catData?.categoryList || [];
+  const validSubCategories = subCatData || [];
+
+  const isValidCategory = validCategories.some(cat => cat._id === categoryVal);
+  const isValidSubCategory = validSubCategories.some(sub => sub._id === subCatVal);
+
   return (
     <>
       <div className="right-content w-100">
@@ -562,7 +569,7 @@ const EditUpload = () => {
                   <input
                     type="text"
                     name="name"
-                    value={formFields.name}
+                    value={formFields.name || ""}
                     onChange={inputChange}
                   />
                 </div>
@@ -585,7 +592,7 @@ const EditUpload = () => {
 
                       {categoryVal !== "" && (
                         <Select
-                          value={categoryVal}
+                          value={isValidCategory ? categoryVal : ""}
                           onChange={handleChangeCategory}
                           displayEmpty
                           inputProps={{ "aria-label": "Without label" }}
@@ -614,7 +621,7 @@ const EditUpload = () => {
                       <h6>SUB CATEGORY</h6>
 
                       <Select
-                        value={subCatVal}
+                        value={isValidSubCategory ? subCatVal : ""}
                         onChange={handleChangeSubCategory}
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}
@@ -736,7 +743,7 @@ const EditUpload = () => {
                       >
                         {productRAMSData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.productRam}>
+                            <MenuItem key={index} value={item.productRam}>
                               {item.productRam}
                             </MenuItem>
                           );
@@ -760,7 +767,7 @@ const EditUpload = () => {
                       >
                         {productWEIGHTData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.productWeight}>
+                            <MenuItem key={index} value={item.productWeight}>
                               {item.productWeight}
                             </MenuItem>
                           );
@@ -782,7 +789,7 @@ const EditUpload = () => {
                       >
                         {productSIZEData?.map((item, index) => {
                           return (
-                            <MenuItem value={item.size}>{item.size}</MenuItem>
+                            <MenuItem key={index} value={item.size}>{item.size}</MenuItem>
                           );
                         })}
                       </Select>
@@ -812,7 +819,6 @@ const EditUpload = () => {
                     <div className="col-md-12">
                       <div className="form-group">
                         <h6>LOCATION</h6>
-
                         <Select2
                           defaultValue={selectedLocation}
                           isMulti
@@ -820,6 +826,8 @@ const EditUpload = () => {
                           options={countryList}
                           className="basic-multi-select"
                           classNamePrefix="select"
+                          getOptionValue={(option) => option.id || `${option.value}-${option.label}`}
+                          getOptionLabel={(option) => option.label}
                           onChange={handleChangeLocation}
                         />
                       </div>
