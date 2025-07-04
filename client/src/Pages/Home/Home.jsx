@@ -27,7 +27,7 @@ const Home = () => {
   const [randomCatProducts, setRandomCatProducts] = useState([]);
   const [homeSideBanners, setHomeSideBanners] = useState([]);
   const [homeBottomBanners, setHomeBottomBanners] = useState([]);
-
+  const [location, setLocation] = useState("all");
   const context = useContext(MyContext);
   const filterSlider = useRef();
 
@@ -37,9 +37,10 @@ const Home = () => {
     context.setEnableFilterTab(false);
     context.setIsBottomShow(true);
 
-    const location = localStorage.getItem("location");
+
+
     if (location) {
-      fetchDataFromApi(`/api/products/featured?location=${location}`).then(setFeaturedProducts);
+      fetchDataFromApi(`/api/products/featured?location`).then(setFeaturedProducts);
       fetchDataFromApi(`/api/products/All?page=1&perPage=16&location=${location}`).then(setProductsData);
     }
 

@@ -17,9 +17,14 @@ cloudinary.config({
 
 
 const storage = multer.diskStorage({
-  destination: (cb) => cb(null, "uploads"),
-  filename: (file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
 });
+
 
 const upload = multer({ storage });
 
@@ -76,6 +81,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ success: false });
   }
 });
+
 
 router.get("/get/count", async (req, res) => {
   const count = await Category.countDocuments({ parentId: undefined });

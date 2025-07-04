@@ -130,7 +130,7 @@ const Dashboard = () => {
 
   const deleteProduct = (id) => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    if (userInfo?.email === "rinkuv37@gmail.com") {
+    if (userInfo?.email === "ayxanmusayev005@gmail.com") {
       context.setProgress(40);
       deleteData(`/api/products/${id}`).then(() => {
         context.setProgress(100);
@@ -166,13 +166,6 @@ const Dashboard = () => {
     }
   };
 
-  const showPerPage = (e) => {
-    setshowBy(e.target.value);
-    fetchDataFromApi(`/api/products?page=1&perPage=${e.target.value}`).then((res) => {
-      setProductList(res);
-      context.setProgress(100);
-    });
-  };
   return (
     <>
       <div className="right-content w-100">
