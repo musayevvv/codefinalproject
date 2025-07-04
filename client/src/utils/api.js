@@ -26,9 +26,9 @@ export const postData = async (url, formData) => {
         const response = await fetch(import.meta.env.VITE_API_URL + url, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
+            credentials: 'include', 
             body: JSON.stringify(formData),
         });
 
@@ -43,6 +43,7 @@ export const postData = async (url, formData) => {
         console.error('Error:', error);
     }
 };
+
 
 export const editData = async (url, updatedData) => {
     const { data } = await axios.put(`${import.meta.env.VITE_API_URL}${url}`, updatedData, params);

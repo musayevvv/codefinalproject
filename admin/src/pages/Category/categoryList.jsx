@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { MyContext } from "../../App";
+import {MyContext} from "../../App";
 import { Link } from "react-router-dom";
 import { emphasize, styled } from "@mui/material/styles";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
 import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import './Category.css'
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 

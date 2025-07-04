@@ -2,21 +2,16 @@ import { MdShoppingBag } from "react-icons/md";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MdCategory } from "react-icons/md";
-
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
-
 import { FaEye } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { MyContext } from "../../App";
-
 import Rating from "@mui/material/Rating";
 import { Link } from "react-router-dom";
-
 import { emphasize, styled } from "@mui/material/styles";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
@@ -27,7 +22,6 @@ import SearchBox from "../../components/SearchBox/Search";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -36,8 +30,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -90,8 +82,6 @@ const columns = [
 ];
 
 const Products = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [showBy, setshowBy] = useState(10);
   const [categoryVal, setcategoryVal] = useState("all");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
@@ -99,14 +89,9 @@ const Products = () => {
   const [totalCategory, setTotalCategory] = useState();
   const [totalSubCategory, setTotalSubCategory] = useState();
   const [isLoadingBar, setIsLoadingBar] = useState(false);
-  const [perPage, setPerPage] = useState(10);
-  const open = Boolean(anchorEl);
-
   const context = useContext(MyContext);
 
   const [productList, setProductList] = useState([]);
-
-  const [page1, setPage1] = useState(0);
 
   const handleChangePage = (event, newPage) => {
     getProducts(page, rowsPerPage);
@@ -118,15 +103,13 @@ const Products = () => {
     setPage(0);
   };
 
-  const ITEM_HEIGHT = 48;
-
   useEffect(() => {
     getProducts(page, rowsPerPage);
   }, [page, rowsPerPage])
 
 
   const getProducts = (page, rowsPerPage) => {
-    fetchDataFromApi(`/api/products/getAll?page=${page + 1}&perPage=${rowsPerPage}`).then((res) => {
+    fetchDataFromApi(`/api/products/All?page=${page + 1}&perPage=${rowsPerPage}`).then((res) => {
       setProductList(res);
       context.setProgress(100);
     });
@@ -278,7 +261,7 @@ const Products = () => {
               <h4>CATEGORY BY</h4>
               <FormControl size="small" className="w-100">
                 <Select
-                  value={categoryVal}
+                  value={categoryVal || "all"}
                   onChange={handleChangeCategory}
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
@@ -287,18 +270,17 @@ const Products = () => {
                   <MenuItem value="all">
                     <em>All</em>
                   </MenuItem>
-                  {context.catData?.categoryList?.length !== 0 &&
-                    context.catData?.categoryList?.map((cat, index) => {
-                      return (
-                        <MenuItem
-                          className="text-capitalize"
-                          value={cat._id}
-                          key={index}
-                        >
-                          {cat.name}
-                        </MenuItem>
-                      );
-                    })}
+
+                  {Array.isArray(context.catData?.categoryList) &&
+                    context.catData.categoryList.map((cat) => (
+                      <MenuItem
+                        key={cat._id}
+                        value={cat._id}
+                        className="text-capitalize"
+                      >
+                        {cat.name}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </div>
@@ -369,7 +351,7 @@ const Products = () => {
                               <div style={{ width: "70px" }}>
                                 <del className="old">{item?.oldPrice}$</del>
                                 <span className="new text-danger  d-block w-100">
-                                   {item?.price}$
+                                  {item?.price}$
                                 </span>
                               </div>
                             </TableCell>
@@ -418,12 +400,13 @@ const Products = () => {
             <TablePagination
               rowsPerPageOptions={[50, 100, 150, 200]}
               component="div"
-              count={productList?.totalPages * rowsPerPage}
+              count={Number.isInteger(productList?.totalPages) ? productList.totalPages * rowsPerPage : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+
           </Paper>
         </div>
       </div>

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
-
+import './SignUp.css'
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
@@ -56,95 +56,63 @@ const SignUp = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
+
+    const { name, email, phone, password, confirmPassword } = formfields;
+
+    if (!name || !email || !phone || !password || !confirmPassword) {
+      return context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "All fields are required!",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Passwords do not match!",
+      });
+    }
+
     try {
-      if (formfields.name === "") {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "name can not be blank!",
-        });
-        return false;
-      }
-
-      if (formfields.email === "") {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "email can not be blank!",
-        });
-        return false;
-      }
-
-      if (formfields.phone === "") {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "phone can not be blank!",
-        });
-        return false;
-      }
-
-      if (formfields.password === "") {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "password can not be blank!",
-        });
-        return false;
-      }
-
-      if (formfields.confirmPassword === "") {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "confirm password can not be blank!",
-        });
-        return false;
-      }
-
-      if (formfields.confirmPassword !== formfields.password) {
-        context.setAlertBox({
-          open: true,
-          error: true,
-          msg: "password not match",
-        });
-        return false;
-      }
-
       setIsLoading(true);
 
-      postData("/api/user/signup", formfields)
-        .then((res) => {
-          console.log(res);
+      const res = await postData("/api/user/signup", formfields);
+      if (res.status !== "FAILED") {
+        localStorage.setItem("userEmail", email);
 
-          if (res.status !== "FAILED") {
-
-            localStorage.setItem("userEmail", formfields.email);
-
-            setTimeout(() => {
-              setIsLoading(true);
-              history("/verify-account");
-            }, 2000);
-          } else {
-            setIsLoading(false);
-            context.setAlertBox({
-              open: true,
-              error: true,
-              msg: res.msg,
-            });
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.error("Error posting data:", error);
+        context.setAlertBox({
+          open: true,
+          error: false,
+          msg: "Account created! Please verify your email.",
         });
+
+        setTimeout(() => {
+          history("/verify-account");
+        }, 1500);
+      } else {
+        context.setAlertBox({
+          open: true,
+          error: true,
+          msg: res.msg || "Signup failed. Please try again.",
+        });
+      }
+
     } catch (error) {
-      console.log(error);
+      console.error("Signup error:", error);
+      context.setAlertBox({
+        open: true,
+        error: true,
+        msg: "Something went wrong. Try again later.",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
+
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)

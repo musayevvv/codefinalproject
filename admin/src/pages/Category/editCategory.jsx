@@ -204,8 +204,6 @@ const EditCategory = () => {
     e.preventDefault();
 
     const appendedArray = [...previews, ...uniqueArray];
-    console.log(appendedArray);
-
     img_arr = [];
     formdata.append("name", formFields.name);
     formdata.append("color", formFields.color);
@@ -213,8 +211,6 @@ const EditCategory = () => {
     formdata.append("images", appendedArray);
 
     formFields.images = appendedArray;
-
-    console.log(formFields);
     if (
       formFields.name !== "" &&
       formFields.color !== "" &&
@@ -291,7 +287,7 @@ const EditCategory = () => {
                 </div>
 
                 <div className="imagesUploadSec">
-                  <h5 class="mb-4">Media And Published</h5>
+                  <h5 className="mb-4">Media And Published</h5>
 
                   <div className="imgUploadBox d-flex align-items-center">
                     {previews?.length !== 0 &&

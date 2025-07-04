@@ -15,11 +15,10 @@ cloudinary.config({
   secure: true,
 });
 
-let imagesArr = [];
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads"),
-  filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+  destination: (cb) => cb(null, "uploads"),
+  filename: (file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
 });
 
 const upload = multer({ storage });
@@ -42,7 +41,7 @@ router.post("/upload", upload.array("images"), async (req, res) => {
     const imagesUploaded = new ImageUpload({ images: uploadedUrls });
     await imagesUploaded.save();
 
-    res.status(200).json({ images: uploadedUrls }); 
+    res.status(200).json({ images: uploadedUrls });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: 'Upload failed' });

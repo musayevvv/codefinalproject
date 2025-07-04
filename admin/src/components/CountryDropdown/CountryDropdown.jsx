@@ -6,8 +6,9 @@ import { IoIosSearch } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import Slide from '@mui/material/Slide';
-import { MyContext } from '../../App';
+import { MyContext } from "../../App";
 import { Link, useParams } from "react-router-dom";
+import './CountryDropdown.css'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -52,10 +53,12 @@ const CountryDropdown = (props) => {
 
     return (
         <>
-            <Button className='countryDrop' onClick={() => {setisOpenModal(true);
-                setcountryList(context.countryList);}}>
+            <Button className='countryDrop' onClick={() => {
+                setisOpenModal(true);
+                setcountryList(context.countryList);
+            }}>
                 <div className='info d-flex flex-column'>
-                    <span className='name'>{context.selectedCountry!=="" ? context.selectedCountry?.length>10 ? context.selectedCountry?.substr(0,10)+'...' : context.selectedCountry : 'Select Location'}</span>
+                    <span className='name'>{context.selectedCountry !== "" ? context.selectedCountry?.length > 10 ? context.selectedCountry?.substr(0, 10) + '...' : context.selectedCountry : 'Select Location'}</span>
                 </div>
                 <span className='ml-auto'><FaAngleDown /></span>
             </Button>
@@ -75,7 +78,7 @@ const CountryDropdown = (props) => {
                     {
                         countryList?.length !== 0 && countryList?.map((item, index) => {
                             return (
-                                <li key={index}><Button onClick={() => selectCountry(index,item.country)}
+                                <li key={index}><Button onClick={() => selectCountry(index, item.country)}
                                     className={`${selectedTab === index ? 'active' : ''}`}
                                 >{item.country}</Button></li>
                             )

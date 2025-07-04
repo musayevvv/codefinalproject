@@ -21,17 +21,27 @@ import searchRoutes from './routes/search.js';
 import bannersRoutes from './routes/banners.js';
 import homeSideBannerRoutes from './routes/homeSideBanner.js';
 import homeBottomBannerRoutes from './routes/homeBottomBanner.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(cors('*'));
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+}));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
-// API Routes
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/products', productRoutes);
@@ -48,8 +58,9 @@ app.use('/api/search', searchRoutes);
 app.use('/api/banners', bannersRoutes);
 app.use('/api/homeSideBanners', homeSideBannerRoutes);
 app.use('/api/homeBottomBanners', homeBottomBannerRoutes);
+app.use("/api", productRoutes);
 
-// Database connection & server
+
 mongoose.connect(process.env.CONNECTION_STRING)
     .then(() => {
         console.log('✅ Database connection is ready...');

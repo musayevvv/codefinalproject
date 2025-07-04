@@ -28,10 +28,6 @@ router.post('/upload', upload.array('images'), async (req, res) => {
   try {
     for (let i = 0; i < req?.files?.length; i++) {
       const options = { use_filename: true, unique_filename: false, overwrite: false };
-      const img = await cloudinary.uploader.upload(req.files[i].path, options, (error, result) => {
-        imagesArr.push(result.secure_url);
-        fs.unlinkSync(`uploads/${req.files[i].filename}`);
-      });
     }
     let imagesUploaded = new ImageUpload({ images: imagesArr });
     imagesUploaded = await imagesUploaded.save();

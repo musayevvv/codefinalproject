@@ -136,12 +136,9 @@ const MyAccount = () => {
     try {
       const files = e.target.files;
 
-      console.log(files);
       setUploading(true);
 
-      //const fd = new FormData();
       for (var i = 0; i < files.length; i++) {
-        // Validate file type
         if (
           files[i] &&
           (files[i].type === "image/jpeg" ||
@@ -169,7 +166,6 @@ const MyAccount = () => {
     }
 
     uploadImage(apiEndPoint, formdata).then((res) => {
-      console.log(selectedImages);
       fetchDataFromApi("/api/imageUpload").then((response) => {
         if (
           response !== undefined &&

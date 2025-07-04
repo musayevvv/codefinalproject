@@ -26,6 +26,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import './Dashboard.css'
 
 import {
   BarChart,
@@ -45,35 +46,14 @@ export const options = {
 const columns = [
   { id: "product", label: "PRODUCT", minWidth: 150 },
   { id: "category", label: "CATEGORY", minWidth: 100 },
-  {
-    id: "subcategory",
-    label: "SUB CATEGORY",
-    minWidth: 150,
-  },
-  {
-    id: "brand",
-    label: "BRAND",
-    minWidth: 130,
-  },
-  {
-    id: "price",
-    label: "PRICE",
-    minWidth: 100,
-  },
-  {
-    id: "rating",
-    label: "RATING",
-    minWidth: 80,
-  },
-  {
-    id: "action",
-    label: "ACTION",
-    minWidth: 120,
-  },
+  { id: "subcategory", label: "SUB CATEGORY", minWidth: 150 },
+  { id: "brand", label: "BRAND", minWidth: 130 },
+  { id: "price", label: "PRICE", minWidth: 100 },
+  { id: "rating", label: "RATING", minWidth: 80 },
+  { id: "action", label: "ACTION", minWidth: 120 },
 ];
 
 const Dashboard = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [showBy, setshowBy] = useState(10);
   const [productList, setProductList] = useState([]);
   const [categoryVal, setcategoryVal] = useState("all");
@@ -83,98 +63,28 @@ const Dashboard = () => {
   const [totalProducts, setTotalProducts] = useState();
   const [totalProductsReviews, setTotalProductsReviews] = useState();
   const [totalSales, setTotalSales] = useState();
-
   const [salesData, setSalesData] = useState([]);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
-
   const [year, setYear] = useState(new Date().getFullYear());
-
-  const handleChangeYear = (event) => {
-
-    setYear(event.target.value);
-
-    fetchDataFromApi(`/api/orders/sales?year=${event.target.value}`).then((res) => {
-      const sales = [];
-      res?.monthlySales?.length !== 0 &&
-        res?.monthlySales?.map((item) => {
-          sales.push({
-            name: item?.month,
-            sales: parseInt(item?.sale),
-          });
-        });
-
-      const uniqueArr = sales.filter(
-        (obj, index, self) =>
-          index === self.findIndex((t) => t.name === obj.name)
-      );
-      setSalesData(uniqueArr);
-      console.log(uniqueArr);
-    });
-
-
-  };
-
-  const open = Boolean(anchorEl);
 
   const context = useContext(MyContext);
 
-  var data = [
-    {
-      name: "JAN",
-      sales: 2400,
-    },
-    {
-      name: "FEB",
-      sales: 2210,
-    },
-    {
-      name: "MAR",
-      sales: 2290,
-    },
-    {
-      name: "APRIL",
-      sales: 2000,
-    },
-    {
-      name: "MAY",
-      sales: 2181,
-    },
-    {
-      name: "JUNE",
-      sales: 2500,
-    },
-    {
-      name: "JULY",
-      sales: 2100,
-    },
-    {
-      name: "AUG",
-      sales: 2100,
-    },
-    {
-      name: "SEP",
-      sales: 2100,
-    },
-    {
-      name: "OCT",
-      sales: 2100,
-    },
-    {
-      name: "NOV",
-      sales: 2100,
-    },
-    {
-      name: "DEC",
-      sales: 2100,
-    },
-  ];
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const handleChangeYear = (event) => {
+    setYear(event.target.value);
+    fetchDataFromApi(`/api/orders/sales?year=${event.target.value}`).then((res) => {
+      const sales = res?.monthlySales?.map(item => ({
+        name: item?.month,
+        sales: parseInt(item?.sale),
+      })) || [];
+      const uniqueArr = sales.filter((obj, index, self) =>
+        index === self.findIndex((t) => t.name === obj.name)
+      );
+      setSalesData(uniqueArr);
+    });
   };
 
+  const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -182,63 +92,39 @@ const Dashboard = () => {
 
   useEffect(() => {
     getProducts(page, rowsPerPage);
-  }, [page, rowsPerPage])
-
+  }, [page, rowsPerPage]);
 
   const getProducts = (page, rowsPerPage) => {
-    fetchDataFromApi(`/api/products/getAll?page=${page + 1}&perPage=${rowsPerPage}`).then((res) => {
+    fetchDataFromApi(`/api/products/all?page=${page + 1}&perPage=${rowsPerPage}`).then((res) => {
       setProductList(res);
       context.setProgress(100);
     });
-  }
+  };
 
   useEffect(() => {
     context.setisHideSidebarAndHeader(false);
     window.scrollTo(0, 0);
     context.setProgress(40);
 
-    fetchDataFromApi("/api/user/get/count").then((res) => {
-      setTotalUsers(res.userCount);
-    });
+    fetchDataFromApi("/api/user/get/count").then(res => setTotalUsers(res.userCount));
+    fetchDataFromApi("/api/orders/get/count").then(res => setTotalOrders(res.orderCount));
+    fetchDataFromApi("/api/products/get/count").then(res => setTotalProducts(res.productsCount));
+    fetchDataFromApi("/api/productReviews/get/count").then(res => setTotalProductsReviews(res.productsReviews));
 
-    fetchDataFromApi("/api/orders/get/count").then((res) => {
-      setTotalOrders(res.orderCount);
-    });
-
-    let sales = 0;
     fetchDataFromApi("/api/orders/").then((res) => {
-      res?.length !== 0 &&
-        res?.map((item) => {
-          sales += parseInt(item.amount);
-        });
-
-      setTotalSales(sales);
-    });
-
-    fetchDataFromApi("/api/products/get/count").then((res) => {
-      setTotalProducts(res.productsCount);
-    });
-
-    fetchDataFromApi("/api/productReviews/get/count").then((res) => {
-      setTotalProductsReviews(res.productsReviews);
+      const total = res.reduce((sum, item) => sum + parseInt(item.amount), 0);
+      setTotalSales(total);
     });
 
     fetchDataFromApi(`/api/orders/sales?year=${year}`).then((res) => {
-      const sales = [];
-      res?.monthlySales?.length !== 0 &&
-        res?.monthlySales?.map((item) => {
-          sales.push({
-            name: item?.month,
-            sales: parseInt(item?.sale),
-          });
-        });
-
-      const uniqueArr = sales.filter(
-        (obj, index, self) =>
-          index === self.findIndex((t) => t.name === obj.name)
+      const sales = res?.monthlySales?.map(item => ({
+        name: item?.month,
+        sales: parseInt(item?.sale),
+      })) || [];
+      const uniqueArr = sales.filter((obj, index, self) =>
+        index === self.findIndex((t) => t.name === obj.name)
       );
       setSalesData(uniqueArr);
-      console.log(uniqueArr);
     });
   }, []);
 
@@ -246,39 +132,25 @@ const Dashboard = () => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
     if (userInfo?.email === "rinkuv37@gmail.com") {
       context.setProgress(40);
-      deleteData(`/api/products/${id}`).then((res) => {
+      deleteData(`/api/products/${id}`).then(() => {
         context.setProgress(100);
-        context.setAlertBox({
-          open: true,
-          error: false,
-          msg: "Product Deleted!",
-        });
-        fetchDataFromApi(`/api/products`).then((res) => {
-          setProductList(res);
-        });
+        context.setAlertBox({ open: true, error: false, msg: "Product Deleted!" });
+        fetchDataFromApi(`/api/products`).then(setProductList);
       });
     } else {
-      context.setAlertBox({
-        open: true,
-        error: true,
-        msg: "Only Admin can delete Product",
-      });
+      context.setAlertBox({ open: true, error: true, msg: "Only Admin can delete Product" });
     }
   };
 
   const handleChangeCategory = (event) => {
-    if (event.target.value !== "all") {
-      setcategoryVal(event.target.value);
-      fetchDataFromApi(`/api/products/catId?catId=${event.target.value}`).then(
-        (res) => {
-          setProductList(res);
-          context.setProgress(100);
-        }
-      );
-    }
-    if (event.target.value === "all") {
-      setcategoryVal("all");
-      setcategoryVal(event.target.value);
+    const val = event.target.value;
+    setcategoryVal(val);
+    if (val !== "all") {
+      fetchDataFromApi(`/api/products/catId?catId=${val}`).then((res) => {
+        setProductList(res);
+        context.setProgress(100);
+      });
+    } else {
       fetchDataFromApi(`/api/products`).then((res) => {
         setProductList(res);
         context.setProgress(100);
@@ -287,29 +159,20 @@ const Dashboard = () => {
   };
 
   const searchProducts = (keyword) => {
-    if (keyword !== "") {
-      fetchDataFromApi(`/api/search?q=${keyword}&page=1&perPage=${10000}`).then(
-        (res) => {
-          setProductList(res);
-        }
-      );
+    if (keyword) {
+      fetchDataFromApi(`/api/search?q=${keyword}&page=1&perPage=10000`).then(setProductList);
     } else {
-      fetchDataFromApi(`/api/products`).then((res) => {
-        setProductList(res);
-      });
+      fetchDataFromApi(`/api/products`).then(setProductList);
     }
   };
 
   const showPerPage = (e) => {
     setshowBy(e.target.value);
-    fetchDataFromApi(`/api/products?page=${1}&perPage=${e.target.value}`).then(
-      (res) => {
-        setProductList(res);
-        context.setProgress(100);
-      }
-    );
+    fetchDataFromApi(`/api/products?page=1&perPage=${e.target.value}`).then((res) => {
+      setProductList(res);
+      context.setProgress(100);
+    });
   };
-
   return (
     <>
       <div className="right-content w-100">
@@ -344,10 +207,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-
-
-
         <div className="card shadow border-0 p-3 mt-4">
           <h3 className="hd">Best Selling Products</h3>
 
@@ -356,7 +215,7 @@ const Dashboard = () => {
               <h4>CATEGORY BY</h4>
               <FormControl size="small" className="w-100">
                 <Select
-                  value={categoryVal}
+                  value={categoryVal || "all"}
                   onChange={handleChangeCategory}
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
@@ -496,18 +355,23 @@ const Dashboard = () => {
             <TablePagination
               rowsPerPageOptions={[50, 100, 150, 200]}
               component="div"
-              count={productList?.totalPages * rowsPerPage}
+              count={
+                Number.isInteger(productList?.totalPages)
+                  ? productList.totalPages * rowsPerPage
+                  : 0
+              }
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+
           </Paper>
         </div>
 
         <div className="card p-3">
           <div className="d-flex align-items-center">
-            <h3 class="hd">Total Sales</h3>
+            <h3 className="hd">Total Sales</h3>
 
             <div className="ml-auto res-full" style={{ width: '100px' }}>
               <Select
@@ -563,9 +427,9 @@ const Dashboard = () => {
                     backgroundColor: "#071739  ",
                     color: "white",
                   }}
-                  labelStyle={{ color: "yellow" }} 
-                  itemStyle={{ color: "cyan" }} 
-                  cursor={{ fill: "white" }} 
+                  labelStyle={{ color: "yellow" }}
+                  itemStyle={{ color: "cyan" }}
+                  cursor={{ fill: "white" }}
                 />
                 <Legend />
                 <CartesianGrid

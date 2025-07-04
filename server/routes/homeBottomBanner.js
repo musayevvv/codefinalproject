@@ -17,8 +17,8 @@ cloudinary.config({
 let imagesArr = [];
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads"),
-  filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
+  destination: (cb) => cb(null, "uploads"),
+  filename: (file, cb) => cb(null, `${Date.now()}_${file.originalname}`),
 });
 
 const upload = multer({ storage });
@@ -31,7 +31,7 @@ router.post("/upload", upload.array("images"), async (req, res) => {
         use_filename: true,
         unique_filename: false,
         overwrite: false,
-      }, (error, result) => {
+      }, (result) => {
         imagesArr.push(result.secure_url);
         fs.unlinkSync(`uploads/${req.files[i].filename}`);
       });

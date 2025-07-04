@@ -1,0 +1,188 @@
+body.dark {
+    background: #071739 !important;
+}
+
+body.dark .topLoadingBar {
+    background: #ff4964 !important;
+}
+
+body.dark .select__menu * {
+    color: #000 !important;
+}
+
+body.dark .select__control {
+    background-color: #2b3c5f !important;
+}
+
+body.dark .select__input {
+    height: 45px !important;
+    border: 0px !important;
+}
+
+body.dark .form .form-group input.select__input {
+    border: 0px !important;
+}
+
+body.dark .MuiInputBase-root,
+body.dark .MuiSvgIcon-root,
+body.dark .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark .MuiInputBase-root fieldset {
+    border-color: rgba(255, 255, 255, 0.4) !important
+}
+
+body.dark .MuiMenu-paper {
+    background-color: #12254e !important;
+}
+
+body.dark .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+body.dark .MuiPaginationItem-root {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark .MuiDialog-paper {
+    background-color: #12254e !important;
+}
+
+body.dark .headerSearch button svg {
+    color: #000 !important;
+}
+
+body.dark .locationModal .countryList li button {
+    color: #fff !important;
+}
+
+body.dark .close_ svg {
+    font-size: 22px;
+    color: #000 !important;
+    opacity: 0.7;
+}
+
+body.dark button svg {
+    color: #fff !important;
+}
+
+body.dark .imgUploadBox .uploadBox {
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+body.dark .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root,
+body.dark .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark .breadcrumbs_ a {
+    background-color: #112143 !important;
+}
+
+body.dark .breadcrumbs_ a * {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .breadcrumbs_ li .MuiChip-filled {
+    background-color: #112143 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .css-1wuw8dw-MuiBreadcrumbs-separator {
+    background-color: #112143 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark .css-1c99szj-MuiRating-icon {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+body.dark .loginSection {
+    background: #112142 !important;
+}
+
+body.dark form .form-control {
+    background: #071739 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark form .form-control::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark .table-bordered td,
+.table-bordered th {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark .css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+}
+
+body.dark .css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark table td {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p,
+body.dark .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon,
+body.dark .css-bpeome-MuiSvgIcon-root-MuiSelect-icon {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark .card {
+    background: #1b2b4d !important;
+    border: 1px solid #10214b !important;
+}
+
+body.dark .card .hd {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark .cardFilters .col-md-3 h4 {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark .logoutWrapper .logoutBox {
+    background: transparent;
+    background-image: linear-gradient(#183e8c, #163474);
+}
+
+body.dark .myAcc .userInfo * {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    background-color: #12254e !important;
+}
+
+body.dark .MuiPaper-elevation li *,
+body.dark .MuiPaper-elevation li {
+    color: rgba(255, 255, 255, 0.8) !important;
+}

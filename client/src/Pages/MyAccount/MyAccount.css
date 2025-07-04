@@ -63,3 +63,14 @@
     z-index: 1000;
     opacity: 0;
 }
+
+.oldPassword {
+    padding-left: 0 !important;
+}
+.myPhone{
+    margin-top: 12px;
+}
+
+.Save{
+    margin-top: 12px;
+}

@@ -5,7 +5,7 @@ import "./responsive.css";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
-import React, { createContext, useEffect, useState, useRef } from "react";
+import { createContext, useEffect, useState } from "react";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Products from "./pages/Products/Products";
@@ -26,7 +26,8 @@ import HomeBannerSlideList from "./pages/HomeBanner/homeSlideList";
 import EditHomeBannerSlide from "./pages/HomeBanner/editSlide";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
+import './main.css'
+import './dark.css'
 import LoadingBar from "react-top-loading-bar";
 import { fetchDataFromApi } from "./utils/api";
 
@@ -89,17 +90,6 @@ function App() {
     }
   }, [theme]);
 
-
-//   useEffect(() => {
-//     const handleContextmenu = e => {
-//         e.preventDefault()
-//     }
-//     document.addEventListener('contextmenu', handleContextmenu)
-//     return function cleanup() {
-//         document.removeEventListener('contextmenu', handleContextmenu)
-//     }
-// }, [ ])
-
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -118,25 +108,19 @@ function App() {
   }, []);
 
   const countryListArr = [];
-  
+
   const getCountry = async (url) => {
     const responsive = await axios.get(url).then((res) => {
-      
+
       if (res !== null) {
-        //console.log(res.data.data);
         res.data.data.map((item, index) => {
           countryListArr.push({
-            value:item?.iso2,
-            label:item?.country,
+            value: item?.iso2,
+            label: item?.country,
           });
-          //console.log(item.country)
         });
 
-
-       
         setCountryList(countryListArr);
-
-        //console.log(res.data.data[0].country)
       }
 
     });
@@ -225,15 +209,13 @@ function App() {
           {isHideSidebarAndHeader !== true && (
             <>
               <div
-                className={`sidebarOverlay d-none ${
-                  isOpenNav === true && "show"
-                }`}
+                className={`sidebarOverlay d-none ${isOpenNav === true && "show"
+                  }`}
                 onClick={() => setIsOpenNav(false)}
               ></div>
               <div
-                className={`sidebarWrapper ${
-                  isToggleSidebar === true ? "toggle" : ""
-                } ${isOpenNav === true ? "open" : ""}`}
+                className={`sidebarWrapper ${isToggleSidebar === true ? "toggle" : ""
+                  } ${isOpenNav === true ? "open" : ""}`}
               >
                 <Sidebar />
               </div>
@@ -241,9 +223,8 @@ function App() {
           )}
 
           <div
-            className={`content ${isHideSidebarAndHeader === true && "full"} ${
-              isToggleSidebar === true ? "toggle" : ""
-            }`}
+            className={`content ${isHideSidebarAndHeader === true && "full"} ${isToggleSidebar === true ? "toggle" : ""
+              }`}
           >
             <Routes>
               <Route path="/" exact={true} element={<Dashboard />} />

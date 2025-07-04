@@ -18,7 +18,6 @@ cloudinary.config({
 });
 
 let imagesArr = [];
-
 const storage = multer.diskStorage({
   destination: (_, __, cb) => cb(null, "uploads"),
   filename: (_, file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
@@ -50,18 +49,11 @@ const sendEmailFun = async (to, subject, text, html) => {
 };
 
 router.post("/signup", async (req, res) => {
-
-
   const { name, phone, email, password, isAdmin } = req.body;
   try {
-
-    
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
     const existingUser = await User.findOne({ email });
-    const existingUserByPh = await User.findOne({ phone });
-
     if (existingUser) return res.json({ status: "FAILED", msg: "User already exist with this email!" });
-    if (existingUserByPh) return res.json({ status: "FAILED", msg: "User already exist with this phone number!" });
 
     const hashPassword = await bcrypt.hash(password, 10);
     const user = await new User({
@@ -70,7 +62,10 @@ router.post("/signup", async (req, res) => {
     }).save();
 
     await sendEmailFun(email, "Verify Email", "", "Your OTP is " + verifyCode);
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JSON_WEB_TOKEN_SECRET_KEY);
+    const token = jwt.sign(
+      { email: user.email, id: user._id, isAdmin: user.isAdmin },
+      process.env.JSON_WEB_TOKEN_SECRET_KEY
+    );
 
     return res.status(200).json({
       success: true,
@@ -240,12 +235,12 @@ router.delete("/deleteImage", async (req, res) => {
   const result = await cloudinary.uploader.destroy(publicId);
   if (result) res.status(200).send(result);
 });
-
 router.post("/forgotPassword", async (req, res) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.json({ status: "FAILED", msg: "User not exist with this email!" });
+    if (!user)
+      return res.json({ status: "FAILED", msg: "User not exist with this email!" });
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     user.otp = otp;

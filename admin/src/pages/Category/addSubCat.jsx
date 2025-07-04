@@ -9,7 +9,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import Button from '@mui/material/Button';
 import { deleteData, deleteImages, editData, fetchDataFromApi, postData, uploadImage } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
-import { MyContext } from '../../App';
+import { MyContext } from "../../App";
 import CircularProgress from '@mui/material/CircularProgress';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -44,11 +44,11 @@ const AddSubCat = () => {
     const [catData, setCatData] = useState([]);
 
     const [categoryVal, setcategoryVal] = useState('');
-    
+
     const [formFields, setFormFields] = useState({
         name: '',
-        slug:'',
-        parentId:''
+        slug: '',
+        parentId: ''
     });
 
 
@@ -56,12 +56,12 @@ const AddSubCat = () => {
 
     const context = useContext(MyContext);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchDataFromApi('/api/category').then((res) => {
             setCatData(res);
             context.setProgress(100);
-          })
-    },[])
+        })
+    }, [])
 
     const changeInput = (e) => {
         setFormFields(() => (
@@ -78,25 +78,22 @@ const AddSubCat = () => {
     };
 
 
-    const selectCat = (cat,id) => {
+    const selectCat = (cat, id) => {
         formFields.parentId = id;
     }
 
 
     const addSubCategory = (e) => {
         e.preventDefault();
-
-        console.log(formFields)
-
         formFields.slug = formFields.name
 
-        if (formFields.name !== "" && formFields.parentId!=="") {
+        if (formFields.name !== "" && formFields.parentId !== "") {
             setIsLoading(true);
 
             postData(`/api/category/create`, formFields).then((res) => {
                 setIsLoading(false);
                 context.fetchCategory();
-            
+
 
                 deleteData("/api/imageUpload/deleteAllImages");
 
@@ -150,26 +147,26 @@ const AddSubCat = () => {
                                 <div className='form-group'>
                                     <h6>Parent Category</h6>
                                     <Select
-                                                value={categoryVal}
-                                                onChange={handleChangeCategory}
-                                                displayEmpty
-                                                inputProps={{ 'aria-label': 'Without label' }}
-                                                className='w-100'
-                                            >
-                                                <MenuItem value="">
-                                                    <em value={null}>None</em>
-                                                </MenuItem>
-                                                {
-                                                    catData?.categoryList?.length !== 0 && catData?.categoryList?.map((cat, index) => {
-                                                        return (
-                                                            <MenuItem className="text-capitalize" value={cat._id} key={index}
-                                                                onClick={() => selectCat(cat.name,cat._id)}
-                                                            >{cat.name}</MenuItem>
-                                                        )
-                                                    })
-                                                }
+                                        value={categoryVal}
+                                        onChange={handleChangeCategory}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        className='w-100'
+                                    >
+                                        <MenuItem value="">
+                                            <em value={null}>None</em>
+                                        </MenuItem>
+                                        {
+                                            catData?.categoryList?.length !== 0 && catData?.categoryList?.map((cat, index) => {
+                                                return (
+                                                    <MenuItem className="text-capitalize" value={cat._id} key={index}
+                                                        onClick={() => selectCat(cat.name, cat._id)}
+                                                    >{cat.name}</MenuItem>
+                                                )
+                                            })
+                                        }
 
-                                            </Select>
+                                    </Select>
                                 </div>
 
 

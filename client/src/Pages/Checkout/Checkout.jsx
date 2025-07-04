@@ -51,10 +51,6 @@ const Checkout = () => {
 
   const checkout = (e) => {
     e.preventDefault();
-
-    console.log(cartData);
-
-    console.log(formFields);
     if (formFields.fullName === "") {
       context.setAlertBox({
         open: true,
@@ -157,8 +153,6 @@ const Checkout = () => {
       name: "E-Bharat",
       description: "for testing purpose",
       handler: function (response) {
-        console.log(response);
-
         const paymentId = response.razorpay_payment_id;
 
         const user = JSON.parse(localStorage.getItem("user"));
@@ -175,10 +169,6 @@ const Checkout = () => {
           products: cartData,
           date: addressInfo?.date
         };
-
-        console.log(payLoad)
-
-
         postData(`/api/orders/create`, payLoad).then((res) => {
           fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then((res) => {
             res?.length !== 0 && res?.map((item) => {
@@ -363,7 +353,7 @@ const Checkout = () => {
                       {cartData?.length !== 0 &&
                         cartData?.map((item, index) => {
                           return (
-                            <tr>
+                            <tr key={index}>
                               <td>
                                 {item?.productTitle?.substr(0, 20) + "..."}{" "}
                                 <b>× {item?.quantity}</b>

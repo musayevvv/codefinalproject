@@ -161,7 +161,6 @@ const EditUpload = () => {
     });
 
     fetchDataFromApi(`/api/products/${id}`).then((res) => {
-      console.log(res);
       setProducts(res);
       setFormFields({
         name: res.name,
@@ -186,7 +185,6 @@ const EditUpload = () => {
       setSelectedLocation(res.location);
 
       setRatingValue(res.rating);
-      console.log(res);
       setcategoryVal(res.category?._id);
       setSubCatVal(res.subCatId);
       setisFeaturedValue(res.isFeatured);
@@ -380,7 +378,6 @@ const EditUpload = () => {
 
   const handleChangeLocation = (selectedOptions) => {
     setSelectedLocation(selectedOptions);
-    console.log(selectedOptions);
   };
 
   const edit_Product = (e) => {
@@ -835,7 +832,7 @@ const EditUpload = () => {
 
           <div className="card p-4 mt-0">
             <div className="imagesUploadSec">
-              <h5 class="mb-4">Media And Published</h5>
+              <h5 className="mb-4">Media And Published</h5>
 
               <div className="imgUploadBox d-flex align-items-center">
                 {previews?.length !== 0 &&

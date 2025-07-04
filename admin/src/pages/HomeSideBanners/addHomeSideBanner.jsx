@@ -12,6 +12,7 @@ import Select from "@mui/material/Select";
 import {
   deleteData,
   deleteImages,
+  editData,
   fetchDataFromApi,
   postData,
   uploadImage,
@@ -25,6 +26,8 @@ import { IoCloseSharp } from "react-icons/io5";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+
+//breadcrumb code
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
     theme.palette.mode === "light"
@@ -108,7 +111,9 @@ const AddBanner = () => {
       console.log(files);
       setUploading(true);
 
+      //const fd = new FormData();
       for (var i = 0; i < files.length; i++) {
+        // Validate file type
         if (
           files[i] &&
           (files[i].type === "image/jpeg" ||
@@ -149,6 +154,7 @@ const AddBanner = () => {
                 item?.images?.map((img) => {
                   img_arr.push(img);
 
+                  //console.log(img)
                 });
             });
 
@@ -167,6 +173,7 @@ const AddBanner = () => {
               res?.map((item) => {
                 item?.images?.map((img) => {
                   deleteImages(`/api/homeSideBanners/deleteImage?img=${img}`).then((res) => {
+                 //   deleteData("/api/imageUpload/deleteAllImages");
                   });
                 });
               });
@@ -196,7 +203,8 @@ const AddBanner = () => {
     );
 
     if (imgIndex > -1) {
-      previews.splice(index, 1);
+      // only splice array when item is found
+      previews.splice(index, 1); // 2nd parameter means remove one item only
     }
   };
 
@@ -243,6 +251,7 @@ const AddBanner = () => {
       console.log(formFields);
 
       postData(`/api/homeSideBanners/create`, formFields).then((res) => {
+        // console.log(res);
         setIsLoading(false);
         context.fetchCategory();
 

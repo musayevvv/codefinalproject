@@ -179,15 +179,11 @@ const EditHomeSlide = () => {
     e.preventDefault();
 
     const appendedArray = [...previews, ...uniqueArray];
-    console.log(appendedArray);
-
     img_arr = [];
 
     formdata.append("images", appendedArray);
 
     formFields.images = appendedArray;
-
-    console.log(formdata);
     if (
       formFields.name !== "" &&
       formFields.color !== "" &&
@@ -240,7 +236,7 @@ const EditHomeSlide = () => {
             <div className="col-sm-9">
               <div className="card p-4 mt-0">
                 <div className="imagesUploadSec">
-                  <h5 class="mb-4">Media And Published</h5>
+                  <h5 className="mb-4">Media And Published</h5>
 
                   <div className="imgUploadBox d-flex align-items-center">
                     {previews?.length !== 0 &&

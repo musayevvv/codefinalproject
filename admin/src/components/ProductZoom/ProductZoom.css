@@ -1,0 +1,144 @@
+.zoomSlider {
+    padding-top: 30px;
+}
+
+.zoomSlider * {
+    outline: none !important;
+}
+
+.zoomSlider .item {
+    border: 2px solid transparent !important;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 70px !important;
+}
+
+.zoomSlider .item_active {
+    border: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.zoomSlider .item img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.zoomSlider .swiper-button-prev {
+    width: 30px !important;
+    height: 30px !important;
+    top: 60% !important;
+    left: -3% !important;
+}
+
+.zoomSlider .swiper-button-next {
+    width: 30px !important;
+    height: 30px !important;
+    top: 60% !important;
+    right: -3% !important;
+}
+
+.zoomSlider .swiper-slide .item {
+    opacity: 0.5;
+}
+
+.zoomSlider .swiper-slide .item_active {
+    opacity: 1 !important;
+}
+
+.productZoom {
+    width: 100%;
+    height: auto;
+    padding: 0px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.productZoom .badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.zoomSliderBig {
+    width: 100% !important;
+}
+
+.productZoomBig {
+    height: 350px;
+    overflow: hidden;
+}
+
+.productDetails .productZoomBig {
+    height: 350px !important;
+}
+
+.reviewForm {
+    width: 100%;
+}
+
+.reviewForm textarea {
+    width: 100%;
+    height: 200px;
+    background: #132345 !important;
+    outline: navajowhite !important;
+    padding: 15px;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #0d1a36 !important;
+}
+
+body.light .reviewForm textarea {
+    background: #f4f4f4 !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+    border: 1px solid #dbdbdb !important;
+}
+
+.reviewForm textarea::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.light .reviewForm textarea::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.dark .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    background: #2b3c5f !important;
+}
+
+
+.dot {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
+
+.editModal .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    width: 600px !important;
+}
+
+
+.stickyBox {
+    position: sticky;
+    top: 90px;
+}
+
+.stickyBox h4 {
+    font-size: 22px;
+    opacity: 1;
+}
+
+.imgGrid {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.imgGrid .img {
+    width: 47%;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 7px;
+}
+

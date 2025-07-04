@@ -52,90 +52,54 @@ router.post("/upload", upload.array("images"), async (req, res) => {
   }
 });
 
-router.get(`/getProducts`, async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage);
-  const totalPosts = await Product.countDocuments();
-  const totalPages = Math.ceil(totalPosts / perPage);
+router.get("/all", async (req, res) => {
+  try {
+    const { page = 1, perPage = 16, location } = req.query;
 
-  if (page > totalPages) {
-    return res.status(404).json({ message: "Page not found" });
-  }
+    let filter = {};
 
-  let productList = [];
-
-  if (req.query.page !== undefined && req.query.perPage !== undefined) {
-    if (req.query.location !== undefined) {
-      const productListArr = await Product.find()
-        .populate("category")
-        .skip((page - 1) * perPage)
-        .limit(perPage)
-        .exec();
-
-      for (let i = 0; i < productListArr.length; i++) {
-        for (let j = 0; j < productListArr[i].location.length; j++) {
-          if (productListArr[i].location[j].value === req.query.location) {
-            productList.push(productListArr[i]);
-          }
-        }
-      }
-    } else {
-      productList = await Product.find()
-        .populate("category")
-        .skip((page - 1) * perPage)
-        .limit(perPage)
-        .exec();
+    if (location && location !== "all") {
+      filter = {
+        location: {
+          $elemMatch: { value: { $regex: new RegExp(`^${location}$`, "i") } },
+        },
+      };
     }
-  } else {
-    productList = await Product.find();
+
+    const total = await Product.countDocuments(filter);
+    const totalPages = Math.ceil(total / parseInt(perPage));
+    const products = await Product.find(filter)
+      .skip((page - 1) * perPage)
+      .limit(parseInt(perPage));
+
+    res.status(200).json({
+      success: true,
+      products,
+      totalPages,
+      page: parseInt(page),
+    });
+  } catch (error) {
+    console.error("GET /all ERROR:", error);
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message,
+    });
   }
-  return res.status(200).json({
-    products: productList,
-    totalPages: totalPages,
-    page: page,
-  });
 });
 
 
-router.get(`/getAll`, async (req, res) => {
+
+
+router.get("/products/:id", async (req, res) => {
   try {
+    const product = await Product.findById(req.params.id).populate("category");
+    if (!product) return res.status(404).json({ message: "Product not found" });
 
-    const page = parseInt(req.query.page) || 1;
-    const perPage = parseInt(req.query.perPage);
-    const totalProducts = await Product.find();
-
-    const products = await Product.find().sort({ dateCreated: -1 }).skip((page - 1) * perPage).limit(parseInt(perPage));
-
-    const total = await Product.countDocuments(products);
-
-    if (!products) {
-      return res.status(400).json({
-        error: true,
-        success: false
-      })
-    }
-
-    return res.status(200).json({
-      error: false,
-      success: true,
-      products: products,
-      total: total,
-      page: parseInt(page),
-      totalPages: Math.ceil(total / perPage),
-      totalCount: totalProducts?.length,
-      totalProducts: totalProducts
-    })
-
-
+    res.status(200).json(product);
   } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false
-    })
+    res.status(500).json({ message: "Something went wrong", error });
   }
-})
-
+});
 
 router.get(`/catName`, async (req, res) => {
   let productList = [];
@@ -408,30 +372,40 @@ router.get(`/get/count`, async (req, res) => {
   }
 });
 
-router.get(`/featured`, async (req, res) => {
-  let productList = [];
-  if (req.query.location !== undefined && req.query.location !== null) {
-    const productListArr = await Product.find({ isFeatured: true }).populate(
-      "category"
-    );
+router.get("/featured", async (req, res) => {
+  try {
+    const locationQuery = req.query.location;
+    const productListArr = await Product.find({ isFeatured: true }).populate("category");
 
-    for (let i = 0; i < productListArr.length; i++) {
-      for (let j = 0; j < productListArr[i].location.length; j++) {
-        if (productListArr[i].location[j].value === req.query.location) {
-          productList.push(productListArr[i]);
+    let productList = [];
+
+    if (locationQuery && locationQuery !== "All") {
+      for (let i = 0; i < productListArr.length; i++) {
+        const locations = productListArr[i].location || [];
+
+        for (let j = 0; j < locations.length; j++) {
+          if (
+            locations[j] &&
+            typeof locations[j].value === "string" &&
+            locations[j].value.toLowerCase() === locationQuery.toLowerCase()
+          ) {
+            productList.push(productListArr[i]);
+            break;
+          }
         }
       }
+    } else {
+      productList = productListArr;
     }
-  } else {
-    productList = await Product.find({ isFeatured: true }).populate("category");
-  }
 
-  if (!productList) {
-    res.status(500).json({ success: false });
+    return res.status(200).json(productList);
+  } catch (error) {
+    console.log("❌ FEATURED route ERROR:", error.message);
+    return res.status(500).json({ success: false, message: error.message });
   }
-
-  return res.status(200).json(productList);
 });
+
+
 
 router.get(`/recentlyViewd`, async (req, res) => {
   let productList = [];
@@ -484,7 +458,6 @@ router.post(`/recentlyViewd`, async (req, res) => {
   }
 });
 
-// CREATE PRODUCT
 router.post("/create", async (req, res) => {
   try {
     const category = await Category.findById(req.body.category);
@@ -495,7 +468,7 @@ router.post("/create", async (req, res) => {
     const product = new Product({
       name: req.body.name,
       description: req.body.description,
-      images: req.body.images, 
+      images: req.body.images,
       brand: req.body.brand,
       price: req.body.price,
       oldPrice: req.body.oldPrice,
@@ -532,8 +505,7 @@ router.delete("/deleteImage", async (req, res) => {
   const imageName = image.split(".")[0];
 
   const response = await cloudinary.uploader.destroy(
-    imageName,
-    (error, result) => { }
+    imageName
   );
 
   if (response) {

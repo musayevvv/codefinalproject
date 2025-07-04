@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { fetchDataFromApi } from "../../utils/api";
 import ProductZoom from '../../components/ProductZoom/ProductZoom';
+import './productDetails.css'
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =

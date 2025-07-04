@@ -85,26 +85,27 @@ const ProductUpload = () => {
   const history = useNavigate();
 
   const [formFields, setFormFields] = useState({
-    name: "",
-    subCat: "",
-    subCatName: "",
-    description: "",
-    brand: "",
-    price: null,
-    oldPrice: null,
-    subCatId: "",
-    catName: "",
-    catId: "",
-    category: "",
-    countInStock: null,
-    rating: 0,
-    isFeatured: null,
-    discount: null,
-    productRam: [],
-    size: [],
-    productWeight: [],
-    location: [],
-  });
+  name: "",
+  subCat: "",
+  subCatName: "",
+  description: "",
+  brand: "",
+  price: "",
+  oldPrice: "",
+  subCatId: "",
+  catName: "",
+  catId: "",
+  category: "",
+  countInStock: "",
+  rating: 1,
+  isFeatured: "",
+  discount: "",
+  productRam: [],
+  size: [],
+  productWeight: [],
+  location: [],
+});
+
 
   const productImages = useRef();
 
@@ -370,8 +371,6 @@ const ProductUpload = () => {
 
     formFields.images = appendedArray;
 
-    console.log(formFields);
-
     if (formFields.name === "") {
       context.setAlertBox({
         open: true,
@@ -490,7 +489,6 @@ const ProductUpload = () => {
 
   const handleChangeLocation = (selectedOptions) => {
     setSelectedLocation(selectedOptions);
-    console.log(selectedOptions);
   };
 
   return (
@@ -798,7 +796,7 @@ const ProductUpload = () => {
 
           <div className="card p-4 mt-0">
             <div className="imagesUploadSec">
-              <h5 class="mb-4">Media And Published</h5>
+              <h5 className="mb-4">Media And Published</h5>
 
               <div className="imgUploadBox d-flex align-items-center">
                 {previews?.length !== 0 &&

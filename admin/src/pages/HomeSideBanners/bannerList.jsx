@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-import { deleteData,fetchDataFromApi } from "../../utils/api";
+import { deleteData, fetchDataFromApi } from "../../utils/api";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -54,18 +54,18 @@ const BannersList = () => {
 
   const deleteSlide = (id) => {
     context.setProgress(30);
-      deleteData(`/api/homeSideBanners/${id}`).then((res) => {
-        context.setProgress(100);
-        context.setProgress({
-          open: true,
-          error: false,
-          msg: "Banner Deleted!",
-        });
-        fetchDataFromApi("/api/homeSideBanners").then((res) => {
-          setSlideList(res);
-          context.setProgress(100);
-        });
+    deleteData(`/api/homeSideBanners/${id}`).then((res) => {
+      context.setProgress(100);
+      context.setProgress({
+        open: true,
+        error: false,
+        msg: "Banner Deleted!",
       });
+      fetchDataFromApi("/api/homeSideBanners").then((res) => {
+        setSlideList(res);
+        context.setProgress(100);
+      });
+    });
   };
 
   return (

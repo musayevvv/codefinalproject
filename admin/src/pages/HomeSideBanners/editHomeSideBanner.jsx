@@ -8,6 +8,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import './HomeSideBanner.css'
 import {
   deleteData,
   deleteImages,

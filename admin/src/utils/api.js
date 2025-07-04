@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Axios instance
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
@@ -8,14 +7,12 @@ const axiosInstance = axios.create({
   },
 });
 
-// Token interceptor
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// GET
 export const fetchDataFromApi = async (url) => {
   try {
     const { data } = await axiosInstance.get(url);
@@ -26,7 +23,6 @@ export const fetchDataFromApi = async (url) => {
   }
 };
 
-// POST
 export const postData = async (url, formData) => {
   try {
     const { data } = await axiosInstance.post(url, formData);
@@ -37,7 +33,6 @@ export const postData = async (url, formData) => {
   }
 };
 
-// POST (FormData for image upload)
 export const uploadImage = async (url, formData) => {
   try {
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}${url}`, formData, {
@@ -53,7 +48,6 @@ export const uploadImage = async (url, formData) => {
   }
 };
 
-// PUT
 export const editData = async (url, updatedData) => {
   try {
     const { data } = await axiosInstance.put(url, updatedData);
@@ -64,7 +58,6 @@ export const editData = async (url, updatedData) => {
   }
 };
 
-// DELETE
 export const deleteData = async (url) => {
   try {
     const { data } = await axiosInstance.delete(url);
@@ -75,7 +68,6 @@ export const deleteData = async (url) => {
   }
 };
 
-// DELETE (with body for image deletion)
 export const deleteImages = async (url, image) => {
   try {
     const { data } = await axios.delete(`${import.meta.env.VITE_BASE_URL}${url}`, {

@@ -1,0 +1,226 @@
+.main .sidebarWrapper {
+    width: 20%;
+    flex: 0 0 20%;
+    transition: all 0.3s;
+}
+
+.main .sidebarWrapper.toggle {
+    width: 0%;
+    flex: 0 0 0%;
+}
+
+.main .sidebarWrapper .sidebar {
+    width: 20%;
+    height: 100vh;
+    max-height: calc(100% - 70px);
+    position: fixed;
+    top: 70px;
+    left: 0px;
+    background: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    transition: all 0.3s;
+}
+
+
+body.dark .main .sidebarWrapper .sidebar {
+    background: #112143 !important;
+}
+
+.main .sidebarWrapper.toggle .sidebar {
+    left: -100%;
+}
+
+.main .sidebarWrapper .sidebar::-webkit-scrollbar {
+    width: 3px !important;
+}
+
+.main .sidebarWrapper .sidebar::-webkit-scrollbar-thumb {
+    background: transparent !important;
+}
+
+.main .sidebarWrapper:hover .sidebar::-webkit-scrollbar {
+    background: #0858f7 !important;
+}
+
+.main .sidebarWrapper .sidebar ul {
+    margin-bottom: 0px;
+    padding: 10px 15px;
+}
+
+.main .sidebarWrapper .sidebar ul li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.main .sidebarWrapper .sidebar ul li button {
+    color: #5e5d72 !important;
+    text-align: left;
+    justify-content: left;
+    border-radius: 10px !important;
+    padding: 12px 10px !important;
+    align-items: center;
+    text-transform: capitalize !important;
+    font-weight: 600 !important;
+    font-family: "Open Sans", sans-serif !important;
+    font-size: 15px !important;
+}
+
+body.dark .main .sidebarWrapper .sidebar ul li button {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.main .sidebarWrapper .sidebar ul li button .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.main .sidebarWrapper .sidebar ul li button .icon svg {
+    font-size: 22px;
+}
+
+main .sidebarWrapper .sidebar ul li button * {
+    color: #5e5d72 !important;
+}
+
+.main .sidebarWrapper .sidebar ul li button .arrow {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+.main .sidebarWrapper .sidebar ul li button:hover {
+    background: #f1f1f1 !important;
+}
+
+body.dark .main .sidebarWrapper .sidebar ul li button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.main .sidebarWrapper .sidebar ul li button.active {
+    background: #f1f1f1 !important;
+}
+
+body.dark .main .sidebarWrapper .sidebar ul li button.active {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.main .sidebarWrapper .sidebar ul li button.active .icon svg {
+    color: #0858f7 !important;
+}
+
+.main .sidebarWrapper .sidebar ul li button.active .arrow {
+    transform: rotate(90deg);
+}
+
+.main .sidebarWrapper .sidebar ul .submenu {
+    padding: 0px 45px;
+    position: relative;
+    transition: all 0.3s;
+    height: 0px;
+}
+
+.main .sidebarWrapper .sidebar ul .submenu::before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: -10px;
+    left: 25px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+body.dark .main .sidebarWrapper .sidebar ul .submenu::before {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.main .sidebarWrapper .sidebar ul .submenu li {
+    width: 100%;
+    list-style: none;
+}
+
+.main .sidebarWrapper .sidebar ul .submenu li a {
+    color: #5e5d72 !important;
+    text-decoration: none;
+    display: block;
+    padding: 6px 0px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.main .sidebarWrapper .sidebar ul .submenu li a::before {
+    content: '';
+    width: 2px;
+    height: 0%;
+    position: absolute;
+    top: 50%;
+    left: -21px;
+    background: #0858f7;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.main .sidebarWrapper .sidebar ul .submenu li a.active::before {
+    height: 100%;
+    top: 0px;
+    opacity: 1;
+}
+
+body.dark .main .sidebarWrapper .sidebar ul .submenu li a {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.main .sidebarWrapper .sidebar ul .submenu li a:hover,
+.main .sidebarWrapper .sidebar ul .submenu li a.active,
+body.dark .main .sidebarWrapper .sidebar ul .submenu li a.active {
+    color: #0858f7 !important;
+}
+
+body.dark .main .sidebarWrapper .sidebar ul .submenu li a:hover {
+    color: #0858f7 !important;
+}
+
+.main .sidebarWrapper .sidebar ul .submenuWrapper {
+    transition: all 0.4s;
+    height: 0px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.main .sidebarWrapper .sidebar ul .submenuWrapper.colapsed .submenu {
+    opacity: 0;
+}
+
+.main .sidebarWrapper .sidebar ul .submenuWrapper.colapse {
+    height: auto;
+    overflow: inherit;
+    opacity: 1;
+    padding: 10px 0px;
+}
+
+.main .sidebarWrapper .sidebar ul .submenuWrapper.colapse .submenu {
+    opacity: 1;
+    height: auto;
+}
+
+.main .content {
+    width: 80%;
+    flex: 0 0 80%;
+    transition: all 0.3s;
+}
+
+.main .content.toggle {
+    width: 100%;
+    flex: 0 0 100%;
+}

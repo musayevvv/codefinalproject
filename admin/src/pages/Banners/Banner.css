@@ -1,0 +1,153 @@
+.imgUploadBox {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.imgUploadBox .uploadBox {
+    width: 150px;
+    height: 150px !important;
+    padding: 0px;
+    border-radius: 10px;
+    border: 1px dashed rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fafafa;
+    transition: all 0.3s;
+}
+
+.imgUploadBox .uploadBox .box {
+    width: 100%;
+    height: 150px !important;
+    overflow: hidden;
+    border-radius: 7px;
+}
+
+.imgUploadBox .uploadBox .box .lazy-load-image-background {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.imgUploadBox .uploadBox .progressBar .MuiCircularProgress-root {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.imgUploadBox .uploadBox .progressBar span {
+    font-size: 14px;
+}
+
+body.dark .imgUploadBox .uploadBox {
+    background: #2b3c5f;
+}
+
+body.dark .imgUploadBox .uploadBox * {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.imgUploadBox .uploadBox .remove {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #d32f2f;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.imgUploadBox .uploadBox .remove svg {
+    font-size: 18px;
+    color: #fff;
+}
+
+
+.imgUploadBox .uploadBox .MuiBox-root {
+    position: absolute;
+}
+
+
+.imgUploadBox .uploadBox:hover {
+    background: #f1f1f1;
+}
+
+.actions button.secondary {
+    background: rgba(203, 60, 231, 0.2) !important;
+}
+
+.actions button.success {
+    background: rgba(26, 159, 83, 0.2) !important;
+}
+
+.actions button.secondary {
+    background-color: #de2fff !important;
+}
+
+.actions button.secondary svg {
+    color: #fff !important;
+}
+
+.actions button.success {
+    background-color: #27bf68 !important;
+}
+
+.actions button.success svg {
+    color: #fff !important;
+}
+
+button.error {
+    background-color: #ff6179 !important;
+}
+
+button.error svg {
+    color: #fff !important;
+}
+
+.actions button svg {
+    font-size: 26px !important;
+}
+
+.actions button {
+    min-width: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0px 3px !important;
+}
+
+.imgUploadBox .uploadBox img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgUploadBox .uploadBox input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.imgUploadBox .uploadBox .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.imgUploadBox .uploadBox .info svg {
+    font-size: 50px;
+    opacity: 0.2;
+}
+
+.imgUploadBox .uploadBox .info h5 {
+    font-size: 15px;
+    text-align: center;
+    opacity: 0.5;
+}

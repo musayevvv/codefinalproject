@@ -11,7 +11,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
+import './HomeBanner.css'
 import { deleteData,fetchDataFromApi } from "../../utils/api";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -112,7 +112,7 @@ const HomeSlidesList = () => {
                 {slideList?.length !== 0 &&
                   slideList?.map((item, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <div
                             className="d-flex align-items-center "

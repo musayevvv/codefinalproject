@@ -87,7 +87,6 @@ const EditBanner = () => {
     });
 
     fetchDataFromApi(`/api/homeBottomBanners/${id}`).then((res) => {
-      console.log(res);
       setPreviews(res.images);
       setcategoryVal(res?.catId);
       setSubCatVal(res?.subCatId);
@@ -206,7 +205,7 @@ const EditBanner = () => {
     );
 
     if (imgIndex > -1) {
-      previews.splice(index, 1); 
+      previews.splice(index, 1);
     }
   };
 
@@ -240,15 +239,11 @@ const EditBanner = () => {
     e.preventDefault();
 
     const appendedArray = [...previews, ...uniqueArray];
-    console.log(appendedArray);
-
     img_arr = [];
 
     formdata.append("images", appendedArray);
 
     formFields.images = appendedArray;
-
-    console.log(formdata);
     if (
       formFields.name !== "" &&
       formFields.color !== "" &&

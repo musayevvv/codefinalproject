@@ -4,7 +4,7 @@ import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { MyContext } from '../../App';
+import { MyContext } from "../../App";
 import Button from '@mui/material/Button';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -98,7 +98,7 @@ const AddProductWeight = () => {
                     setFormFields({
                         productWeight: ""
                     });
-    
+
                 })
             })
         }
@@ -111,12 +111,12 @@ const AddProductWeight = () => {
             fetchDataFromApi("/api/productWeight").then((res) => {
                 setProductWeightData(res);
             })
-        })        
+        })
     }
 
     const updateData = (id) => {
         input.current.focus();
-        window.scrollTo({top: 0, left: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         fetchDataFromApi(`/api/productWeight/${id}`).then((res) => {
             setEditId(id);
             setFormFields({

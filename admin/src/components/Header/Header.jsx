@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
 import Button from "@mui/material/Button";
 import { MdMenuOpen } from "react-icons/md";
 import { MdOutlineMenu } from "react-icons/md";
@@ -8,6 +7,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { MdNightlightRound } from "react-icons/md";
 import { FaRegBell } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
+import './Header.css'
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -78,8 +78,7 @@ const Header = () => {
             {/* Logo Wraooer */}
             <div className="col-sm-2 part1 pr-0">
               <Link to={"/"} className="d-flex align-items-center logo">
-                <img src={logo} />
-                <span className="ml-2">ECOMMERCE</span>
+                <span className="ml-2">ADMIN</span>
               </Link>
             </div>
 

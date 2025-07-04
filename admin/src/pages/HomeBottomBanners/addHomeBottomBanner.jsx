@@ -105,7 +105,6 @@ const AddBanner = () => {
     try {
       const files = e.target.files;
 
-      console.log(files);
       setUploading(true);
 
       for (var i = 0; i < files.length; i++) {
@@ -161,7 +160,7 @@ const AddBanner = () => {
           setTimeout(() => {
             setUploading(false);
             img_arr = [];
-            uniqueArray=[];
+            uniqueArray = [];
             fetchDataFromApi("/api/imageUpload").then((res) => {
               res?.map((item) => {
                 item?.images?.map((img) => {
@@ -240,8 +239,6 @@ const AddBanner = () => {
     if (previews.length !== 0) {
       setIsLoading(true);
 
-      console.log(formFields);
-
       postData(`/api/homeBottomBanners/create`, formFields).then((res) => {
         setIsLoading(false);
         context.fetchCategory();
@@ -295,29 +292,28 @@ const AddBanner = () => {
                     <div className="form-group">
                       <h6>CATEGORY</h6>
                       <Select
-                        value={categoryVal}
+                        value={categoryVal || ""}
                         onChange={handleChangeCategory}
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>None</em>
                         </MenuItem>
-                        {context.catData?.categoryList?.length !== 0 &&
-                          context.catData?.categoryList?.map((cat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={cat._id}
-                                key={index}
-                                onClick={() => selectCat(cat.name, cat._id)}
-                              >
-                                {cat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {context.catData?.categoryList?.length > 0 &&
+                          context.catData?.categoryList?.map((cat, index) => (
+                            <MenuItem
+                              className="text-capitalize"
+                              value={cat._id}
+                              key={index}
+                              onClick={() => selectCat(cat.name, cat._id)}
+                            >
+                              {cat.name}
+                            </MenuItem>
+                          ))}
                       </Select>
+
                     </div>
                   </div>
 
@@ -325,31 +321,28 @@ const AddBanner = () => {
                     <div className="form-group">
                       <h6>SUB CATEGORY</h6>
                       <Select
-                        value={subCatVal}
+                        value={subCatVal || ""}
                         onChange={handleChangeSubCategory}
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}
                         className="w-100"
                       >
                         <MenuItem value="">
-                          <em value={null}>None</em>
+                          <em>None</em>
                         </MenuItem>
-                        {subCatData?.length !== 0 &&
-                          subCatData?.map((subCat, index) => {
-                            return (
-                              <MenuItem
-                                className="text-capitalize"
-                                value={subCat._id}
-                                key={index}
-                                onClick={() =>
-                                  selectSubCat(subCat.name, subCat._id)
-                                }
-                              >
-                                {subCat.name}
-                              </MenuItem>
-                            );
-                          })}
+                        {subCatData?.length > 0 &&
+                          subCatData?.map((subCat, index) => (
+                            <MenuItem
+                              className="text-capitalize"
+                              value={subCat._id}
+                              key={index}
+                              onClick={() => selectSubCat(subCat.name, subCat._id)}
+                            >
+                              {subCat.name}
+                            </MenuItem>
+                          ))}
                       </Select>
+
                     </div>
                   </div>
                 </div>
@@ -390,7 +383,7 @@ const AddBanner = () => {
                         <>
                           <input
                             type="file"
-                            
+
                             onChange={(e) =>
                               onChangeFile(e, "/api/homeBottomBanners/upload")
                             }

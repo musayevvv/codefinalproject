@@ -4,7 +4,7 @@ import patern from "../../assets/images/pattern.webp";
 import { MyContext } from "../../App";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
+import './OtpVerify.css'
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";

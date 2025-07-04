@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import MyContext from "../../Context/MyContext";
 import { IoMdCloseCircle } from "react-icons/io";

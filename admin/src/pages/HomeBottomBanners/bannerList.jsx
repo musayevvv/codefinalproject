@@ -4,7 +4,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { MyContext } from "../../App";
 import { Link } from "react-router-dom";
-
+import './HomeBottomBanner.css'
 import { emphasize, styled } from "@mui/material/styles";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";

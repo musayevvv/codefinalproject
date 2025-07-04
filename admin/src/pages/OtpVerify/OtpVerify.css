@@ -1,0 +1,26 @@
+.otpBox input {
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+    border-radius: 4px;
+}
+
+.otpBox input:focus {
+    border: 1px solid rgba(0, 0, 0, 0.7) !important;
+}
+
+
+body.dard .MuiTableContainer-root::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark .select__multi-value__label {
+    font-weight: 600 !important;
+}
+
+body.dark .text-blue {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.dark span.text-blue.cursor {
+    color: rgba(0, 255, 242, 0.8) !important;
+}

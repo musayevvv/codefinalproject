@@ -1,0 +1,124 @@
+.productDetailsSEction .productInfo .icon {
+    width: 28%;
+    flex: 0 0 28%;
+}
+
+body.light .productDetailsSEction .productInfo .icon svg {
+    color: #5e5d72 !important;
+}
+
+.productDetailsSEction .productInfo .icon svg {
+    font-size: 22px;
+}
+
+.productDetailsSEction .productInfo .name {
+    width: 72%;
+    flex: 0 0 72%;
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.light .productDetailsSEction .productInfo .name {
+    color: #5e5d72 !important;
+}
+
+.productDetailsSEction .productInfo .row {
+    margin-bottom: 10px !important;
+}
+
+.productDetailsSEction .productInfo .row .col-sm-9 {
+    display: flex;
+    align-items: center;
+}
+
+.productDetailsSEction .productInfo .row .col-sm-9 span {
+    opacity: 0.8;
+    font-size: 15px;
+    padding-left: 20px;
+}
+
+
+.productDetailsSEction .productInfo .row .col-sm-9 span .row {
+    margin-bottom: 0px !important;
+}
+
+.reviewsSecrion .reviewsRow p {
+    padding-left: 20px;
+}
+
+.reviewsSecrion .reviewsRow.reply {
+    width: 90%;
+    margin-left: auto;
+}
+
+.reviewsSecrion .reviewsRow .btn-big {
+    font-size: 14px !important;
+    padding: 7px 20px !important;
+}
+
+.reviewsSecrion .reviewsRow .btn-big svg {
+    font-size: 18px !important;
+}
+
+.reviewsSecrion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewsSecrion .reviewsRow {
+    width: 100%;
+    height: auto;
+    background: #071739;
+    padding: 35px;
+    border-radius: 10px;
+    margin: 15px 0px;
+}
+
+body.light .reviewsSecrion .reviewsRow {
+    background: #ededed !important;
+}
+.rti--container {
+    background: #2b3c5f !important;
+    border: 0px !important;
+}
+
+.rti--tag {
+    background: #364e7d !important;
+}
+
+.rti--tag button {
+    color: #fff !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.select__input {
+    height: 45px !important;
+    border: 0px !important;
+}
+
+.form .form-group input.select__input {
+    border: 0px !important;
+}
+
+.select__menu {
+    z-index: 10000 !important;
+}
+
+
+
+.select__multi-value__remove svg {
+    color: #000 !important;
+}
+
+body.dark .select__menu * {
+    color: #000 !important;
+}

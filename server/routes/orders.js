@@ -21,7 +21,7 @@ router.get('/sales', async (req, res) => {
             totalSales += amount;
             const orderDate = new Date(order.date);
             const year = orderDate.getFullYear();
-            const month = orderDate.getMonth(); // 0-11
+            const month = orderDate.getMonth();
 
             if (year === currentYear) {
                 monthlySales[month].sale += amount;

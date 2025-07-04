@@ -124,7 +124,6 @@ const SignIn = () => {
             }, 2000);
           });
         }
-        console.log(res);
       });
     }
   };

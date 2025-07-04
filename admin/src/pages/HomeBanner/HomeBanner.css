@@ -1,0 +1,103 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: #201f2f;
+}
+
+
+p {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 25px;
+}
+
+body.light p {
+    font-weight: 400 !important;
+}
+
+body.dark .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #ccc !important;
+}
+
+body.dark .table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.slick-slide {
+    outline: none !important;
+}
+
+
+table td .text-blue {
+    color: blue !important;
+}
+
+
+body.dark .table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.table .thead-dark th,
+.MuiTableCell-head {
+    background-color: #1866ee !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    font-size: 13px !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    padding: 9px 16px !important;
+}
+
+.MuiTableBody-root .MuiTableCell-root {
+    border-right: 1px solid #dee2e6 !important;
+}
+
+.table tbody td {
+    font-size: 14px !important;
+    color: #2f2d3e;
+    font-weight: 500;
+}
+
+
+
+.MuiTablePagination-selectLabel,
+.MuiTablePagination-displayedRows {
+    margin-bottom: 0px !important;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar-thumb {
+    background: #ccc !important;
+}
+
+
+.MuiTableBody-root tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, .05) !important;
+}
+
+body.dark .MuiTableBody-root tr:nth-child(odd) {
+    background-color: #1b2b4d !important;
+}
+
+body.dark .MuiTableBody-root tr:nth-child(even) {
+    background-color: #223661 !important;
+}
